@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("v1/aluno")
-@PreAuthorize("hasRole('ALUNO')")
+@RequestMapping("v1/a")
+//@PreAuthorize("hasRole('ALUNO')")
 public class AlunoController {
 
     private final AlunoRepository alunoRepository;
@@ -33,6 +33,13 @@ public class AlunoController {
     @GetMapping
     @Cacheable(value = "listaDeAlunos")
     public ResponseEntity<? extends List<AlunoDto>> findAllAlunos(){
+        Aluno aluno = new Aluno();
+        aluno.setAluno(Boolean.TRUE);
+        aluno.setProfessor(Boolean.FALSE);
+        aluno.setTutor(Boolean.FALSE);
+        aluno.setNomeCompleto("Leonel");
+        alunoRepository.save(aluno);
+
         List<AlunoDto> alunoDtoList = AlunoDto.converter(alunoRepository.findAll());
         if (alunoDtoList.isEmpty())
             return ResponseEntity.notFound().build();
