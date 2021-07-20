@@ -38,6 +38,7 @@ public class AlunoController {
         aluno.setProfessor(Boolean.FALSE);
         aluno.setTutor(Boolean.FALSE);
         aluno.setNomeCompleto("Leonel");
+        aluno.setSenha("12345");
         alunoRepository.save(aluno);
 
         List<AlunoDto> alunoDtoList = AlunoDto.converter(alunoRepository.findAll());
