@@ -1,0 +1,11 @@
+package br.com.easylearn.config.exception;
+
+public class ResourceAlreadyExistsException extends Exception {
+
+    public ResourceAlreadyExistsException() {
+    }
+
+    public ResourceAlreadyExistsException(String msg) {
+        super(msg);
+    }
+}
