@@ -1,0 +1,45 @@
+package br.com.easylearn.controller.dto;
+
+import br.com.easylearn.domain.Aula;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class AulaDto {
+
+    private Integer indice;
+    private String titulo;
+    private String urlVideo;
+    private String transcricao;
+
+    public AulaDto(Aula aula) {
+        this.indice = aula.getIndice();
+        this.titulo = aula.getTitulo();
+        this.urlVideo = aula.getUrlVideo();
+        this.transcricao = aula.getTranscricao();
+    }
+
+    public static List<AulaDto> converter(List<Aula> allAula) {
+        return allAula.stream().map(AulaDto::new).collect(Collectors.toList());
+    }
+
+    public static AulaDto converter(Aula aula) {
+        return new AulaDto(aula);
+    }
+
+    public Integer getIndice() {
+        return indice;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getUrlVideo() {
+        return urlVideo;
+    }
+
+    public String getTranscricao() {
+        return transcricao;
+    }
+}
