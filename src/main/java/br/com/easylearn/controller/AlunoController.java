@@ -5,6 +5,8 @@ import br.com.easylearn.controller.form.AlunoForm;
 import br.com.easylearn.controller.form.AtualizacaoAlunoForm;
 import br.com.easylearn.domain.Aluno;
 import br.com.easylearn.repository.AlunoRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -19,8 +21,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("v1/a")
-//@PreAuthorize("hasRole('ALUNO')")
+@RequestMapping("v1/aluno")
+@PreAuthorize("hasRole('ALUNO')")
+@Api(value = "AlunoController")
 public class AlunoController {
 
     private final AlunoRepository alunoRepository;
@@ -30,17 +33,10 @@ public class AlunoController {
         this.alunoRepository = alunoRepository;
     }
 
+    @ApiOperation(value = "Retorna todos os alunos")
     @GetMapping
     @Cacheable(value = "listaDeAlunos")
     public ResponseEntity<? extends List<AlunoDto>> findAllAlunos(){
-        Aluno aluno = new Aluno();
-        aluno.setAluno(Boolean.TRUE);
-        aluno.setProfessor(Boolean.FALSE);
-        aluno.setTutor(Boolean.FALSE);
-        aluno.setNomeCompleto("Leonel");
-        aluno.setSenha("12345");
-        alunoRepository.save(aluno);
-
         List<AlunoDto> alunoDtoList = AlunoDto.converter(alunoRepository.findAll());
         if (alunoDtoList.isEmpty())
             return ResponseEntity.notFound().build();
