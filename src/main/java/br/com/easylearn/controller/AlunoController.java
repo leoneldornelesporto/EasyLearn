@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("v1/aluno")
-//@PreAuthorize("hasRole('ALUNO')")
+@RequestMapping("v1/a")
+@PreAuthorize("hasRole('ALUNO')")
 @Api(value = "AlunoController")
 public class AlunoController {
 
@@ -51,20 +51,6 @@ public class AlunoController {
         Aluno aluno = alunoForm.save(alunoRepository);
         URI uri = uriBuilder.path("/v1/aluno/{id}").buildAndExpand(aluno.getId()).toUri();
         return ResponseEntity.created(uri).body(new AlunoDto(aluno));
-    }
-
-    @PostMapping("/inserirAlunos")
-    @Transactional
-    @CacheEvict(value = "listaDeAlunos", allEntries = true)
-    public ResponseEntity<? extends AlunoDto> inserirAlunos() {
-        Aluno aluno = new Aluno();
-        aluno.setNomeCompleto("Leonel Dorneles Porto");
-        aluno.setSenha("12345");
-        aluno.setAluno(Boolean.TRUE);
-        aluno.setTutor(Boolean.FALSE);
-        aluno.setProfessor(Boolean.FALSE);
-        alunoRepository.save(aluno);
-        return ResponseEntity.ok(new AlunoDto(aluno));
     }
 
     @PutMapping("{idAluno}")
