@@ -53,6 +53,20 @@ public class AlunoController {
         return ResponseEntity.created(uri).body(new AlunoDto(aluno));
     }
 
+    @PostMapping("/inserirAlunos")
+    @Transactional
+    @CacheEvict(value = "listaDeAlunos", allEntries = true)
+    public ResponseEntity<? extends AlunoDto> inserirAlunos() {
+        Aluno aluno = new Aluno();
+        aluno.setNomeCompleto("Leonel Dorneles Porto");
+        aluno.setSenha("12345");
+        aluno.setAluno(Boolean.TRUE);
+        aluno.setTutor(Boolean.FALSE);
+        aluno.setProfessor(Boolean.FALSE);
+        alunoRepository.save(aluno);
+        return ResponseEntity.ok(new AlunoDto(aluno));
+    }
+
     @PutMapping("{idAluno}")
     @Transactional
     @CacheEvict(value = "listaDeAlunos", allEntries = true)

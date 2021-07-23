@@ -80,7 +80,6 @@ public class CursoController {
             cursoRepository.deleteById(idCurso);
             return ResponseEntity.ok().build();
         }
-
         return ResponseEntity.notFound().build();
     }
 }
