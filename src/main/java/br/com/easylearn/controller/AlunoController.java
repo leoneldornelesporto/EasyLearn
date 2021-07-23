@@ -22,7 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("v1/a")
-@PreAuthorize("hasRole('ALUNO')")
+//@PreAuthorize("hasRole('ALUNO')")
 @Api(value = "AlunoController")
 public class AlunoController {
 
