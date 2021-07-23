@@ -25,7 +25,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("v1/professor")
-@PreAuthorize("hasRole('PROFESSOR')")
+//@PreAuthorize("hasRole('PROFESSOR')")
 public class ProfessorController {
 
     private final ProfessorRepository professorRepository;

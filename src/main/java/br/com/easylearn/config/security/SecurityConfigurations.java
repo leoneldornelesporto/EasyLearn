@@ -30,18 +30,19 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 	
 	//Configuracoes de autorizacao
 
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/*/aluno/**").hasRole("ALUNO")
-				.antMatchers("/*/professor/**").hasRole("PROFESSOR")
+				//.antMatchers("/*/professor/**").hasRole("PROFESSOR")
 				.antMatchers("/*/tutor/**").hasRole("TUTOR")
 				.and()
 				.httpBasic()
 				.and()
 				.csrf().disable();
 	}
-	
+
 	//Configuracoes de recursos estaticos(js, css, imagens, etc.)
 	@Override
 	public void configure(WebSecurity web) throws Exception {
