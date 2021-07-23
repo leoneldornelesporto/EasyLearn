@@ -1,6 +1,5 @@
 package br.com.easylearn.controller.dto;
 
-import br.com.easylearn.domain.Aluno;
 import br.com.easylearn.domain.Professor;
 
 import java.util.List;
@@ -8,6 +7,7 @@ import java.util.stream.Collectors;
 
 public class ProfessorDto {
 
+    private Long id;
     private String nomeCompleto;
     private String nomeNoCertificado;
     private String usuarioNaUrl;
@@ -21,6 +21,7 @@ public class ProfessorDto {
     private Boolean privacidadeDoPerfil;
 
     public ProfessorDto(Professor professor) {
+        this.id = professor.getId();
         this.nomeCompleto = professor.getNomeCompleto();
         this.nomeNoCertificado = professor.getNomeNoCertificado();
         this.usuarioNaUrl = professor.getUsuarioNaUrl();
@@ -40,6 +41,10 @@ public class ProfessorDto {
 
     public static ProfessorDto converter(Professor professor) {
         return new ProfessorDto(professor);
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getNomeCompleto() {
