@@ -70,7 +70,7 @@ public class ProfessorController {
 
     @DeleteMapping("professor/{idProfessor}")
     @Transactional
-    @CacheEvict(value = "listaDeTutores", allEntries = true)
+    @CacheEvict(value = "listaDeProfessores", allEntries = true)
     public ResponseEntity<?> removerProfessor(@PathVariable Long idProfessor) {
         Optional<Professor> optional = professorRepository.findById(idProfessor);
         if (optional.isPresent()) {
@@ -91,7 +91,7 @@ public class ProfessorController {
 
     @DeleteMapping("aluno/{idAluno}")
     @Transactional
-    @CacheEvict(value = "listaDeTutores", allEntries = true)
+    @CacheEvict(value = "listaDeAlunos", allEntries = true)
     public ResponseEntity<?> removerAluno(@PathVariable Long idAluno) {
         Optional<Aluno> optional = alunoRepository.findById(idAluno);
         if (optional.isPresent()) {
