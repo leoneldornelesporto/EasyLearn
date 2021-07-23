@@ -15,10 +15,16 @@ public class Aluno extends Usuario{
     private List<Matricula> matriculaList;
 
     public Aluno() {
+        this.setAluno(Boolean.TRUE);
+        this.setProfessor(Boolean.FALSE);
+        this.setTutor(Boolean.FALSE);
     }
 
     public Aluno(String nomeCompleto, String nomeNoCertificado, String usuarioNaUrl, String email, String senha, String biografia, String linkedin, String github, String twitter, String empresa, String cargo) {
         super(nomeCompleto,nomeNoCertificado,usuarioNaUrl,email,senha,biografia,linkedin,github,twitter,empresa,cargo);
+        this.setAluno(Boolean.TRUE);
+        this.setProfessor(Boolean.FALSE);
+        this.setTutor(Boolean.FALSE);
     }
 
     public Aluno(String nomeCompleto, String nomeNoCertificado, String usuarioNaUrl, String email, String senha, String biografia, String linkedin, String github, String twitter, String empresa, String cargo, Boolean privacidadeDoPerfil) {
