@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 public class AlunoDto {
 
+    private Long id;
     private String nomeCompleto;
     private String nomeNoCertificado;
     private String usuarioNaUrl;
@@ -20,6 +21,7 @@ public class AlunoDto {
     private Boolean privacidadeDoPerfil;
 
     public AlunoDto(Aluno aluno) {
+        this.id = aluno.getId();
         this.nomeCompleto = aluno.getNomeCompleto();
         this.nomeNoCertificado = aluno.getNomeNoCertificado();
         this.usuarioNaUrl = aluno.getUsuarioNaUrl();
@@ -39,6 +41,10 @@ public class AlunoDto {
 
     public static AlunoDto converter(Aluno aluno) {
         return new AlunoDto(aluno);
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getNomeCompleto() {
