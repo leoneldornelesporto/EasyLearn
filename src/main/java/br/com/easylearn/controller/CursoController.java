@@ -43,22 +43,6 @@ public class CursoController {
     @GetMapping
     @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends List<CursoDto>> findAllCursos(){
-        Aluno aluno = new Aluno();
-        aluno.setNomeCompleto("Aluno");
-        aluno.setSenha("12345");
-
-        Professor professor = new Professor();
-        professor.setNomeCompleto("Professor");
-        professor.setSenha("12345");
-
-        Tutor tutor = new Tutor();
-        tutor.setNomeCompleto("Tutor");
-        tutor.setSenha("12345");
-
-        alunoRepository.save(aluno);
-        professorRepository.save(professor);
-        tutorRepository.save(tutor);
-
         List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findAll());
 
         if (cursoDtoList.isEmpty())
