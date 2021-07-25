@@ -3,10 +3,11 @@ package br.com.easylearn.controller;
 import br.com.easylearn.controller.dto.CursoDto;
 import br.com.easylearn.controller.form.AtualizacaoCursoForm;
 import br.com.easylearn.controller.form.CursoForm;
+import br.com.easylearn.domain.Aluno;
 import br.com.easylearn.domain.Curso;
-import br.com.easylearn.repository.CategoriaRepository;
-import br.com.easylearn.repository.CursoRepository;
-import br.com.easylearn.repository.ProfessorRepository;
+import br.com.easylearn.domain.Professor;
+import br.com.easylearn.domain.Tutor;
+import br.com.easylearn.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,19 +26,35 @@ import java.util.Optional;
 public class CursoController {
 
     private final CursoRepository cursoRepository;
+    private final AlunoRepository alunoRepository;
     private final ProfessorRepository professorRepository;
+    private final TutorRepository tutorRepository;
     private final CategoriaRepository categoriaRepository;
 
     @Autowired
-    public CursoController(CursoRepository cursoRepository, ProfessorRepository professorRepository, CategoriaRepository categoriaRepository) {
+    public CursoController(CursoRepository cursoRepository, AlunoRepository alunoRepository, ProfessorRepository professorRepository, TutorRepository tutorRepository, CategoriaRepository categoriaRepository) {
         this.cursoRepository = cursoRepository;
+        this.alunoRepository = alunoRepository;
         this.professorRepository = professorRepository;
+        this.tutorRepository = tutorRepository;
         this.categoriaRepository = categoriaRepository;
     }
 
     @GetMapping
     @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends List<CursoDto>> findAllCursos(){
+        Aluno aluno = new Aluno();
+        aluno.setNomeCompleto("Aluno");
+        aluno.setSenha("12345");
+
+        Professor professor = new Professor();
+        professor.setNomeCompleto("Professor");
+        professor.setSenha("12345");
+
+        Tutor tutor = new Tutor();
+        tutor.setNomeCompleto("Tutor");
+        tutor.setSenha("12345");
+
         List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findAll());
 
         if (cursoDtoList.isEmpty())
