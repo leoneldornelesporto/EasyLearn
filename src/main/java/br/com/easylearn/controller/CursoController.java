@@ -55,6 +55,10 @@ public class CursoController {
         tutor.setNomeCompleto("Tutor");
         tutor.setSenha("12345");
 
+        alunoRepository.save(aluno);
+        professorRepository.save(professor);
+        tutorRepository.save(tutor);
+
         List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findAll());
 
         if (cursoDtoList.isEmpty())
