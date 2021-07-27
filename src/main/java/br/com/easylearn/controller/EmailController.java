@@ -1,5 +1,6 @@
-package br.com.easylearn.config.mailsender;
+package br.com.easylearn.controller;
 
+import br.com.easylearn.config.mailsender.SendMailService;
 import br.com.easylearn.domain.Mail;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -28,6 +28,7 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
     private String empresa;
     private String cargo;
     private Boolean privacidadeDoPerfil = Boolean.FALSE;
+    private Boolean ativo = Boolean.FALSE;
     @JsonIgnore
     @OneToMany
     private List<Ocorrencia> ocorrenciaList;
@@ -162,6 +163,18 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
 
     public void setPrivacidadeDoPerfil(Boolean privacidadeDoPerfil) {
         this.privacidadeDoPerfil = privacidadeDoPerfil;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     public List<Ocorrencia> getOcorrenciaList() {
