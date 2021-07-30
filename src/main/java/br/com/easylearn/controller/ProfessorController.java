@@ -57,7 +57,7 @@ public class ProfessorController {
     public ResponseEntity<? extends ProfessorDto> saveProfessor(@RequestBody ProfessorForm professorForm, UriComponentsBuilder uriBuilder) throws MessagingException {
         Professor professor = professorForm.save(professorRepository);
         URI uri = uriBuilder.path("/v1/professor/{id}").buildAndExpand(professor.getId()).toUri();
-        String link = "https://easylearn-app.herokuapp.com/v1/professor/ativar/"+professor.getId();
+        String link = "https://easylearn-app.herokuapp.com/ativar/"+professor.getId();
         Mail email = new Mail(professor.getEmail(),"Confirmação de Conta","Por gentiliza acesse esse link " +
                 "<a href='"+link+"'>aqui</a>");
         service.sendMailWithAttachments(email);
