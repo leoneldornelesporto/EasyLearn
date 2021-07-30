@@ -75,7 +75,7 @@ public class AlunoController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("ativar/{idAluno}")
+    @GetMapping("ativarAluno/{idAluno}")
     @Transactional
     @CacheEvict(value = "listaDeAlunos", allEntries = true)
     public ResponseEntity<? extends AlunoDto> ativarAluno(@PathVariable Long idAluno) {

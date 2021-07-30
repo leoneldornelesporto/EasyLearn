@@ -86,7 +86,7 @@ public class TutorController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("ativar/{idTutor}")
+    @GetMapping("ativarTutor/{idTutor}")
     @Transactional
     @CacheEvict(value = "listaDeProfessores", allEntries = true)
     public ResponseEntity<? extends TutorDto> ativarTutor(@PathVariable Long idTutor) {
