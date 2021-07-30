@@ -49,7 +49,6 @@ public class AlunoController {
             return ResponseEntity.ok(alunoDtoList);
     }
 
-    @PreAuthorize("hasRole('ALUNO')")
     @PostMapping
     @Transactional
     @CacheEvict(value = "listaDeAlunos", allEntries = true)

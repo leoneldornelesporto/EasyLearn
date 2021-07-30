@@ -52,7 +52,6 @@ public class ProfessorController {
             return ResponseEntity.ok(professorDtoList);
     }
 
-    @PreAuthorize("hasRole('PROFESSOR')")
     @PostMapping
     @Transactional
     @CacheEvict(value = "listaDeProfessores", allEntries = true)
