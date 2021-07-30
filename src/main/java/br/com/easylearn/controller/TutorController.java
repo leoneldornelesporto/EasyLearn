@@ -52,7 +52,7 @@ public class TutorController {
     public ResponseEntity<? extends TutorDto> saveTutor(@RequestBody TutorForm tutorForm, UriComponentsBuilder uriBuilder) throws MessagingException {
         Tutor tutor = tutorForm.save(tutorRepository);
         URI uri = uriBuilder.path("/v1/tutor/{id}").buildAndExpand(tutor.getId()).toUri();
-        String link = "https://easylearn-app.herokuapp.com/ativar/"+tutor.getId();
+        String link = "https://easylearn-app.herokuapp.com/ativarTutor/"+tutor.getId();
         Mail email = new Mail(tutor.getEmail(),"Confirmação de Conta","Por gentiliza acesse esse link " +
                 "<a href='"+link+"'>aqui</a>");
         service.sendMailWithAttachments(email);
