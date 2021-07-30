@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("v1/aluno")
 @Api(value = "AlunoController")
 public class AlunoController {
 
@@ -39,7 +38,7 @@ public class AlunoController {
 
     @ApiOperation(value = "Retorna todos os alunos")
     @PreAuthorize("hasRole('ALUNO')")
-    @GetMapping
+    @GetMapping("v1/aluno")
     @Cacheable(value = "listaDeAlunos")
     public ResponseEntity<? extends List<AlunoDto>> findAllAlunos(){
         List<AlunoDto> alunoDtoList = AlunoDto.converter(alunoRepository.findAll());
@@ -49,7 +48,7 @@ public class AlunoController {
             return ResponseEntity.ok(alunoDtoList);
     }
 
-    @PostMapping
+    @PostMapping("v1/SalvarAluno")
     @Transactional
     @CacheEvict(value = "listaDeAlunos", allEntries = true)
     public ResponseEntity<? extends AlunoDto> saveAluno(@RequestBody AlunoForm alunoForm, UriComponentsBuilder uriBuilder) throws MessagingException {
@@ -64,7 +63,7 @@ public class AlunoController {
     }
 
     @PreAuthorize("hasRole('ALUNO')")
-    @PutMapping("{idAluno}")
+    @PutMapping("v1/aluno/{idAluno}")
     @Transactional
     @CacheEvict(value = "listaDeAlunos", allEntries = true)
     public ResponseEntity<? extends AlunoDto> atualizarAluno(@PathVariable Long idAluno, @RequestBody AtualizacaoAlunoForm form) {

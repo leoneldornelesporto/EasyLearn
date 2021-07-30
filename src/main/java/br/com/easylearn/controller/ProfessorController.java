@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("v1/professor")
 public class ProfessorController {
 
     private final ProfessorRepository professorRepository;
@@ -42,7 +41,7 @@ public class ProfessorController {
     }
 
     @PreAuthorize("hasRole('PROFESSOR')")
-    @GetMapping
+    @GetMapping("v1/professor")
     @Cacheable(value = "listaDeProfessores")
     public ResponseEntity<? extends List<ProfessorDto>> findAllProfessores(){
         List<ProfessorDto> professorDtoList = ProfessorDto.converter(professorRepository.findAll());
@@ -52,7 +51,7 @@ public class ProfessorController {
             return ResponseEntity.ok(professorDtoList);
     }
 
-    @PostMapping
+    @PostMapping("v1/SalvarProfessor")
     @Transactional
     @CacheEvict(value = "listaDeProfessores", allEntries = true)
     public ResponseEntity<? extends ProfessorDto> saveProfessor(@RequestBody ProfessorForm professorForm, UriComponentsBuilder uriBuilder) throws MessagingException {
@@ -66,7 +65,7 @@ public class ProfessorController {
     }
 
     @PreAuthorize("hasRole('PROFESSOR')")
-    @PutMapping("{idProfessor}")
+    @PutMapping("v1/professor/{idProfessor}")
     @Transactional
     @CacheEvict(value = "listaDeProfessores", allEntries = true)
     public ResponseEntity<? extends ProfessorDto> atualizarProfessor(@PathVariable Long idProfessor, @RequestBody AtualizacaoProfessorForm form) {
@@ -79,7 +78,7 @@ public class ProfessorController {
     }
 
     @PreAuthorize("hasRole('PROFESSOR')")
-    @DeleteMapping("professor/{idProfessor}")
+    @DeleteMapping("v1/professor/{idProfessor}")
     @Transactional
     @CacheEvict(value = "listaDeProfessores", allEntries = true)
     public ResponseEntity<?> removerProfessor(@PathVariable Long idProfessor) {
@@ -92,7 +91,7 @@ public class ProfessorController {
     }
 
     @PreAuthorize("hasRole('PROFESSOR')")
-    @PostMapping("aluno")
+    @PostMapping("v1/professor/aluno")
     @Transactional
     @CacheEvict(value = "listaDeProfessores", allEntries = true)
     public ResponseEntity<? extends AlunoDto> saveAluno(@RequestBody AlunoForm alunoForm, UriComponentsBuilder uriBuilder){
@@ -102,7 +101,7 @@ public class ProfessorController {
     }
 
     @PreAuthorize("hasRole('PROFESSOR')")
-    @DeleteMapping("aluno/{idAluno}")
+    @DeleteMapping("v1/professor/aluno/{idAluno}")
     @Transactional
     @CacheEvict(value = "listaDeProfessores", allEntries = true)
     public ResponseEntity<?> removerAluno(@PathVariable Long idAluno) {

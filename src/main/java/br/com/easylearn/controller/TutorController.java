@@ -24,8 +24,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("v1/tutor")
-@PreAuthorize("hasRole('TUTOR')")
 public class TutorController {
 
     private final TutorRepository tutorRepository;
@@ -37,7 +35,8 @@ public class TutorController {
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping("v1/tutor")
+    @PreAuthorize("hasRole('TUTOR')")
     @Cacheable(value = "listaDeTutores")
     public ResponseEntity<? extends List<TutorDto>> findAllTutores(){
         List<TutorDto> tutorDtoList = TutorDto.converter(tutorRepository.findAll());
@@ -47,7 +46,7 @@ public class TutorController {
             return ResponseEntity.ok(tutorDtoList);
     }
 
-    @PostMapping
+    @PostMapping("v1/SalvarTutor")
     @Transactional
     @CacheEvict(value = "listaDeTutores", allEntries = true)
     public ResponseEntity<? extends TutorDto> saveTutor(@RequestBody TutorForm tutorForm, UriComponentsBuilder uriBuilder) throws MessagingException {
@@ -61,7 +60,8 @@ public class TutorController {
         return ResponseEntity.created(uri).body(new TutorDto(tutor));
     }
 
-    @PutMapping("{idTutor}")
+    @PutMapping("v1/tutor/{idTutor}")
+    @PreAuthorize("hasRole('TUTOR')")
     @Transactional
     @CacheEvict(value = "listaDeTutores", allEntries = true)
     public ResponseEntity<? extends TutorDto> atualizarTutor(@PathVariable Long idTutor, @RequestBody AtualizacaoTutorForm form) {
@@ -73,7 +73,8 @@ public class TutorController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("{idTutor}")
+    @DeleteMapping("v1/tutor/{idTutor}")
+    @PreAuthorize("hasRole('TUTOR')")
     @Transactional
     @CacheEvict(value = "listaDeTutores", allEntries = true)
     public ResponseEntity<?> removerTutor(@PathVariable Long idTutor) {
