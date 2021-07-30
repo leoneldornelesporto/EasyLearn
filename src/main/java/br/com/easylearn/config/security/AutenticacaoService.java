@@ -32,14 +32,14 @@ public class AutenticacaoService implements UserDetailsService {
 		List<GrantedAuthority> authorityListProfessor = AuthorityUtils.createAuthorityList("ROLE_USER", "ROLE_PROFESSOR");
 		List<GrantedAuthority> authorityListAluno = AuthorityUtils.createAuthorityList("ROLE_USER","ROLE_ALUNO");
 
-		if(user.getTutor()){
+		if(user.getTutor() && user.getAtivo()){
 			return new User(user.getUsername(),user.getPassword(), authorityListTutor);
 		}
 		else {
-			if(user.getProfessor()){
+			if(user.getProfessor() && user.getAtivo()){
 				return new User(user.getUsername(),user.getPassword(), authorityListProfessor);
 			}
-			if(user.getAluno()){
+			if(user.getAluno() && user.getAtivo()){
 				return new User(user.getUsername(),user.getPassword(), authorityListAluno);
 			}
 		}
