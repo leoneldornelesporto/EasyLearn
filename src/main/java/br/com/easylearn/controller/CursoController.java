@@ -15,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.net.URI;
 import java.util.List;
@@ -37,7 +38,8 @@ public class CursoController {
 
     @GetMapping
     @Cacheable(value = "listaDeCursos")
-    public ResponseEntity<? extends List<CursoDto>> findAllCursos(){
+    public ResponseEntity<? extends List<CursoDto>> findAllCursos(HttpServletResponse response){
+        response.addHeader("CORS", "Access-Control-Allow-Origin");
         List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findAll());
 
         if (cursoDtoList.isEmpty())

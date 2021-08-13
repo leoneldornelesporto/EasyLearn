@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -16,6 +17,7 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
+    private String uuid = UUID.randomUUID().toString().replace("-","");
     private String nomeCompleto;
     private String nomeNoCertificado;
     private String usuarioNaUrl;
@@ -67,6 +69,10 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
         this.empresa = empresa;
         this.cargo = cargo;
         this.privacidadeDoPerfil = privacidadeDoPerfil;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     public String getNomeCompleto() {
