@@ -38,8 +38,7 @@ public class CursoController {
 
     @GetMapping
     @Cacheable(value = "listaDeCursos")
-    public ResponseEntity<? extends List<CursoDto>> findAllCursos(HttpServletResponse response){
-        response.addHeader("Access-Control-Allow-Origin", "*");
+    public ResponseEntity<? extends List<CursoDto>> findAllCursos(){
         List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findAll());
 
         if (cursoDtoList.isEmpty())
