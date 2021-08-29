@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("v1/login")
+@RequestMapping("v2/login")
 public class LoginController {
 
     private final UsuarioRepository usuarioRepository;
