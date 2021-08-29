@@ -34,12 +34,7 @@ public class LoginController {
             if (user.getEmail().equals(usuario)) {
                 if(encoder.matches(senha, user.getPassword())){
                     Optional<Usuario> byEmailAndSenha = usuarioRepository.findByEmailAndSenha(usuario, user.getSenha());
-
-                    if (!byEmailAndSenha.isPresent()) {
-                        return ResponseEntity.notFound().build();
-                    } else{
                         return ResponseEntity.ok(LoginDto.converterBase64(byEmailAndSenha,senha));
-                    }
                 }
             }
         }
