@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("v2/login")
+@RequestMapping("v1/login")
 public class LoginController {
 
     private final UsuarioRepository usuarioRepository;
@@ -25,6 +25,7 @@ public class LoginController {
         this.usuarioRepository = usuarioRepository;
     }
 
+    /*
     @GetMapping
     public ResponseEntity<? extends LoginDto> login(@RequestHeader String usuario, @RequestHeader String senha) {
         List<Usuario> usuarioList = usuarioRepository.findAll();
@@ -38,6 +39,18 @@ public class LoginController {
                 }
             }
         }
+        return ResponseEntity.notFound().build();
+    }
+     */
+
+    @GetMapping
+    public ResponseEntity<? extends LoginDto> login(@RequestHeader String usuario, @RequestHeader String senha) {
+        Optional<Usuario> byEmailAndSenha = usuarioRepository.findByEmailAndSenha(usuario, senha);
+
+        if (byEmailAndSenha.isPresent()){
+            return ResponseEntity.ok(LoginDto.converterBase64(byEmailAndSenha,senha));
+        }
+
         return ResponseEntity.notFound().build();
     }
 }
