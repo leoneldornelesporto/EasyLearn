@@ -25,7 +25,7 @@ public class LoginController {
         this.usuarioRepository = usuarioRepository;
     }
 
-    /*
+
     @GetMapping
     public ResponseEntity<? extends LoginDto> login(@RequestHeader String usuario, @RequestHeader String senha) {
         List<Usuario> usuarioList = usuarioRepository.findAll();
@@ -41,8 +41,9 @@ public class LoginController {
         }
         return ResponseEntity.notFound().build();
     }
-     */
 
+
+    /*
     @GetMapping
     public ResponseEntity<? extends LoginDto> login(@RequestHeader String usuario, @RequestHeader String senha) {
         Optional<Usuario> byEmailAndSenha = usuarioRepository.findByEmailAndSenha(usuario, senha);
@@ -53,4 +54,5 @@ public class LoginController {
 
         return ResponseEntity.notFound().build();
     }
+     */
 }

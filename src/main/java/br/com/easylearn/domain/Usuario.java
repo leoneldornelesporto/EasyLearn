@@ -47,8 +47,7 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
         this.nomeNoCertificado = nomeNoCertificado;
         this.usuarioNaUrl = usuarioNaUrl;
         this.email = email;
-        //this.senha = new BCryptPasswordEncoder().encode(senha);
-        this.senha = senha;
+        this.senha = new BCryptPasswordEncoder().encode(senha);
         this.biografia = biografia;
         this.linkedin = linkedin;
         this.github = github;
@@ -62,8 +61,7 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
         this.nomeNoCertificado = nomeNoCertificado;
         this.usuarioNaUrl = usuarioNaUrl;
         this.email = email;
-        //this.senha = new BCryptPasswordEncoder().encode(senha);
-        this.senha = senha;
+        this.senha = new BCryptPasswordEncoder().encode(senha);
         this.biografia = biografia;
         this.linkedin = linkedin;
         this.github = github;
@@ -114,8 +112,7 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
     }
 
     public void setSenha(String senha) {
-        //this.senha = new BCryptPasswordEncoder().encode(senha);
-        this.senha = senha;
+        this.senha = new BCryptPasswordEncoder().encode(senha);
     }
 
     public String getBiografia() {

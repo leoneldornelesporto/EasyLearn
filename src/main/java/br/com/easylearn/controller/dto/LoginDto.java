@@ -2,6 +2,8 @@ package br.com.easylearn.controller.dto;
 
 import br.com.easylearn.domain.Usuario;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Optional;
 
 public class LoginDto {
@@ -15,7 +17,8 @@ public class LoginDto {
     }
 
     public static LoginDto converterBase64(Optional<Usuario> user, String senha) {
-        String authorization = user.get().getUsername() + ":" + senha;
+        String base64 = Base64.getEncoder().encodeToString((user.get().getUsername() + ":" + senha).getBytes(StandardCharsets.UTF_8));
+        String authorization = "Basic "+base64;
         return new LoginDto(authorization);
     }
 
