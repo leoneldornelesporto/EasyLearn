@@ -1,8 +1,6 @@
 package br.com.easylearn.controller.dto;
 
 import br.com.easylearn.domain.Usuario;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 
@@ -35,12 +33,5 @@ public class LoginDto {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public static void main(String[] args) {
-        String token = new BCryptPasswordEncoder().encode("12345");
-
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        System.out.println(encoder.matches("12345", token));
     }
 }
