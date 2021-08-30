@@ -10,6 +10,7 @@ public class TutorDto {
     private Long id;
     private String nomeCompleto;
     private String nomeNoCertificado;
+    private String cpf;
     private String usuarioNaUrl;
     private String email;
     private String biografia;
@@ -24,6 +25,7 @@ public class TutorDto {
         this.id = tutor.getId();
         this.nomeCompleto = tutor.getNomeCompleto();
         this.nomeNoCertificado = tutor.getNomeNoCertificado();
+        this.cpf = tutor.getCpf();
         this.usuarioNaUrl = tutor.getUsuarioNaUrl();
         this.email = tutor.getEmail();
         this.biografia = tutor.getBiografia();
@@ -53,6 +55,10 @@ public class TutorDto {
 
     public String getNomeNoCertificado() {
         return nomeNoCertificado;
+    }
+
+    public String getCpf() {
+        return cpf;
     }
 
     public String getUsuarioNaUrl() {
