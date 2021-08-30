@@ -21,6 +21,7 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
     private String nomeCompleto;
     private String nomeNoCertificado;
     private String usuarioNaUrl;
+    @Column(unique=true)
     private String email;
     private String senha;
     private String biografia;
