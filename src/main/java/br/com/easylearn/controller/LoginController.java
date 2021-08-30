@@ -28,7 +28,7 @@ public class LoginController {
         this.usuarioRepository = usuarioRepository;
     }
 
-    @GetMapping
+    @GetMapping("/signin")
     public ResponseEntity<?> login(@RequestHeader String usuario, @RequestHeader String senha) {
         List<Usuario> usuarioList = usuarioRepository.findAll();
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
