@@ -43,9 +43,4 @@ public class LoginController {
         }
         return ResponseEntity.notFound().build();
     }
-
-    @GetMapping("/teste")
-    public String login() {
-        return "teste";
-    }
 }
