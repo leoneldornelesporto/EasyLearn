@@ -7,6 +7,7 @@ public class TutorForm {
 
     private String nomeCompleto;
     private String nomeNoCertificado;
+    private String cpf;
     private String usuarioNaUrl;
     private String email;
     private String senha;
@@ -18,7 +19,7 @@ public class TutorForm {
     private String cargo;
 
     public Tutor save(TutorRepository tutorRepository) {
-        Tutor tutor = new Tutor(nomeCompleto,nomeNoCertificado,usuarioNaUrl,email,senha,biografia,linkedin,github,twitter,empresa,cargo);
+        Tutor tutor = new Tutor(nomeCompleto,nomeNoCertificado,cpf,usuarioNaUrl,email,senha,biografia,linkedin,github,twitter,empresa,cargo);
         return tutorRepository.save(tutor);
     }
 
@@ -28,6 +29,10 @@ public class TutorForm {
 
     public void setNomeNoCertificado(String nomeNoCertificado) {
         this.nomeNoCertificado = nomeNoCertificado;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public void setUsuarioNaUrl(String usuarioNaUrl) {

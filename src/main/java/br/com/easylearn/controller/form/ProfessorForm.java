@@ -7,6 +7,7 @@ public class ProfessorForm {
 
     private String nomeCompleto;
     private String nomeNoCertificado;
+    private String cpf;
     private String usuarioNaUrl;
     private String email;
     private String senha;
@@ -18,7 +19,7 @@ public class ProfessorForm {
     private String cargo;
 
     public Professor save(ProfessorRepository professorRepository) {
-        Professor professor = new Professor(nomeCompleto,nomeNoCertificado,usuarioNaUrl,email,senha,biografia,linkedin,github,twitter,empresa,cargo);
+        Professor professor = new Professor(nomeCompleto,nomeNoCertificado,cpf,usuarioNaUrl,email,senha,biografia,linkedin,github,twitter,empresa,cargo);
         return professorRepository.save(professor);
     }
 
@@ -28,6 +29,10 @@ public class ProfessorForm {
 
     public void setNomeNoCertificado(String nomeNoCertificado) {
         this.nomeNoCertificado = nomeNoCertificado;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public void setUsuarioNaUrl(String usuarioNaUrl) {

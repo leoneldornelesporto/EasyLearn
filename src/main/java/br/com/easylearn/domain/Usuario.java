@@ -50,9 +50,10 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
     public Usuario() {
     }
 
-    public Usuario(String nomeCompleto, String nomeNoCertificado, String usuarioNaUrl, String email, String senha, String biografia, String linkedin, String github, String twitter, String empresa, String cargo) {
+    public Usuario(String nomeCompleto, String nomeNoCertificado, String cpf, String usuarioNaUrl, String email, String senha, String biografia, String linkedin, String github, String twitter, String empresa, String cargo) {
         this.nomeCompleto = nomeCompleto;
         this.nomeNoCertificado = nomeNoCertificado;
+        this.cpf = cpf;
         this.usuarioNaUrl = usuarioNaUrl;
         this.email = email;
         this.senha = new BCryptPasswordEncoder().encode(senha);
@@ -64,9 +65,10 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
         this.cargo = cargo;
     }
 
-    public Usuario(String nomeCompleto, String nomeNoCertificado, String usuarioNaUrl, String email, String senha, String biografia, String linkedin, String github, String twitter, String empresa, String cargo, Boolean privacidadeDoPerfil) {
+    public Usuario(String nomeCompleto, String nomeNoCertificado, String cpf, String usuarioNaUrl, String email, String senha, String biografia, String linkedin, String github, String twitter, String empresa, String cargo, Boolean privacidadeDoPerfil) {
         this.nomeCompleto = nomeCompleto;
         this.nomeNoCertificado = nomeNoCertificado;
+        this.cpf = cpf;
         this.usuarioNaUrl = usuarioNaUrl;
         this.email = email;
         this.senha = new BCryptPasswordEncoder().encode(senha);

@@ -7,6 +7,7 @@ public class AlunoForm {
 
     private String nomeCompleto;
     private String nomeNoCertificado;
+    private String cpf;
     private String usuarioNaUrl;
     private String email;
     private String senha;
@@ -18,7 +19,7 @@ public class AlunoForm {
     private String cargo;
 
     public Aluno save(AlunoRepository alunoRepository) {
-        Aluno aluno = new Aluno(nomeCompleto,nomeNoCertificado,usuarioNaUrl,email,senha,biografia,linkedin,github,twitter,empresa,cargo);
+        Aluno aluno = new Aluno(nomeCompleto,nomeNoCertificado,cpf,usuarioNaUrl,email,senha,biografia,linkedin,github,twitter,empresa,cargo);
         return alunoRepository.save(aluno);
     }
 
@@ -28,6 +29,10 @@ public class AlunoForm {
 
     public void setNomeNoCertificado(String nomeNoCertificado) {
         this.nomeNoCertificado = nomeNoCertificado;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public void setUsuarioNaUrl(String usuarioNaUrl) {
