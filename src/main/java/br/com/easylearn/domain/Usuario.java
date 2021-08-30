@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import javax.validation.constraints.Email;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -13,6 +15,7 @@ import java.util.UUID;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TIPO_USUARIO", discriminatorType = DiscriminatorType.STRING)
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "cpf")})
 public abstract class Usuario extends AbstractEntity implements UserDetails {
 
     private static final long serialVersionUID = 1L;
@@ -20,8 +23,12 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
     private String uuid = UUID.randomUUID().toString().replace("-","");
     private String nomeCompleto;
     private String nomeNoCertificado;
+    @CPF(message = "Invalid CPF")
+    @Column(unique = true, nullable = false)
+    private String cpf;
     private String usuarioNaUrl;
-    @Column(unique=true)
+    @Email(message = "Invalid e-mail")
+    @Column(unique = true, nullable = false)
     private String email;
     private String senha;
     private String biografia;
@@ -82,6 +89,14 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
 
     public void setNomeCompleto(String nomeCompleto) {
         this.nomeCompleto = nomeCompleto;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getNomeNoCertificado() {
