@@ -14,6 +14,7 @@ public class CursoForm {
     private String descricao;
     private Integer cargahoraria;
     private Long categoriaId;
+    private String imagemIcon;
 
     public void setIdProfessor(Long idProfessor) {
         this.idProfessor = idProfessor;
@@ -35,10 +36,14 @@ public class CursoForm {
         this.categoriaId = categoriaId;
     }
 
+    public void setImagemIcon(String imagemIcon) {
+        this.imagemIcon = imagemIcon;
+    }
+
     public Curso save(CursoRepository cursoRepository, ProfessorRepository professorRepository, CategoriaRepository categoriaRepository) {
         Professor professor = professorRepository.getOne(idProfessor);
         Categoria categoria = categoriaRepository.getOne(categoriaId);
-        Curso curso = new Curso(cargahoraria, descricao, nome, professor, categoria);
+        Curso curso = new Curso(cargahoraria, descricao, nome, imagemIcon, professor, categoria);
         return cursoRepository.save(curso);
     }
 }

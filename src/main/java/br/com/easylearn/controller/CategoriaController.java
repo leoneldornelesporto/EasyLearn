@@ -17,7 +17,7 @@ import java.net.URI;
 import java.util.Optional;
 
 @RequestMapping("v1/categoria")
-@PreAuthorize("hasRole('PROFESSOR')")
+//@PreAuthorize("hasRole('PROFESSOR')")
 @RestController
 public class CategoriaController {
 

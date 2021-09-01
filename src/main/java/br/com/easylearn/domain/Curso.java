@@ -11,6 +11,7 @@ public class Curso extends AbstractEntity{
 	private String nome;
 	private String descricao;
 	private Integer cargaHoraria;
+	private String imagemIcon;
 	@OneToOne
 	private Categoria categoria;
 	@OneToMany
@@ -35,10 +36,11 @@ public class Curso extends AbstractEntity{
 	public Curso() {
 	}
 
-	public Curso(Integer carga_horaria, String descricao, String nome, Professor professor,Categoria categoria) {
+	public Curso(Integer carga_horaria, String descricao, String nome, String imagemIcon, Professor professor,Categoria categoria) {
 		this.cargaHoraria = carga_horaria;
 		this.descricao = descricao;
 		this.nome = nome;
+		this.imagemIcon = imagemIcon;
 		this.professor = professor;
 		this.categoria = categoria;
 	}
@@ -65,6 +67,14 @@ public class Curso extends AbstractEntity{
 
 	public void setCargaHoraria(Integer cargaHoraria) {
 		this.cargaHoraria = cargaHoraria;
+	}
+
+	public String getImagemIcon() {
+		return imagemIcon;
+	}
+
+	public void setImagemIcon(String imagemIcon) {
+		this.imagemIcon = imagemIcon;
 	}
 
 	public Categoria getCategoria() {

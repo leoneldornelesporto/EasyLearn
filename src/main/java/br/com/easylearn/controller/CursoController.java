@@ -49,7 +49,7 @@ public class CursoController {
 
     @PostMapping
     @Transactional
-    @PreAuthorize("hasRole('PROFESSOR')")
+    //@PreAuthorize("hasRole('PROFESSOR')")
     @CacheEvict(value = "listaDeCursos", allEntries = true)
     public ResponseEntity<? extends CursoDto> saveCurso(@RequestBody CursoForm cursoForm, UriComponentsBuilder uriBuilder){
         Curso curso  = cursoForm.save(cursoRepository,professorRepository,categoriaRepository);
