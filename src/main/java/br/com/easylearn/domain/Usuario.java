@@ -23,12 +23,12 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
     private String uuid = UUID.randomUUID().toString().replace("-","");
     private String nomeCompleto;
     private String nomeNoCertificado;
-    @CPF(message = "Invalid CPF")
-    @Column(unique = true, nullable = false)
+    //@CPF(message = "Invalid CPF")
+    //@Column(unique = true, nullable = false)
     private String cpf;
     private String usuarioNaUrl;
-    @Email(message = "Invalid e-mail")
-    @Column(unique = true, nullable = false)
+    //@Email(message = "Invalid e-mail")
+    //@Column(unique = true, nullable = false)
     private String email;
     private String senha;
     private String biografia;
