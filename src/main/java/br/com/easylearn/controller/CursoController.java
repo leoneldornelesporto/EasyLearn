@@ -60,7 +60,7 @@ public class CursoController {
     @PutMapping("{idCurso}")
     @Transactional
     @CacheEvict(value = "listaDeCursos", allEntries = true)
-    @PreAuthorize("hasRole('PROFESSOR')")
+    //@PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<? extends CursoDto> atualizarCurso(@PathVariable Long idCurso, @RequestBody AtualizacaoCursoForm form) {
         Optional<Curso> optional = cursoRepository.findById(idCurso);
         if (optional.isPresent()) {
@@ -74,7 +74,7 @@ public class CursoController {
     @DeleteMapping("{idCurso}")
     @Transactional
     @CacheEvict(value = "listaDeCursos", allEntries = true)
-    @PreAuthorize("hasRole('PROFESSOR')")
+    //@PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<?> removerCurso(@PathVariable Long idCurso) {
         Optional<Curso> optional = cursoRepository.findById(idCurso);
         if (optional.isPresent()) {
