@@ -12,6 +12,7 @@ public class CursoDto {
     private String descricao;
     private Integer cargaHoraria;
     private String imagemIcon;
+    private String uuid;
 
     public CursoDto(Curso curso) {
         this.id = curso.getId();
@@ -19,6 +20,7 @@ public class CursoDto {
         this.descricao = curso.getDescricao();
         this.cargaHoraria = curso.getCargaHoraria();
         this.imagemIcon = curso.getImagemIcon();
+        this.uuid = curso.getUuid();
     }
 
     public static List<CursoDto> converter(List<Curso> allCursos) {
@@ -47,5 +49,9 @@ public class CursoDto {
 
     public String getImagemIcon() {
         return imagemIcon;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 }

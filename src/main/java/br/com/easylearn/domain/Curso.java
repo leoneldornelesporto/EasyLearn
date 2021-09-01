@@ -4,10 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class Curso extends AbstractEntity{
 
+	private String uuid = UUID.randomUUID().toString().replace("-","");
 	private String nome;
 	private String descricao;
 	private Integer cargaHoraria;
@@ -43,6 +45,10 @@ public class Curso extends AbstractEntity{
 		this.imagemIcon = imagemIcon;
 		this.professor = professor;
 		this.categoria = categoria;
+	}
+
+	public String getUuid() {
+		return uuid;
 	}
 
 	public String getNome() {
