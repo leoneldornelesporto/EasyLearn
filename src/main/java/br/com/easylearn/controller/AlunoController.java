@@ -7,8 +7,6 @@ import br.com.easylearn.controller.form.AtualizacaoAlunoForm;
 import br.com.easylearn.domain.Aluno;
 import br.com.easylearn.domain.Mail;
 import br.com.easylearn.repository.AlunoRepository;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -24,7 +22,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@Api(value = "AlunoController")
 public class AlunoController {
 
     private final AlunoRepository alunoRepository;
@@ -36,7 +33,6 @@ public class AlunoController {
         this.service = service;
     }
 
-    @ApiOperation(value = "Retorna todos os alunos")
     @PreAuthorize("hasRole('ALUNO')")
     @GetMapping("v1/aluno")
     @Cacheable(value = "listaDeAlunos")
