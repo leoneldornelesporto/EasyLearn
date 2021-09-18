@@ -1,8 +1,10 @@
 package br.com.easylearn.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
 
@@ -16,6 +18,9 @@ public class Aula extends AbstractEntity{
     @JsonIgnore
     @OneToMany
     private List<Modulo> moduloList;
+    @JsonIgnore
+    @ManyToOne
+    private Modulo modulo;
 
     public Aula() {
     }
@@ -65,5 +70,13 @@ public class Aula extends AbstractEntity{
 
     public void setModuloList(List<Modulo> moduloList) {
         this.moduloList = moduloList;
+    }
+
+    public Modulo getModulo() {
+        return modulo;
+    }
+
+    public void setModulo(Modulo modulo) {
+        this.modulo = modulo;
     }
 }

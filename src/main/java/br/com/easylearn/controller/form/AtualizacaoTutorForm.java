@@ -7,6 +7,7 @@ public class AtualizacaoTutorForm {
 
     private String nomeCompleto;
     private String nomeNoCertificado;
+    private String cpf;
     private String usuarioNaUrl;
     private String email;
     private String senha;
@@ -22,6 +23,7 @@ public class AtualizacaoTutorForm {
         Tutor tutor = tutorRepository.getOne(idTutor);
         tutor.setNomeCompleto(nomeCompleto);
         tutor.setNomeNoCertificado(nomeNoCertificado);
+        tutor.setCpf(cpf);
         tutor.setUsuarioNaUrl(usuarioNaUrl);
         tutor.setEmail(email);
         tutor.setSenha(senha);
@@ -41,6 +43,10 @@ public class AtualizacaoTutorForm {
 
     public void setNomeNoCertificado(String nomeNoCertificado) {
         this.nomeNoCertificado = nomeNoCertificado;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public void setUsuarioNaUrl(String usuarioNaUrl) {

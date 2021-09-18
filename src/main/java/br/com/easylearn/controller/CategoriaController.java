@@ -1,12 +1,14 @@
 package br.com.easylearn.controller;
 
 import br.com.easylearn.controller.dto.CategoriaDto;
+import br.com.easylearn.controller.dto.CursoDto;
 import br.com.easylearn.controller.form.AtualizacaoCategoriaForm;
 import br.com.easylearn.controller.form.CategoriaForm;
 import br.com.easylearn.domain.Categoria;
 import br.com.easylearn.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +16,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("v1/categoria")
-//@PreAuthorize("hasRole('PROFESSOR')")
 @RestController
 public class CategoriaController {
 
@@ -28,7 +29,19 @@ public class CategoriaController {
         this.categoriaRepository = categoriaRepository;
     }
 
-    @PostMapping
+    @GetMapping("v1/categoria")
+    @Cacheable(value = "listaDeCategorias")
+    public ResponseEntity<? extends List<CategoriaDto>> findAllCategorias(){
+        List<CategoriaDto> categoriaDtoList = CategoriaDto.converter(categoriaRepository.findAll());
+
+        if (categoriaDtoList.isEmpty())
+            return ResponseEntity.notFound().build();
+        else
+            return ResponseEntity.ok(categoriaDtoList);
+    }
+
+    @PostMapping("v1/protectedP/categoria")
+    @PreAuthorize("hasRole('PROFESSOR')")
     @Transactional
     @CacheEvict(value = "listaDeCategorias", allEntries = true)
     public ResponseEntity<? extends CategoriaDto> saveCategoria(@RequestBody CategoriaForm categoriaForm, UriComponentsBuilder uriBuilder){
@@ -37,7 +50,8 @@ public class CategoriaController {
         return ResponseEntity.created(uri).body(new CategoriaDto(categoria));
     }
 
-    @PutMapping("{idCategoria}")
+    @PutMapping("v1/protectedP/categoria/{idCategoria}")
+    @PreAuthorize("hasRole('PROFESSOR')")
     @Transactional
     @CacheEvict(value = "listaDeCategorias", allEntries = true)
     public ResponseEntity<? extends CategoriaDto> atualizarCategoria(@PathVariable Long idCategoria, @RequestBody AtualizacaoCategoriaForm form) {
@@ -49,7 +63,8 @@ public class CategoriaController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("{idCategoria}")
+    @DeleteMapping("v1/protectedP/categoria/{idCategoria}")
+    @PreAuthorize("hasRole('PROFESSOR')")
     @Transactional
     @CacheEvict(value = "listaDeCategorias", allEntries = true)
     public ResponseEntity<?> removerTutor(@PathVariable Long idCategoria) {

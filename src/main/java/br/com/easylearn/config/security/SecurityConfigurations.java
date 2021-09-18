@@ -32,9 +32,9 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/*/aluno/**").hasRole("ALUNO")
-				//.antMatchers("/*/professor/**").hasRole("PROFESSOR")
-				.antMatchers("/*/tutor/**").hasRole("TUTOR")
+				.antMatchers("/*/protectedA/**").hasRole("ALUNO")
+				.antMatchers("/*/protectedP/**").hasRole("PROFESSOR")
+				.antMatchers("/*/protectedT/**").hasRole("TUTOR")
 				.and()
 				.httpBasic()
 				.and()

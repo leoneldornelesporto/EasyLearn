@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import java.net.URI;
@@ -33,8 +32,8 @@ public class AlunoController {
         this.service = service;
     }
 
+    @GetMapping("v1/protectedA/aluno")
     @PreAuthorize("hasRole('ALUNO')")
-    @GetMapping("v1/aluno")
     @Cacheable(value = "listaDeAlunos")
     public ResponseEntity<? extends List<AlunoDto>> findAllAlunos(){
         List<AlunoDto> alunoDtoList = AlunoDto.converter(alunoRepository.findAll());
@@ -44,7 +43,7 @@ public class AlunoController {
             return ResponseEntity.ok(alunoDtoList);
     }
 
-    @PostMapping("v1/SalvarAluno")
+    @PostMapping("v1/salvar/aluno")
     @Transactional
     @CacheEvict(value = "listaDeAlunos", allEntries = true)
     public ResponseEntity<? extends AlunoDto> saveAluno(@RequestBody AlunoForm alunoForm, UriComponentsBuilder uriBuilder) throws MessagingException {
@@ -58,8 +57,8 @@ public class AlunoController {
         return ResponseEntity.created(uri).body(new AlunoDto(aluno));
     }
 
+    @PutMapping("v1/protectedA/aluno/{idAluno}")
     @PreAuthorize("hasRole('ALUNO')")
-    @PutMapping("v1/aluno/{idAluno}")
     @Transactional
     @CacheEvict(value = "listaDeAlunos", allEntries = true)
     public ResponseEntity<? extends AlunoDto> atualizarAluno(@PathVariable Long idAluno, @RequestBody AtualizacaoAlunoForm form) {

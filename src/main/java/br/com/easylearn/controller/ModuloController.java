@@ -20,7 +20,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("v1/modulo")
 @RestController
 public class ModuloController {
 
@@ -35,29 +34,7 @@ public class ModuloController {
         this.aulaRepository = aulaRepository;
     }
 
-    @GetMapping
-    @PreAuthorize("hasRole('ALUNO') or hasRole('PROFESSOR')")
-    @Cacheable(value = "listaDeModulos")
-    public ResponseEntity<? extends List<ModuloDto>> findAllModulos(@RequestParam(required = false) Long idCurso){
-
-        if(idCurso == null){
-            List<ModuloDto> moduloDtoList = ModuloDto.converter(moduloRepository.findAll());
-
-            if (moduloDtoList.isEmpty())
-                return ResponseEntity.notFound().build();
-            else
-                return ResponseEntity.ok(moduloDtoList);
-        } else {
-            List<ModuloDto> moduloDtoList = ModuloDto.converter(moduloRepository.findAllByCursoId(idCurso));
-
-            if (moduloDtoList.isEmpty())
-                return ResponseEntity.notFound().build();
-            else
-                return ResponseEntity.ok(moduloDtoList);
-        }
-    }
-
-    @PostMapping
+    @PostMapping("v1/protectedP/modulo")
     @Transactional
     @PreAuthorize("hasRole('PROFESSOR')")
     @CacheEvict(value = "listaDeModulos", allEntries = true)
@@ -67,7 +44,7 @@ public class ModuloController {
         return ResponseEntity.created(uri).body(new ModuloDto(modulo));
     }
 
-    @PutMapping("{idModulo}")
+    @PutMapping("v1/protectedP/modulo/{idModulo}")
     @Transactional
     @PreAuthorize("hasRole('PROFESSOR')")
     @CacheEvict(value = "listaDeModulos", allEntries = true)
@@ -81,7 +58,7 @@ public class ModuloController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("{idModulo}")
+    @DeleteMapping("v1/protectedP/modulo/{idModulo}")
     @Transactional
     @PreAuthorize("hasRole('PROFESSOR')")
     @CacheEvict(value = "listaDeModulos", allEntries = true)

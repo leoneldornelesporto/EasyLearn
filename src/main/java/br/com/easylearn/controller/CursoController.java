@@ -14,14 +14,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("v1/curso")
 @RestController
 public class CursoController {
 
@@ -36,7 +33,7 @@ public class CursoController {
         this.categoriaRepository = categoriaRepository;
     }
 
-    @GetMapping
+    @GetMapping("v1/curso")
     @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends List<CursoDto>> findAllCursos(){
         List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findAll());
@@ -47,9 +44,9 @@ public class CursoController {
             return ResponseEntity.ok(cursoDtoList);
     }
 
-    @PostMapping
+    @PostMapping("v1/protectedP/curso")
     @Transactional
-    //@PreAuthorize("hasRole('PROFESSOR')")
+    @PreAuthorize("hasRole('PROFESSOR')")
     @CacheEvict(value = "listaDeCursos", allEntries = true)
     public ResponseEntity<? extends CursoDto> saveCurso(@RequestBody CursoForm cursoForm, UriComponentsBuilder uriBuilder){
         Curso curso  = cursoForm.save(cursoRepository,professorRepository,categoriaRepository);
@@ -57,10 +54,10 @@ public class CursoController {
         return ResponseEntity.created(uri).body(new CursoDto(curso));
     }
 
-    @PutMapping("{idCurso}")
+    @PutMapping("v1/protectedP/curso/{idCurso}")
     @Transactional
     @CacheEvict(value = "listaDeCursos", allEntries = true)
-    //@PreAuthorize("hasRole('PROFESSOR')")
+    @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<? extends CursoDto> atualizarCurso(@PathVariable Long idCurso, @RequestBody AtualizacaoCursoForm form) {
         Optional<Curso> optional = cursoRepository.findById(idCurso);
         if (optional.isPresent()) {
@@ -71,10 +68,10 @@ public class CursoController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("{idCurso}")
+    @DeleteMapping("v1/protectedP/curso/{idCurso}")
     @Transactional
     @CacheEvict(value = "listaDeCursos", allEntries = true)
-    //@PreAuthorize("hasRole('PROFESSOR')")
+    @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<?> removerCurso(@PathVariable Long idCurso) {
         Optional<Curso> optional = cursoRepository.findById(idCurso);
         if (optional.isPresent()) {

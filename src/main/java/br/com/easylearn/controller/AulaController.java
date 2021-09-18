@@ -7,7 +7,6 @@ import br.com.easylearn.domain.Aula;
 import br.com.easylearn.repository.AulaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +14,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("v1/aula")
 @RestController
 public class AulaController {
 
@@ -29,19 +26,7 @@ public class AulaController {
         this.aulaRepository = aulaRepository;
     }
 
-    @GetMapping
-    @PreAuthorize("hasRole('ALUNO') or hasRole('PROFESSOR')")
-    @Cacheable(value = "listaDeAulas")
-    public ResponseEntity<? extends List<AulaDto>> findAllAulas(){
-        List<AulaDto> aulaDtoList = AulaDto.converter(aulaRepository.findAll());
-
-        if (aulaDtoList.isEmpty())
-            return ResponseEntity.notFound().build();
-        else
-            return ResponseEntity.ok(aulaDtoList);
-    }
-
-    @PostMapping
+    @PostMapping("v1/protectedP/aulas")
     @Transactional
     @PreAuthorize("hasRole('PROFESSOR')")
     @CacheEvict(value = "listaDeAulas", allEntries = true)
@@ -51,7 +36,7 @@ public class AulaController {
         return ResponseEntity.created(uri).body(new AulaDto(aula));
     }
 
-    @PutMapping("{idAula}")
+    @PutMapping("v1/protectedP/aulas/{idAula}")
     @Transactional
     @PreAuthorize("hasRole('PROFESSOR')")
     @CacheEvict(value = "listaDeAulas", allEntries = true)
@@ -65,7 +50,7 @@ public class AulaController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("{idAula}")
+    @DeleteMapping("v1/protectedP/aulas/{idAula}")
     @Transactional
     @PreAuthorize("hasRole('PROFESSOR')")
     @CacheEvict(value = "listaDeAulas", allEntries = true)

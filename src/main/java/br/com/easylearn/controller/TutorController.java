@@ -35,7 +35,7 @@ public class TutorController {
         this.service = service;
     }
 
-    @GetMapping("v1/tutor")
+    @GetMapping("v1/protectedT/tutor")
     @PreAuthorize("hasRole('TUTOR')")
     @Cacheable(value = "listaDeTutores")
     public ResponseEntity<? extends List<TutorDto>> findAllTutores(){
@@ -60,7 +60,7 @@ public class TutorController {
         return ResponseEntity.created(uri).body(new TutorDto(tutor));
     }
 
-    @PutMapping("v1/tutor/{idTutor}")
+    @PutMapping("v1/protectedT/tutor/{idTutor}")
     @PreAuthorize("hasRole('TUTOR')")
     @Transactional
     @CacheEvict(value = "listaDeTutores", allEntries = true)
@@ -73,7 +73,7 @@ public class TutorController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("v1/tutor/{idTutor}")
+    @DeleteMapping("v1/protectedT/tutor/{idTutor}")
     @PreAuthorize("hasRole('TUTOR')")
     @Transactional
     @CacheEvict(value = "listaDeTutores", allEntries = true)
