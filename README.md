@@ -16,7 +16,7 @@ A partir das funcionalidades levantadas na tabela comparativa será modelado  o 
 
 O sistema será desenvolvido utilizando a arquitetura REST para comunicação entre o front-end e o back-end. A figura 1 mostra a arquitetura geral do sistema aqui proposto.
 
-<img style="-webkit-user-select: none;margin: auto;cursor: zoom-in;background-color: hsl(0, 0%, 90%);transition: background-color 300ms;" src="https://lh3.googleusercontent.com/keep-bbsk/AGk0z-NVNkzdqWp0L7Cpk8Z9gmSSvMZMe8ZM3urGMwxXuCIQywx4UKTaFlw7d9gbOT05pC_FMcvBHNiqkDlpBEnlAU5Z0_JlwCESsYGnhPo=s629" width="625" height="577">
+<img style="-webkit-user-select: none;margin: auto;cursor: zoom-in;background-color: hsl(0, 0%, 90%);transition: background-color 300ms;" src="https://i.ibb.co/cXyfzHC/unnamed.png" width="625" height="577">
 
 ### 2.2 Proposta de implementação
 
