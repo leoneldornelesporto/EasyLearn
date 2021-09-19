@@ -44,6 +44,17 @@ public class CursoController {
             return ResponseEntity.ok(cursoDtoList);
     }
 
+    @GetMapping("v1/curso/{id}")
+    @Cacheable(value = "listaDeCursos")
+    public ResponseEntity<? extends CursoDto> findCursosById(@PathVariable Long id){
+        CursoDto curso = CursoDto.converter(cursoRepository.getById(id));
+
+        if (curso == null)
+            return ResponseEntity.notFound().build();
+        else
+            return ResponseEntity.ok(curso);
+    }
+
     @PostMapping("v1/protectedP/curso")
     @Transactional
     @PreAuthorize("hasRole('PROFESSOR')")
