@@ -1,7 +1,9 @@
 package br.com.easylearn.controller.form;
 
+import br.com.easylearn.domain.Categoria;
 import br.com.easylearn.domain.Curso;
 import br.com.easylearn.domain.Formacao;
+import br.com.easylearn.repository.CategoriaRepository;
 import br.com.easylearn.repository.CursoRepository;
 import br.com.easylearn.repository.FormacaoRepository;
 
@@ -13,6 +15,7 @@ public class AtualizacaoFormacaoForm {
     private List<Long> idCursos;
     private String titulo;
     private String descricao;
+    private Long idCategoria;
 
     public void setIdCursos(List<Long> idCursos) {
         this.idCursos = idCursos;
@@ -26,7 +29,11 @@ public class AtualizacaoFormacaoForm {
         this.descricao = descricao;
     }
 
-    public Formacao atualizar(Long idFormacao, FormacaoRepository formacaoRepository, CursoRepository cursoRepository) {
+    public void setIdCategoria(Long idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    public Formacao atualizar(Long idFormacao, FormacaoRepository formacaoRepository, CursoRepository cursoRepository, CategoriaRepository categoriaRepository) {
         Formacao formacao = formacaoRepository.getOne(idFormacao);
         formacao.setTitulo(titulo);
         formacao.setDescricao(descricao);
@@ -37,6 +44,10 @@ public class AtualizacaoFormacaoForm {
             Curso curso = cursoRepository.getOne(idCurso);
             cursoList.add(curso);
         }
+
+        Categoria categoria = categoriaRepository.getOne(idCategoria);
+
+        formacao.setCategoria(categoria);
         formacao.setCursoList(cursoList);
 
         return formacao;

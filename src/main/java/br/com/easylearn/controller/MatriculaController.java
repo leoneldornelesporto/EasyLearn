@@ -19,7 +19,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("v1/matricula")
+@RequestMapping("v1/protectedA/matricula")
 @PreAuthorize("hasRole('ALUNO')")
 public class MatriculaController {
 

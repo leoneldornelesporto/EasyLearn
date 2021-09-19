@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 public class MatriculasDto {
 
+    private Long id;
     private AlunoDto alunoDto;
     private CursoDto cursoDto;
     private Integer progresso;
@@ -14,6 +15,7 @@ public class MatriculasDto {
     private Boolean cursoConcluido;
 
     public MatriculasDto(Matricula matricula) {
+        this.id = matricula.getId();
         this.alunoDto = AlunoDto.converter(matricula.getAluno());
         this.cursoDto = CursoDto.converter(matricula.getCurso());
         this.progresso = matricula.getProgresso();
@@ -23,6 +25,10 @@ public class MatriculasDto {
 
     public static List<MatriculasDto> converter(List<Matricula> allMatricula) {
         return allMatricula.stream().map(MatriculasDto::new).collect(Collectors.toList());
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public AlunoDto getAlunoDto() {
