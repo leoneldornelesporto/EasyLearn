@@ -12,11 +12,41 @@ Esta proposta apresenta o EasyLearn: uma plataforma web de ensino livre, com sup
 
 A partir das funcionalidades levantadas na tabela comparativa será modelado  o sistema através dos diagramas da UML, diagrama de casos de uso e o diagrama de classes. A modelagem do design também fará parte dessa etapa, artefatos como, wireframes e direção de arte serão trabalhados. Em relação a modelagem do banco de dados, como pretende-se utilizar ORM (Object-relational Mapping), uma engenharia reversa será realizada para efeitos de produção do diagrama lógico do banco de dados.
 
+### DIAGRAMA DE CASOS DE USO
+
+O diagrama de casos de uso procura, por meio de uma linguagem
+simples, possibilitar a compreensão do comportamento externo do sistema por
+qualquer pessoa, tentando apresentar o sistema da perspectiva do usuário
+(GUEDES, 2011). Ele é conhecido como o diagrama mais geral e informal, mas se
+mostra muito útil, visto que, ele aborda de maneira simples como o sistema irá se
+portar e o que oferecerá aos seus usuários. Nele podemos obter uma visão geral
+das suas reais necessidades. Além disso, ele reconhece e caracteriza os tipos de
+usuários do sistema. De maneira geral pode-se dizer que ele dispõe de dois
+principais elementos: o primeiro chamado de ator que representa os usuários do
+sistema; e o segundo chamado de caso de uso que figura uma funcionalidade que o
+sistema apresentará.
+
+<img style="-webkit-user-select: none;margin: auto;cursor: zoom-in;background-color: hsl(0, 0%, 90%);transition: background-color 300ms;" src="https://i.ibb.co/7YZmFZp/Capturars.jpg" width="625" height="577">
+
+### DIAGRAMA DE CLASSES
+
+O diagrama de classes é conhecido como um dos diagramas mais
+importantes da UML, pois possibilita a visualização de uma maneira geral das
+classes que serão utilizadas no sistema, assim como os atributos e métodos
+primordiais, e consequentemente demonstrando o relacionamento de todas as
+classes e informações envolvidas.
+De acordo com Guedes (2011, p. 101) "apresenta uma visão estática de
+como as classes estão organizadas, preocupando-se em como definir a estrutura
+lógica das mesmas".
+
+<img style="-webkit-user-select: none;margin: auto;cursor: zoom-in;background-color: hsl(0, 0%, 90%);transition: background-color 300ms;" src="https://i.ibb.co/gS5FKdb/Capturarss.jpg" width="625" height="577">
+
 ### 2.1 Arquitetura
 
 O sistema será desenvolvido utilizando a arquitetura REST para comunicação entre o front-end e o back-end. A figura 1 mostra a arquitetura geral do sistema aqui proposto.
 
 <img style="-webkit-user-select: none;margin: auto;cursor: zoom-in;background-color: hsl(0, 0%, 90%);transition: background-color 300ms;" src="https://i.ibb.co/cXyfzHC/unnamed.png" width="625" height="577">
+
 
 ### 2.2 Proposta de implementação
 
@@ -38,10 +68,10 @@ React Service: Pode ser considerado o DAO do front-end. Tem como responsabilidad
 ## Ferramentas e dependências utilizadas
 [![Java Badge](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)](https://www.java.com/en/)
 [![Spring Badge](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)](https://start.spring.io/)
-[![Eclipse Badge](https://img.shields.io/badge/Eclipse-2C2255?style=for-the-badge&logo=eclipse&logoColor=white)](https://www.eclipse.org/downloads/packages/release/kepler/sr2/eclipse-ide-java-ee-developers)
 [![Postman Badge](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white)](https://www.postman.com/)
 [![Git Badge](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/)
 <!-- [<img src="https://static1.smartbear.co/swagger/media/assets/images/swagger_logo.svg" width="90px;"></img>](https://swagger.io/) !-->
+<!-- [![Intellij Badge](https://img.shields.io/badge/Eclipse-2C2255?style=for-the-badge&logo=eclipse&logoColor=white)](https://www.eclipse.org/downloads/packages/release/kepler/sr2/eclipse-ide-java-ee-developers) !-->
 
 - **[Spring Initializr](https://start.spring.io/):** gera um projeto de Spring Boot com dependências iniciais de forma rápida. Todas as dependências se encontram no arquivo **[pom.xml](/pom.xml)**.
     * **Projeto Maven com Spring Boot versão 2.5.2 e Java versão 11.**
@@ -56,7 +86,7 @@ React Service: Pode ser considerado o DAO do front-end. Tem como responsabilidad
     * **PostgreSQL**: fornece um banco de dados que suporta acesso JDBC API e R2DBC, com um aplicativo de console baseado em navegador.
     * As configurações do DataSource, JPA e PostgreSQL se encontram no arquivo **[application.properties](/src/main/resources/application.properties)**.
     * Os registros do banco de dados utilizados como teste se encontram no arquivo **[data.sql](/src/main/resources/data.sql)**.
-- **[Intellij ](https://www.eclipse.org/downloads/packages/release/kepler/sr2/eclipse-ide-java-ee-developers)**: ferramentas para desenvolvedores Java criando aplicativos Java EE e Web, incluindo Java IDE, ferramentas para Java EE, JPA, JSF, Mylyn, EGit e outros.
+- **[Intellij ](https://www.jetbrains.com/pt-br/idea/)**: ferramentas para desenvolvedores Java criando aplicativos Java EE e Web, incluindo Java IDE, ferramentas para Java EE, JPA, JSF, Mylyn, EGit e outros.
 - **[Postman](https://www.postman.com/)**: plataforma de colaboração para desenvolvimento de API, utilizado para requisições do tipo GET/POST/PUT/DELETE.
 - **[Git](https://git-scm.com/)**: sistema de controle de versão distribuído gratuito e de código aberto.
 <!-- - **[Swagger](https://swagger.io/)**: simplifica o desenvolvimento de API, ajudando a projetar e documentar APIs. A documentação criada para esse projeto se encontra em **[swagger-openapi.yaml](/swagger-openapi.yaml)**.-->
