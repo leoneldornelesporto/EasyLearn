@@ -39,7 +39,6 @@ public class CursoController {
     }
 
     @GetMapping("v1/curso")
-    @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends List<CursoDto>> findAllCursos(){
         List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findAll(),moduloRepository);
 
@@ -50,7 +49,6 @@ public class CursoController {
     }
 
     @GetMapping("v1/curso/{id}")
-    @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends CursoDto> findCursosById(@PathVariable Long id){
         CursoDto curso = CursoDto.converter(cursoRepository.getById(id));
 
@@ -61,7 +59,6 @@ public class CursoController {
     }
 
     @GetMapping("v1/curso/uuid/{uuid}")
-    @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends CursoDto> findCursosByUuid(@PathVariable String uuid){
         CursoDto curso = CursoDto.converter(cursoRepository.findByUuid(uuid),moduloRepository);
 
@@ -74,7 +71,6 @@ public class CursoController {
     @PostMapping("v1/protectedP/curso")
     @Transactional
     @PreAuthorize("hasRole('PROFESSOR')")
-    @CacheEvict(value = "listaDeCursos", allEntries = true)
     public ResponseEntity<? extends CursoDto> saveCurso(@RequestBody CursoForm cursoForm, UriComponentsBuilder uriBuilder){
         Curso curso  = cursoForm.save(cursoRepository,professorRepository,categoriaRepository);
         URI uri = uriBuilder.path("/v1/curso/{id}").buildAndExpand(curso.getId()).toUri();
@@ -83,7 +79,6 @@ public class CursoController {
 
     @PutMapping("v1/protectedP/curso/{idCurso}")
     @Transactional
-    @CacheEvict(value = "listaDeCursos", allEntries = true)
     @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<? extends CursoDto> atualizarCurso(@PathVariable Long idCurso, @RequestBody AtualizacaoCursoForm form) {
         Optional<Curso> optional = cursoRepository.findById(idCurso);
@@ -97,7 +92,6 @@ public class CursoController {
 
     @DeleteMapping("v1/protectedP/curso/{idCurso}")
     @Transactional
-    @CacheEvict(value = "listaDeCursos", allEntries = true)
     @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<?> removerCurso(@PathVariable Long idCurso) {
         Optional<Curso> optional = cursoRepository.findById(idCurso);
