@@ -1,7 +1,10 @@
 package br.com.easylearn.controller.dto;
 
 import br.com.easylearn.domain.Curso;
+import br.com.easylearn.domain.Modulo;
+import br.com.easylearn.repository.ModuloRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,20 +14,56 @@ public class CursoDto {
     private String nome;
     private String descricao;
     private Integer cargaHoraria;
+    private String data;
+    private String categoria;
     private String imagemIcon;
     private String uuid;
+    private List<ModuloDto> moduloDtoList = new ArrayList<>();
 
+    public CursoDto(Curso curso, ModuloRepository moduloRepository) {
+        this.id = curso.getId();
+        this.nome = curso.getNome();
+        this.descricao = curso.getDescricao();
+        this.cargaHoraria = curso.getCargaHoraria();
+        this.data = curso.getData();
+        this.categoria = curso.getCategoria().getNome();
+        this.imagemIcon = curso.getImagemIcon();
+        this.uuid = curso.getUuid();
+
+        for(Modulo modulo:moduloRepository.findByCursoId(curso.getId())){
+            ModuloDto moduloDto = new ModuloDto(modulo);
+            moduloDtoList.add(moduloDto);
+        }
+    }
     public CursoDto(Curso curso) {
         this.id = curso.getId();
         this.nome = curso.getNome();
         this.descricao = curso.getDescricao();
         this.cargaHoraria = curso.getCargaHoraria();
+        this.data = curso.getData();
+        this.categoria = curso.getCategoria().getNome();
         this.imagemIcon = curso.getImagemIcon();
         this.uuid = curso.getUuid();
     }
 
     public static List<CursoDto> converter(List<Curso> allCursos) {
         return allCursos.stream().map(CursoDto::new).collect(Collectors.toList());
+    }
+
+    public static List<CursoDto> converter(List<Curso> allCursos, ModuloRepository moduloRepository) {
+        List<CursoDto> cursoDtoList = new ArrayList<>();
+
+        for (Curso curso:allCursos){
+            CursoDto cursoDto = new CursoDto(curso,moduloRepository);
+            cursoDtoList.add(cursoDto);
+        }
+
+        return cursoDtoList;
+    }
+
+    public static CursoDto converter(Curso curso, ModuloRepository moduloRepository) {
+        CursoDto cursoDto = new CursoDto(curso,moduloRepository);
+        return cursoDto;
     }
 
     public static CursoDto converter(Curso curso) {
@@ -47,11 +86,23 @@ public class CursoDto {
         return cargaHoraria;
     }
 
+    public String getData() {
+        return data;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
     public String getImagemIcon() {
         return imagemIcon;
     }
 
     public String getUuid() {
         return uuid;
+    }
+
+    public List<ModuloDto> getModuloDtoList() {
+        return moduloDtoList;
     }
 }

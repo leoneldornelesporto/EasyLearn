@@ -3,6 +3,8 @@ package br.com.easylearn.domain;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,6 +15,7 @@ public class Curso extends AbstractEntity{
 	private String nome;
 	private String descricao;
 	private Integer cargaHoraria;
+	private String data = getCurrentTimeStamp();
 	private String imagemIcon;
 	@OneToOne
 	private Categoria categoria;
@@ -69,6 +72,10 @@ public class Curso extends AbstractEntity{
 
 	public Integer getCargaHoraria() {
 		return cargaHoraria;
+	}
+
+	public String getData() {
+		return data;
 	}
 
 	public void setCargaHoraria(Integer cargaHoraria) {
@@ -161,5 +168,9 @@ public class Curso extends AbstractEntity{
 
 	public void setMatriculaList(List<Matricula> matriculaList) {
 		this.matriculaList = matriculaList;
+	}
+
+	public String getCurrentTimeStamp() {
+		return new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 	}
 }

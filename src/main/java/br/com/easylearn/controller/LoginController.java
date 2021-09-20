@@ -1,6 +1,7 @@
 package br.com.easylearn.controller;
 
 import br.com.easylearn.controller.dto.LoginDto;
+import br.com.easylearn.controller.dto.UsuarioDto;
 import br.com.easylearn.domain.Usuario;
 import br.com.easylearn.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,22 @@ public class LoginController {
                 if(encoder.matches(senha, user.getPassword())){
                     Optional<Usuario> byEmailAndSenha = usuarioRepository.findByEmailAndSenha(usuario, user.getSenha());
                         return ResponseEntity.ok(LoginDto.converterBase64(byEmailAndSenha,senha));
+                }
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("v1/signin")
+    public ResponseEntity<?> v1Login(@RequestHeader String usuario, @RequestHeader String senha) {
+        List<Usuario> usuarioList = usuarioRepository.findAll();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        for (Usuario user : usuarioList) {
+            if (user.getEmail().equals(usuario)) {
+                if(encoder.matches(senha, user.getPassword())){
+                    Optional<Usuario> byEmailAndSenha = usuarioRepository.findByEmailAndSenha(usuario, user.getSenha());
+                    return ResponseEntity.ok(UsuarioDto.converter(byEmailAndSenha.get()));
                 }
             }
         }

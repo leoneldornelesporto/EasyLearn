@@ -2,6 +2,7 @@ package br.com.easylearn.controller.dto;
 
 import br.com.easylearn.domain.Modulo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,14 +10,16 @@ public class ModuloDto {
 
     private Integer indice;
     private String titulo;
-    private CursoDto cursoDto;
-    private AulaDto aulaDto;
+    private String tituloSecundario;
+    private List<AulaDto> aulaDto;
+    private List<String> subtitulo;
 
     public ModuloDto(Modulo modulo) {
         this.indice = modulo.getIndice();
         this.titulo = modulo.getTitulo();
-        this.cursoDto = CursoDto.converter(modulo.getCurso());
-        this.aulaDto = AulaDto.converter(modulo.getAula());
+        this.tituloSecundario = modulo.getTituloSecundario();
+        this.aulaDto = AulaDto.converter(modulo.getAulaList());
+        this.subtitulo = modulo.getSubtitulo();
     }
 
     public static List<ModuloDto> converter(List<Modulo> allModulos) {
@@ -31,11 +34,15 @@ public class ModuloDto {
         return titulo;
     }
 
-    public CursoDto getCursoDto() {
-        return cursoDto;
+    public String getTituloSecundario() {
+        return tituloSecundario;
     }
 
-    public AulaDto getAulaDto() {
+    public List<AulaDto> getAulaDto() {
         return aulaDto;
+    }
+
+    public List<String> getSubtitulo() {
+        return subtitulo;
     }
 }

@@ -7,12 +7,14 @@ import java.util.stream.Collectors;
 
 public class AulaDto {
 
+    private Long id;
     private Integer indice;
     private String titulo;
     private String urlVideo;
     private String transcricao;
 
     public AulaDto(Aula aula) {
+        this.id = aula.getId();
         this.indice = aula.getIndice();
         this.titulo = aula.getTitulo();
         this.urlVideo = aula.getUrlVideo();
@@ -25,6 +27,10 @@ public class AulaDto {
 
     public static AulaDto converter(Aula aula) {
         return new AulaDto(aula);
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Integer getIndice() {

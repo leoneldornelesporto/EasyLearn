@@ -5,6 +5,9 @@ import br.com.easylearn.domain.Modulo;
 import br.com.easylearn.repository.AulaRepository;
 import br.com.easylearn.repository.ModuloRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AtualizacaoModuloForm {
 
     private Integer indice;
@@ -12,12 +15,14 @@ public class AtualizacaoModuloForm {
     private Long idAula;
 
     public Modulo atualizar(Long idModulo, ModuloRepository moduloRepository, AulaRepository aulaRepository) {
+        List<Aula> aulaList = new ArrayList<>();
         Modulo modulo = moduloRepository.getOne(idModulo);
         modulo.setIndice(indice);
         modulo.setTitulo(titulo);
 
         Aula aula = aulaRepository.getOne(idAula);
-        modulo.setAula(aula);
+        aulaList.add(aula);
+        modulo.setAulaList(aulaList);
         return modulo;
     }
 

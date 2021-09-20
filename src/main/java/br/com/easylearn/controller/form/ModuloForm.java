@@ -7,17 +7,27 @@ import br.com.easylearn.repository.AulaRepository;
 import br.com.easylearn.repository.CursoRepository;
 import br.com.easylearn.repository.ModuloRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ModuloForm {
 
     private Integer indice;
     private String titulo;
+    private String tituloSecundario;
     private Long idCurso;
-    private Long idAula;
+    private List<Long> idAula;
+    private List<String> subtitulo = new ArrayList<>();
 
     public Modulo save(ModuloRepository moduloRepository, CursoRepository cursoRepository, AulaRepository aulaRepository) {
+        List<Aula> aulaList = new ArrayList<>();
         Curso curso = cursoRepository.getOne(idCurso);
-        Aula aula = aulaRepository.getOne(idAula);
-        Modulo modulo = new Modulo(indice,titulo,curso,aula);
+
+        for (Long id:idAula){
+            Aula aula = aulaRepository.getOne(id);
+            aulaList.add(aula);
+        }
+        Modulo modulo = new Modulo(indice,titulo,tituloSecundario,curso,aulaList,subtitulo);
         return moduloRepository.save(modulo);
     }
 
@@ -29,11 +39,19 @@ public class ModuloForm {
         this.titulo = titulo;
     }
 
+    public void setTituloSecundario(String tituloSecundario) {
+        this.tituloSecundario = tituloSecundario;
+    }
+
     public void setIdCurso(Long idCurso) {
         this.idCurso = idCurso;
     }
 
-    public void setIdAula(Long idAula) {
+    public void setIdAula(List<Long> idAula) {
         this.idAula = idAula;
+    }
+
+    public void setSubtitulo(List<String> subtitulo) {
+        this.subtitulo = subtitulo;
     }
 }

@@ -2,28 +2,38 @@ package br.com.easylearn.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Modulo extends AbstractEntity{
 
     private Integer indice;
     private String titulo;
+    private String tituloSecundario;
+    @ElementCollection
+    private List<String> subtitulo = new ArrayList<>();
     @JsonIgnore
     @OneToOne
     private Curso curso;
-    @OneToOne
-    private Aula aula;
+    @OneToMany
+    private List<Aula> aulaList;
 
-    public Modulo() {
-    }
-
-    public Modulo(Integer indice, String titulo, Curso curso, Aula aula) {
+    public Modulo(Integer indice, String titulo, String tituloSecundario,Curso curso, List<Aula> aulaList, List<String> subtitulo) {
         this.indice = indice;
         this.titulo = titulo;
+        this.tituloSecundario = tituloSecundario;
         this.curso = curso;
-        this.aula = aula;
+        this.aulaList = aulaList;
+        this.subtitulo = subtitulo;
+    }
+
+    public Modulo() {
+
     }
 
     public Integer getIndice() {
@@ -42,6 +52,22 @@ public class Modulo extends AbstractEntity{
         this.titulo = titulo;
     }
 
+    public String getTituloSecundario() {
+        return tituloSecundario;
+    }
+
+    public void setTituloSecundario(String tituloSecundario) {
+        this.tituloSecundario = tituloSecundario;
+    }
+
+    public List<String> getSubtitulo() {
+        return subtitulo;
+    }
+
+    public void setSubtitulo(List<String> subtitulo) {
+        this.subtitulo = subtitulo;
+    }
+
     public Curso getCurso() {
         return curso;
     }
@@ -50,11 +76,11 @@ public class Modulo extends AbstractEntity{
         this.curso = curso;
     }
 
-    public Aula getAula() {
-        return aula;
+    public List<Aula> getAulaList() {
+        return aulaList;
     }
 
-    public void setAula(Aula aula) {
-        this.aula = aula;
+    public void setAulaList(List<Aula> aulaList) {
+        this.aulaList = aulaList;
     }
 }
