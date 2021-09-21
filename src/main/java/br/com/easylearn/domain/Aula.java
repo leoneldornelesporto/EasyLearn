@@ -15,12 +15,7 @@ public class Aula extends AbstractEntity{
     private String titulo;
     private String urlVideo;
     private String transcricao;
-    @JsonIgnore
-    @OneToMany
-    private List<Modulo> moduloList;
-    @JsonIgnore
-    @ManyToOne
-    private Modulo modulo;
+    private Boolean visualizada = Boolean.FALSE;
 
     public Aula() {
     }
@@ -60,23 +55,15 @@ public class Aula extends AbstractEntity{
         return transcricao;
     }
 
+    public Boolean getVisualizada() {
+        return visualizada;
+    }
+
+    public void setVisualizada(Boolean visualizada) {
+        this.visualizada = visualizada;
+    }
+
     public void setTranscricao(String transcricao) {
         this.transcricao = transcricao;
-    }
-
-    public List<Modulo> getModuloList() {
-        return moduloList;
-    }
-
-    public void setModuloList(List<Modulo> moduloList) {
-        this.moduloList = moduloList;
-    }
-
-    public Modulo getModulo() {
-        return modulo;
-    }
-
-    public void setModulo(Modulo modulo) {
-        this.modulo = modulo;
     }
 }

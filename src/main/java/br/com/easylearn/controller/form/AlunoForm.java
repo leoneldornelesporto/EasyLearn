@@ -17,9 +17,10 @@ public class AlunoForm {
     private String twitter;
     private String empresa;
     private String cargo;
+    private String avatar;
 
     public Aluno save(AlunoRepository alunoRepository) {
-        Aluno aluno = new Aluno(nomeCompleto,nomeNoCertificado,cpf,usuarioNaUrl,email,senha,biografia,linkedin,github,twitter,empresa,cargo);
+        Aluno aluno = new Aluno(nomeCompleto,nomeNoCertificado,cpf,usuarioNaUrl,email,senha,biografia,linkedin,github,twitter,empresa,cargo,avatar);
         return alunoRepository.save(aluno);
     }
 
@@ -69,5 +70,9 @@ public class AlunoForm {
 
     public void setCargo(String cargo) {
         this.cargo = cargo;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

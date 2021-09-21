@@ -47,10 +47,12 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
     private Boolean isProfessor;
     private Boolean isTutor;
 
+    private String avatar;
+
     public Usuario() {
     }
 
-    public Usuario(String nomeCompleto, String nomeNoCertificado, String cpf, String usuarioNaUrl, String email, String senha, String biografia, String linkedin, String github, String twitter, String empresa, String cargo) {
+    public Usuario(String nomeCompleto, String nomeNoCertificado, String cpf, String usuarioNaUrl, String email, String senha, String biografia, String linkedin, String github, String twitter, String empresa, String cargo, String avatar) {
         this.nomeCompleto = nomeCompleto;
         this.nomeNoCertificado = nomeNoCertificado;
         this.cpf = cpf;
@@ -63,9 +65,10 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
         this.twitter = twitter;
         this.empresa = empresa;
         this.cargo = cargo;
+        this.avatar = avatar;
     }
 
-    public Usuario(String nomeCompleto, String nomeNoCertificado, String cpf, String usuarioNaUrl, String email, String senha, String biografia, String linkedin, String github, String twitter, String empresa, String cargo, Boolean privacidadeDoPerfil) {
+    public Usuario(String nomeCompleto, String nomeNoCertificado, String cpf, String usuarioNaUrl, String email, String senha, String biografia, String linkedin, String github, String twitter, String empresa, String cargo, Boolean privacidadeDoPerfil, String avatar) {
         this.nomeCompleto = nomeCompleto;
         this.nomeNoCertificado = nomeNoCertificado;
         this.cpf = cpf;
@@ -79,6 +82,7 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
         this.empresa = empresa;
         this.cargo = cargo;
         this.privacidadeDoPerfil = privacidadeDoPerfil;
+        this.avatar = avatar;
     }
 
     public String getUuid() {
@@ -231,6 +235,14 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
 
     public void setTutor(Boolean tutor) {
         isTutor = tutor;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     @Override

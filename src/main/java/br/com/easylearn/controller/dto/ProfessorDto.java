@@ -20,6 +20,7 @@ public class ProfessorDto {
     private String empresa;
     private String cargo;
     private Boolean privacidadeDoPerfil;
+    private String avatar;
 
     public ProfessorDto(Professor professor) {
         this.id = professor.getId();
@@ -35,6 +36,7 @@ public class ProfessorDto {
         this.empresa = professor.getEmpresa();
         this.cargo = professor.getCargo();
         this.privacidadeDoPerfil = professor.getPrivacidadeDoPerfil();
+        this.avatar = professor.getAvatar();
     }
 
     public static List<ProfessorDto> converter(List<Professor> allProfessores) {
@@ -95,5 +97,9 @@ public class ProfessorDto {
 
     public Boolean getPrivacidadeDoPerfil() {
         return privacidadeDoPerfil;
+    }
+
+    public String getAvatar() {
+        return avatar;
     }
 }

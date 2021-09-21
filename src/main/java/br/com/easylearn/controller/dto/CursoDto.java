@@ -19,6 +19,10 @@ public class CursoDto {
     private String imagemIcon;
     private String uuid;
     private List<ModuloDto> moduloDtoList = new ArrayList<>();
+    private String nomeProfessor;
+    private String biografia;
+    private String avatar;
+    private String linkedin;
 
     public CursoDto(Curso curso, ModuloRepository moduloRepository) {
         this.id = curso.getId();
@@ -34,6 +38,11 @@ public class CursoDto {
             ModuloDto moduloDto = new ModuloDto(modulo);
             moduloDtoList.add(moduloDto);
         }
+
+        this.nomeProfessor = curso.getProfessor().getNomeCompleto();
+        this.biografia = curso.getProfessor().getBiografia();
+        this.avatar = curso.getProfessor().getAvatar();
+        this.linkedin = curso.getProfessor().getLinkedin();
     }
     public CursoDto(Curso curso) {
         this.id = curso.getId();
@@ -44,6 +53,10 @@ public class CursoDto {
         this.categoria = curso.getCategoria().getNome();
         this.imagemIcon = curso.getImagemIcon();
         this.uuid = curso.getUuid();
+        this.nomeProfessor = curso.getProfessor().getNomeCompleto();
+        this.biografia = curso.getProfessor().getBiografia();
+        this.avatar = curso.getProfessor().getAvatar();
+        this.linkedin = curso.getProfessor().getLinkedin();
     }
 
     public static List<CursoDto> converter(List<Curso> allCursos) {
@@ -104,5 +117,21 @@ public class CursoDto {
 
     public List<ModuloDto> getModuloDtoList() {
         return moduloDtoList;
+    }
+
+    public String getNomeProfessor() {
+        return nomeProfessor;
+    }
+
+    public String getBiografia() {
+        return biografia;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public String getLinkedin() {
+        return linkedin;
     }
 }

@@ -17,9 +17,10 @@ public class TutorForm {
     private String twitter;
     private String empresa;
     private String cargo;
+    private String avatar;
 
     public Tutor save(TutorRepository tutorRepository) {
-        Tutor tutor = new Tutor(nomeCompleto,nomeNoCertificado,cpf,usuarioNaUrl,email,senha,biografia,linkedin,github,twitter,empresa,cargo);
+        Tutor tutor = new Tutor(nomeCompleto,nomeNoCertificado,cpf,usuarioNaUrl,email,senha,biografia,linkedin,github,twitter,empresa,cargo,avatar);
         return tutorRepository.save(tutor);
     }
 
@@ -69,5 +70,9 @@ public class TutorForm {
 
     public void setCargo(String cargo) {
         this.cargo = cargo;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

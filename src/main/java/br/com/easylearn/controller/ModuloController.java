@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
+import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +43,21 @@ public class ModuloController {
         Modulo modulo  = moduloForm.save(moduloRepository,cursoRepository,aulaRepository);
         URI uri = uriBuilder.path("/v1/modulo/{id}").buildAndExpand(modulo.getId()).toUri();
         return ResponseEntity.created(uri).body(new ModuloDto(modulo));
+    }
+
+    @GetMapping("v1/protectedP/modulo/{idModulo}")
+    @Transactional
+    @PreAuthorize("hasRole('PROFESSOR')")
+    @CacheEvict(value = "listaDeModulos", allEntries = true)
+    public ResponseEntity<? extends ModuloDto> findModuloById(@PathVariable Long idModulo) {
+        Optional<Modulo> optional = moduloRepository.findById(idModulo);
+        if (optional.isPresent()) {
+            //return ResponseEntity.ok(new ModuloDto(optional.get()));
+            //return Response.status(200).entity(new ModuloDto(optional.get())).header("Access-Control-Allow-Origin", "*").build();
+            return ResponseEntity.ok(new ModuloDto(optional.get()));
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @PutMapping("v1/protectedP/modulo/{idModulo}")

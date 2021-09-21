@@ -8,6 +8,7 @@ import br.com.easylearn.domain.Formacao;
 import br.com.easylearn.repository.CategoriaRepository;
 import br.com.easylearn.repository.CursoRepository;
 import br.com.easylearn.repository.FormacaoRepository;
+import br.com.easylearn.repository.ModuloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -29,18 +30,20 @@ public class FormacaoController {
     private final FormacaoRepository formacaoRepository;
     private final CursoRepository cursoRepository;
     private final CategoriaRepository categoriaRepository;
+    private final ModuloRepository moduloRepository;
 
     @Autowired
-    public FormacaoController(FormacaoRepository formacaoRepository, CursoRepository cursoRepository, CategoriaRepository categoriaRepository) {
+    public FormacaoController(FormacaoRepository formacaoRepository, CursoRepository cursoRepository, CategoriaRepository categoriaRepository, ModuloRepository moduloRepository) {
         this.formacaoRepository = formacaoRepository;
         this.cursoRepository = cursoRepository;
         this.categoriaRepository = categoriaRepository;
+        this.moduloRepository = moduloRepository;
     }
 
     @GetMapping
     @Cacheable(value = "listaDeFormacao")
     public ResponseEntity<? extends List<FormacaoDto>> findAllFormacoes(){
-        List<FormacaoDto> formacaoDtoList = FormacaoDto.converter(formacaoRepository.findAll());
+        List<FormacaoDto> formacaoDtoList = FormacaoDto.converter(formacaoRepository.findAll(),moduloRepository);
         if (formacaoDtoList.isEmpty())
             return ResponseEntity.notFound().build();
         else
