@@ -54,6 +54,10 @@ public class Curso extends AbstractEntity{
 		return uuid;
 	}
 
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
 	public String getNome() {
 		return nome;
 	}

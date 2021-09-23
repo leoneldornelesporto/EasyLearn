@@ -37,8 +37,8 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 				.antMatchers("/*/protectedT/**").hasRole("TUTOR")
 				.and()
 				.httpBasic()
-				.and()
-				.csrf().disable();
+				.and().cors()
+				.and().csrf().disable();
 	}
 
 	//Configuracoes de recursos estaticos(js, css, imagens, etc.)

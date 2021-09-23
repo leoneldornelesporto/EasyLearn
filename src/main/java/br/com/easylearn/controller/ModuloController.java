@@ -1,8 +1,10 @@
 package br.com.easylearn.controller;
 
+import br.com.easylearn.controller.dto.AulaDto;
 import br.com.easylearn.controller.dto.ModuloDto;
 import br.com.easylearn.controller.form.AtualizacaoModuloForm;
 import br.com.easylearn.controller.form.ModuloForm;
+import br.com.easylearn.domain.Aula;
 import br.com.easylearn.domain.Modulo;
 import br.com.easylearn.repository.AulaRepository;
 import br.com.easylearn.repository.CursoRepository;
@@ -15,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import java.net.URI;
@@ -48,15 +51,58 @@ public class ModuloController {
     @GetMapping("v1/protectedP/modulo/{idModulo}")
     @Transactional
     @PreAuthorize("hasRole('PROFESSOR')")
-    @CacheEvict(value = "listaDeModulos", allEntries = true)
+    @Cacheable(value = "listaDeModulos")
     public ResponseEntity<? extends ModuloDto> findModuloById(@PathVariable Long idModulo) {
         Optional<Modulo> optional = moduloRepository.findById(idModulo);
         if (optional.isPresent()) {
-            //return ResponseEntity.ok(new ModuloDto(optional.get()));
-            //return Response.status(200).entity(new ModuloDto(optional.get())).header("Access-Control-Allow-Origin", "*").build();
             return ResponseEntity.ok(new ModuloDto(optional.get()));
         }
 
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("v1/protectedP/modulo/curso/{uuidcurso}")
+    @Transactional
+    @PreAuthorize("hasRole('PROFESSOR')")
+    @Cacheable(value = "listaDeModulos")
+    public ResponseEntity<? extends List<ModuloDto>> findAllModulosByUuidCurso(@PathVariable String uuidcurso) {
+        List<Modulo> optional = moduloRepository.findByCursoUuid(uuidcurso);
+        if (!optional.isEmpty()) {
+            return ResponseEntity.ok(ModuloDto.converter(optional));
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("v1/protectedP/modulo/curso/{uuidcurso}/aula/{idAula}")
+    @Transactional
+    @PreAuthorize("hasRole('PROFESSOR')")
+    public ResponseEntity<? extends AulaDto> findModulosByUuidCursoAndIdAula(@PathVariable String uuidcurso, @PathVariable Long idAula) {
+        List<Modulo> optional = moduloRepository.findByCursoUuid(uuidcurso);
+
+        for (Modulo modulo:optional){
+            for(Aula aula:modulo.getAulaList()){
+                if (aula.getId().equals(idAula)){
+                    return ResponseEntity.ok(new AulaDto(aula));
+                }
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("v1/protectedP/curso/{uuidcurso}/aula/{idAula}/modulo")
+    @Transactional
+    @PreAuthorize("hasRole('PROFESSOR')")
+    public ResponseEntity<? extends ModuloDto> findModuloByUuidCursoAndIdAula(@PathVariable String uuidcurso, @PathVariable Long idAula) {
+        List<Modulo> optional = moduloRepository.findByCursoUuid(uuidcurso);
+
+        for (Modulo modulo:optional){
+            for(Aula aula:modulo.getAulaList()){
+                if (aula.getId().equals(idAula)){
+                    return ResponseEntity.ok(new ModuloDto(modulo));
+                }
+            }
+        }
         return ResponseEntity.notFound().build();
     }
 
