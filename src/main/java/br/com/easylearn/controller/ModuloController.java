@@ -38,7 +38,7 @@ public class ModuloController {
         this.aulaRepository = aulaRepository;
     }
 
-    @PostMapping("v1/protectedP/modulo")
+    @PostMapping("v1/protectedA/modulo")
     @Transactional
     @PreAuthorize("hasRole('PROFESSOR')")
     @CacheEvict(value = "listaDeModulos", allEntries = true)
@@ -48,9 +48,9 @@ public class ModuloController {
         return ResponseEntity.created(uri).body(new ModuloDto(modulo));
     }
 
-    @GetMapping("v1/protectedP/modulo/{idModulo}")
+    @GetMapping("v1/protectedA/modulo/{idModulo}")
     @Transactional
-    @PreAuthorize("hasRole('PROFESSOR')")
+    @PreAuthorize("hasRole('ALUNO') or hasRole('PROFESSOR')")
     @Cacheable(value = "listaDeModulos")
     public ResponseEntity<? extends ModuloDto> findModuloById(@PathVariable Long idModulo) {
         Optional<Modulo> optional = moduloRepository.findById(idModulo);
@@ -61,9 +61,9 @@ public class ModuloController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("v1/protectedP/modulo/curso/{uuidcurso}")
+    @GetMapping("v1/protectedA/modulo/curso/{uuidcurso}")
     @Transactional
-    @PreAuthorize("hasRole('PROFESSOR')")
+    @PreAuthorize("hasRole('ALUNO') or hasRole('PROFESSOR')")
     @Cacheable(value = "listaDeModulos")
     public ResponseEntity<? extends List<ModuloDto>> findAllModulosByUuidCurso(@PathVariable String uuidcurso) {
         List<Modulo> optional = moduloRepository.findByCursoUuid(uuidcurso);
@@ -74,9 +74,9 @@ public class ModuloController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("v1/protectedP/modulo/curso/{uuidcurso}/aula/{idAula}")
+    @GetMapping("v1/protectedA/modulo/curso/{uuidcurso}/aula/{idAula}")
     @Transactional
-    @PreAuthorize("hasRole('PROFESSOR')")
+    @PreAuthorize("hasRole('ALUNO') or hasRole('PROFESSOR')")
     public ResponseEntity<? extends AulaDto> findModulosByUuidCursoAndIdAula(@PathVariable String uuidcurso, @PathVariable Long idAula) {
         List<Modulo> optional = moduloRepository.findByCursoUuid(uuidcurso);
 
@@ -90,9 +90,9 @@ public class ModuloController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("v1/protectedP/curso/{uuidcurso}/aula/{idAula}/modulo")
+    @GetMapping("v1/protectedA/curso/{uuidcurso}/aula/{idAula}/modulo")
     @Transactional
-    @PreAuthorize("hasRole('PROFESSOR')")
+    @PreAuthorize("hasRole('ALUNO') or hasRole('PROFESSOR')")
     public ResponseEntity<? extends ModuloDto> findModuloByUuidCursoAndIdAula(@PathVariable String uuidcurso, @PathVariable Long idAula) {
         List<Modulo> optional = moduloRepository.findByCursoUuid(uuidcurso);
 

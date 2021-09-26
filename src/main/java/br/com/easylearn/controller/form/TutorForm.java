@@ -7,20 +7,25 @@ public class TutorForm {
 
     private String nomeCompleto;
     private String nomeNoCertificado;
+    private String ocupacao;
     private String cpf;
     private String usuarioNaUrl;
     private String email;
     private String senha;
+    private String dataDeNascimento;
     private String biografia;
     private String linkedin;
     private String github;
     private String twitter;
     private String empresa;
     private String cargo;
+    private String linkPersonalizado;
     private String avatar;
+    private String instituicao;
+    private String curso;
 
     public Tutor save(TutorRepository tutorRepository) {
-        Tutor tutor = new Tutor(nomeCompleto,nomeNoCertificado,cpf,usuarioNaUrl,email,senha,biografia,linkedin,github,twitter,empresa,cargo,avatar);
+        Tutor tutor = new Tutor(nomeCompleto,nomeNoCertificado,ocupacao,cpf,usuarioNaUrl,email,senha,dataDeNascimento,biografia,linkedin,github,twitter,empresa,cargo,linkPersonalizado,avatar,instituicao,curso);
         return tutorRepository.save(tutor);
     }
 
@@ -30,6 +35,10 @@ public class TutorForm {
 
     public void setNomeNoCertificado(String nomeNoCertificado) {
         this.nomeNoCertificado = nomeNoCertificado;
+    }
+
+    public void setOcupacao(String ocupacao) {
+        this.ocupacao = ocupacao;
     }
 
     public void setCpf(String cpf) {
@@ -46,6 +55,10 @@ public class TutorForm {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public void setDataDeNascimento(String dataDeNascimento) {
+        this.dataDeNascimento = dataDeNascimento;
     }
 
     public void setBiografia(String biografia) {
@@ -72,7 +85,19 @@ public class TutorForm {
         this.cargo = cargo;
     }
 
+    public void setLinkPersonalizado(String linkPersonalizado) {
+        this.linkPersonalizado = linkPersonalizado;
+    }
+
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public void setInstituicao(String instituicao) {
+        this.instituicao = instituicao;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
     }
 }

@@ -50,6 +50,17 @@ public class CursoController {
             return ResponseEntity.ok(cursoDtoList);
     }
 
+    @GetMapping("v1/curso/categoria/{idCategoria}")
+    @Cacheable(value = "listaDeCursos")
+    public ResponseEntity<? extends List<CursoDto>> findAllCursosByCategoria(@PathVariable Long idCategoria){
+        List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findByCategoriaId(idCategoria));
+
+        if (cursoDtoList.isEmpty())
+            return ResponseEntity.notFound().build();
+        else
+            return ResponseEntity.ok(cursoDtoList);
+    }
+
     @GetMapping("v1/curso/{id}")
     @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends CursoDto> findCursosById(@PathVariable Long id){
@@ -59,6 +70,17 @@ public class CursoController {
             return ResponseEntity.notFound().build();
         else
             return ResponseEntity.ok(curso);
+    }
+
+    @GetMapping("v1/curso/nome/{nome}")
+    @Cacheable(value = "listaDeCursos")
+    public ResponseEntity<? extends List<CursoDto>> findCursosByNome(@PathVariable String nome){
+        List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findByNomeContaining(nome));
+
+        if (cursoDtoList.isEmpty())
+            return ResponseEntity.notFound().build();
+        else
+            return ResponseEntity.ok(cursoDtoList);
     }
 
     @GetMapping("v1/curso/uuid/{uuid}")

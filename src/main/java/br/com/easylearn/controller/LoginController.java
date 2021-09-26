@@ -43,7 +43,7 @@ public class LoginController {
     }
 
     @GetMapping("v1/signin")
-    public ResponseEntity<?> v1Login(@RequestHeader String usuario, @RequestHeader String senha) {
+    public ResponseEntity<? extends UsuarioDto> v1Login(@RequestHeader String usuario, @RequestHeader String senha) {
         List<Usuario> usuarioList = usuarioRepository.findAll();
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 

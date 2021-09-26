@@ -20,15 +20,15 @@ public class Professor extends Usuario{
         this.setTutor(Boolean.FALSE);
     }
 
-    public Professor(String nomeCompleto, String nomeNoCertificado, String cpf, String usuarioNaUrl, String email, String senha, String biografia, String linkedin, String github, String twitter, String empresa, String cargo, String avatar) {
-        super(nomeCompleto,nomeNoCertificado,cpf,usuarioNaUrl,email,senha,biografia,linkedin,github,twitter,empresa,cargo,avatar);
+    public Professor(String nomeCompleto, String nomeNoCertificado, String ocupacao, String cpf, String usuarioNaUrl, String email, String senha, String dataDeNascimento, String biografia, String linkedin, String github, String twitter, String empresa, String cargo, String linkPersonalizado, String avatar, String instituicao, String curso) {
+        super(nomeCompleto,nomeNoCertificado,ocupacao,cpf,usuarioNaUrl,email,senha,dataDeNascimento,biografia,linkedin,github,twitter,empresa,cargo,linkPersonalizado,avatar,instituicao,curso);
         this.setAluno(Boolean.FALSE);
         this.setProfessor(Boolean.TRUE);
         this.setTutor(Boolean.FALSE);
     }
 
-    public Professor(String nomeCompleto, String nomeNoCertificado, String cpf, String usuarioNaUrl, String email, String senha, String biografia, String linkedin, String github, String twitter, String empresa, String cargo, Boolean privacidadeDoPerfil, String avatar) {
-        super(nomeCompleto,nomeNoCertificado,cpf,usuarioNaUrl,email,senha,biografia,linkedin,github,twitter,empresa,cargo,privacidadeDoPerfil,avatar);
+    public Professor(String nomeCompleto, String nomeNoCertificado, String ocupacao, String cpf, String usuarioNaUrl, String email, String senha, String dataDeNascimento, String biografia, String linkedin, String github, String twitter, String empresa, String cargo, String linkPersonalizado, Boolean privacidadeDoPerfil, String avatar, String instituicao, String curso) {
+        super(nomeCompleto,nomeNoCertificado,ocupacao,cpf,usuarioNaUrl,email,senha,dataDeNascimento,biografia,linkedin,github,twitter,empresa,cargo,linkPersonalizado,privacidadeDoPerfil,avatar,instituicao,curso);
         this.setAluno(Boolean.FALSE);
         this.setProfessor(Boolean.TRUE);
         this.setTutor(Boolean.FALSE);

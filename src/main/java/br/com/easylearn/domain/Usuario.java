@@ -23,6 +23,7 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
     private String uuid = UUID.randomUUID().toString().replace("-","");
     private String nomeCompleto;
     private String nomeNoCertificado;
+    private String ocupacao;
     //@CPF(message = "Invalid CPF")
     //@Column(unique = true, nullable = false)
     private String cpf;
@@ -31,12 +32,14 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
     //@Column(unique = true, nullable = false)
     private String email;
     private String senha;
+    private String dataDeNascimento;
     private String biografia;
     private String linkedin;
     private String github;
     private String twitter;
     private String empresa;
     private String cargo;
+    private String linkPersonalizado;
     private Boolean privacidadeDoPerfil = Boolean.FALSE;
     private Boolean ativo = Boolean.FALSE;
     @JsonIgnore
@@ -48,41 +51,53 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
     private Boolean isTutor;
 
     private String avatar;
+    private String instituicao;
+    private String curso;
 
     public Usuario() {
     }
 
-    public Usuario(String nomeCompleto, String nomeNoCertificado, String cpf, String usuarioNaUrl, String email, String senha, String biografia, String linkedin, String github, String twitter, String empresa, String cargo, String avatar) {
+    public Usuario(String nomeCompleto, String nomeNoCertificado, String ocupacao, String cpf, String usuarioNaUrl, String email, String senha, String dataDeNascimento, String biografia, String linkedin, String github, String twitter, String empresa, String cargo, String linkPersonalizado, String avatar, String instituicao, String curso) {
         this.nomeCompleto = nomeCompleto;
         this.nomeNoCertificado = nomeNoCertificado;
+        this.ocupacao = ocupacao;
         this.cpf = cpf;
         this.usuarioNaUrl = usuarioNaUrl;
         this.email = email;
         this.senha = new BCryptPasswordEncoder().encode(senha);
+        this.dataDeNascimento = dataDeNascimento;
         this.biografia = biografia;
         this.linkedin = linkedin;
         this.github = github;
         this.twitter = twitter;
         this.empresa = empresa;
         this.cargo = cargo;
+        this.linkPersonalizado = linkPersonalizado;
         this.avatar = avatar;
+        this.instituicao = instituicao;
+        this.curso = curso;
     }
 
-    public Usuario(String nomeCompleto, String nomeNoCertificado, String cpf, String usuarioNaUrl, String email, String senha, String biografia, String linkedin, String github, String twitter, String empresa, String cargo, Boolean privacidadeDoPerfil, String avatar) {
+    public Usuario(String nomeCompleto, String nomeNoCertificado, String ocupacao, String cpf, String usuarioNaUrl, String email, String senha, String dataDeNascimento, String biografia, String linkedin, String github, String twitter, String empresa, String cargo, String linkPersonalizado, Boolean privacidadeDoPerfil, String avatar, String instituicao, String curso) {
         this.nomeCompleto = nomeCompleto;
         this.nomeNoCertificado = nomeNoCertificado;
+        this.ocupacao = ocupacao;
         this.cpf = cpf;
         this.usuarioNaUrl = usuarioNaUrl;
         this.email = email;
         this.senha = new BCryptPasswordEncoder().encode(senha);
+        this.dataDeNascimento = dataDeNascimento;
         this.biografia = biografia;
         this.linkedin = linkedin;
         this.github = github;
         this.twitter = twitter;
         this.empresa = empresa;
         this.cargo = cargo;
+        this.linkPersonalizado = linkPersonalizado;
         this.privacidadeDoPerfil = privacidadeDoPerfil;
         this.avatar = avatar;
+        this.instituicao = instituicao;
+        this.curso = curso;
     }
 
     public String getUuid() {
@@ -113,6 +128,14 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
         this.nomeNoCertificado = nomeNoCertificado;
     }
 
+    public String getOcupacao() {
+        return ocupacao;
+    }
+
+    public void setOcupacao(String ocupacao) {
+        this.ocupacao = ocupacao;
+    }
+
     public String getUsuarioNaUrl() {
         return usuarioNaUrl;
     }
@@ -135,6 +158,14 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
 
     public void setSenha(String senha) {
         this.senha = new BCryptPasswordEncoder().encode(senha);
+    }
+
+    public String getDataDeNascimento() {
+        return dataDeNascimento;
+    }
+
+    public void setDataDeNascimento(String dataDeNascimento) {
+        this.dataDeNascimento = dataDeNascimento;
     }
 
     public String getBiografia() {
@@ -183,6 +214,14 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
 
     public void setCargo(String cargo) {
         this.cargo = cargo;
+    }
+
+    public String getLinkPersonalizado() {
+        return linkPersonalizado;
+    }
+
+    public void setLinkPersonalizado(String linkPersonalizado) {
+        this.linkPersonalizado = linkPersonalizado;
     }
 
     public Boolean getPrivacidadeDoPerfil() {
@@ -243,6 +282,22 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getInstituicao() {
+        return instituicao;
+    }
+
+    public void setInstituicao(String instituicao) {
+        this.instituicao = instituicao;
+    }
+
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
     }
 
     @Override

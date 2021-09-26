@@ -6,34 +6,40 @@ import br.com.easylearn.repository.AlunoRepository;
 public class AtualizacaoAlunoForm {
 
     private String nomeCompleto;
-    private String nomeNoCertificado;
-    private String cpf;
+    private String nomeNosCertificados;
     private String usuarioNaUrl;
-    private String email;
-    private String senha;
+    private String cpf;
     private String biografia;
+    private String dataDeNascimento;
+    private String ocupacao;
     private String linkedin;
-    private String github;
     private String twitter;
+    private String github;
+    private String linkPersonalizado;
     private String empresa;
     private String cargo;
+    private String instituicao;
+    private String curso;
     private Boolean privacidadeDoPerfil;
 
     public Aluno atualizar(Long idAluno, AlunoRepository alunoRepository) {
         Aluno aluno = alunoRepository.getOne(idAluno);
         aluno.setNomeCompleto(nomeCompleto);
-        aluno.setNomeNoCertificado(nomeNoCertificado);
-        aluno.setCpf(cpf);
+        aluno.setNomeNoCertificado(nomeNosCertificados);
         aluno.setUsuarioNaUrl(usuarioNaUrl);
-        aluno.setEmail(email);
-        aluno.setSenha(senha);
+        aluno.setCpf(cpf);
         aluno.setBiografia(biografia);
+        aluno.setDataDeNascimento(dataDeNascimento);
+        aluno.setOcupacao(ocupacao);
         aluno.setLinkedin(linkedin);
-        aluno.setGithub(github);
         aluno.setTwitter(twitter);
+        aluno.setLinkedin(linkPersonalizado);
+        aluno.setGithub(github);
         aluno.setEmpresa(empresa);
         aluno.setCargo(cargo);
         aluno.setPrivacidadeDoPerfil(privacidadeDoPerfil);
+        aluno.setInstituicao(instituicao);
+        aluno.setCurso(curso);
         return aluno;
     }
 
@@ -41,40 +47,44 @@ public class AtualizacaoAlunoForm {
         this.nomeCompleto = nomeCompleto;
     }
 
-    public void setNomeNoCertificado(String nomeNoCertificado) {
-        this.nomeNoCertificado = nomeNoCertificado;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setNomeNosCertificados(String nomeNosCertificados) {
+        this.nomeNosCertificados = nomeNosCertificados;
     }
 
     public void setUsuarioNaUrl(String usuarioNaUrl) {
         this.usuarioNaUrl = usuarioNaUrl;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public void setBiografia(String biografia) {
         this.biografia = biografia;
     }
 
+    public void setDataDeNascimento(String dataDeNascimento) {
+        this.dataDeNascimento = dataDeNascimento;
+    }
+
+    public void setOcupacao(String ocupacao) {
+        this.ocupacao = ocupacao;
+    }
+
     public void setLinkedin(String linkedin) {
         this.linkedin = linkedin;
+    }
+
+    public void setTwitter(String twitter) {
+        this.twitter = twitter;
     }
 
     public void setGithub(String github) {
         this.github = github;
     }
 
-    public void setTwitter(String twitter) {
-        this.twitter = twitter;
+    public void setLinkPersonalizado(String linkPersonalizado) {
+        this.linkPersonalizado = linkPersonalizado;
     }
 
     public void setEmpresa(String empresa) {
@@ -87,5 +97,13 @@ public class AtualizacaoAlunoForm {
 
     public void setPrivacidadeDoPerfil(Boolean privacidadeDoPerfil) {
         this.privacidadeDoPerfil = privacidadeDoPerfil;
+    }
+
+    public void setInstituicao(String instituicao) {
+        this.instituicao = instituicao;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
     }
 }
