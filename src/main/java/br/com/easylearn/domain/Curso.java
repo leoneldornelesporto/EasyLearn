@@ -17,6 +17,8 @@ public class Curso extends AbstractEntity{
 	private Integer cargaHoraria;
 	private String data = getCurrentTimeStamp();
 	private String imagemIcon;
+	private Boolean ativo = Boolean.FALSE;
+
 	@OneToOne
 	private Categoria categoria;
 	@OneToMany
@@ -41,13 +43,14 @@ public class Curso extends AbstractEntity{
 	public Curso() {
 	}
 
-	public Curso(Integer carga_horaria, String descricao, String nome, String imagemIcon, Professor professor,Categoria categoria) {
+	public Curso(Integer carga_horaria, String descricao, String nome, String imagemIcon, Professor professor,Categoria categoria, Boolean ativo) {
 		this.cargaHoraria = carga_horaria;
 		this.descricao = descricao;
 		this.nome = nome;
 		this.imagemIcon = imagemIcon;
 		this.professor = professor;
 		this.categoria = categoria;
+		this.ativo = ativo;
 	}
 
 	public String getUuid() {
@@ -176,5 +179,13 @@ public class Curso extends AbstractEntity{
 
 	public String getCurrentTimeStamp() {
 		return new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
 	}
 }

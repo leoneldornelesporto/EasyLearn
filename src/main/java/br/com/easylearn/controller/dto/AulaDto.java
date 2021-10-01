@@ -12,7 +12,6 @@ public class AulaDto {
     private String titulo;
     private String urlVideo;
     private String transcricao;
-    private Boolean visualizada;
 
     public AulaDto(Aula aula) {
         this.id = aula.getId();
@@ -20,7 +19,6 @@ public class AulaDto {
         this.titulo = aula.getTitulo();
         this.urlVideo = aula.getUrlVideo();
         this.transcricao = aula.getTranscricao();
-        this.visualizada = aula.getVisualizada();
     }
 
     public static List<AulaDto> converter(List<Aula> allAula) {
@@ -49,9 +47,5 @@ public class AulaDto {
 
     public String getTranscricao() {
         return transcricao;
-    }
-
-    public Boolean getVisualizada() {
-        return visualizada;
     }
 }

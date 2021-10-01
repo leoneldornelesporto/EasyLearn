@@ -301,6 +301,37 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
     }
 
     @Override
+    public String toString() {
+        return "Usuario{" +
+                "uuid='" + uuid + '\'' +
+                ", nomeCompleto='" + nomeCompleto + '\'' +
+                ", nomeNoCertificado='" + nomeNoCertificado + '\'' +
+                ", ocupacao='" + ocupacao + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", usuarioNaUrl='" + usuarioNaUrl + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                ", dataDeNascimento='" + dataDeNascimento + '\'' +
+                ", biografia='" + biografia + '\'' +
+                ", linkedin='" + linkedin + '\'' +
+                ", github='" + github + '\'' +
+                ", twitter='" + twitter + '\'' +
+                ", empresa='" + empresa + '\'' +
+                ", cargo='" + cargo + '\'' +
+                ", linkPersonalizado='" + linkPersonalizado + '\'' +
+                ", privacidadeDoPerfil=" + privacidadeDoPerfil +
+                ", ativo=" + ativo +
+                ", ocorrenciaList=" + ocorrenciaList +
+                ", isAluno=" + isAluno +
+                ", isProfessor=" + isProfessor +
+                ", isTutor=" + isTutor +
+                ", avatar='" + avatar + '\'' +
+                ", instituicao='" + instituicao + '\'' +
+                ", curso='" + curso + '\'' +
+                '}';
+    }
+
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }

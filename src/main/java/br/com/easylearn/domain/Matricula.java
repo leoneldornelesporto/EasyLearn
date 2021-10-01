@@ -15,6 +15,7 @@ public class Matricula extends AbstractEntity{
     private Integer progresso;
     private String estado;
     private Boolean cursoConcluido = Boolean.FALSE;
+    private Boolean cursoPausado = Boolean.FALSE;
 
     public Matricula() {
     }
@@ -64,5 +65,13 @@ public class Matricula extends AbstractEntity{
 
     public void setCursoConcluido(Boolean cursoConcluido) {
         this.cursoConcluido = cursoConcluido;
+    }
+
+    public Boolean getCursoPausado() {
+        return cursoPausado;
+    }
+
+    public void setCursoPausado(Boolean cursoPausado) {
+        this.cursoPausado = cursoPausado;
     }
 }

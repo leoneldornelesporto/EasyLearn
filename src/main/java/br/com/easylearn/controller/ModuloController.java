@@ -38,7 +38,7 @@ public class ModuloController {
         this.aulaRepository = aulaRepository;
     }
 
-    @PostMapping("v1/protectedA/modulo")
+    @PostMapping("v1/protectedP/modulo")
     @Transactional
     @PreAuthorize("hasRole('PROFESSOR')")
     @CacheEvict(value = "listaDeModulos", allEntries = true)

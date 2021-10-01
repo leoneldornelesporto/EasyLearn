@@ -5,6 +5,7 @@ import br.com.easylearn.repository.AlunoRepository;
 
 public class AtualizacaoAlunoForm {
 
+    private String avatar;
     private String nomeCompleto;
     private String nomeNosCertificados;
     private String usuarioNaUrl;
@@ -24,6 +25,7 @@ public class AtualizacaoAlunoForm {
 
     public Aluno atualizar(Long idAluno, AlunoRepository alunoRepository) {
         Aluno aluno = alunoRepository.getOne(idAluno);
+        aluno.setAvatar(avatar);
         aluno.setNomeCompleto(nomeCompleto);
         aluno.setNomeNoCertificado(nomeNosCertificados);
         aluno.setUsuarioNaUrl(usuarioNaUrl);
@@ -33,7 +35,7 @@ public class AtualizacaoAlunoForm {
         aluno.setOcupacao(ocupacao);
         aluno.setLinkedin(linkedin);
         aluno.setTwitter(twitter);
-        aluno.setLinkedin(linkPersonalizado);
+        aluno.setLinkPersonalizado(linkPersonalizado);
         aluno.setGithub(github);
         aluno.setEmpresa(empresa);
         aluno.setCargo(cargo);
@@ -45,6 +47,10 @@ public class AtualizacaoAlunoForm {
 
     public void setNomeCompleto(String nomeCompleto) {
         this.nomeCompleto = nomeCompleto;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public void setNomeNosCertificados(String nomeNosCertificados) {

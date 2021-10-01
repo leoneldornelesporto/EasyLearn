@@ -6,7 +6,6 @@ import br.com.easylearn.controller.dto.ModuloDto;
 import br.com.easylearn.controller.form.AtualizacaoCursoForm;
 import br.com.easylearn.controller.form.CursoForm;
 import br.com.easylearn.domain.Curso;
-import br.com.easylearn.domain.Modulo;
 import br.com.easylearn.repository.CategoriaRepository;
 import br.com.easylearn.repository.CursoRepository;
 import br.com.easylearn.repository.ModuloRepository;
@@ -18,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
 import javax.transaction.Transactional;
 import java.net.URI;
 import java.util.List;
@@ -42,7 +42,7 @@ public class CursoController {
     @GetMapping("v1/curso")
     @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends List<CursoDto>> findAllCursos(){
-        List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findAll(),moduloRepository);
+        List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findCursosByAtivoTrue(),moduloRepository);
 
         if (cursoDtoList.isEmpty())
             return ResponseEntity.notFound().build();

@@ -15,6 +15,7 @@ public class CursoForm {
     private Integer cargahoraria;
     private Long categoriaId;
     private String imagemIcon;
+    private Boolean ativo;
 
     public void setIdProfessor(Long idProfessor) {
         this.idProfessor = idProfessor;
@@ -40,10 +41,14 @@ public class CursoForm {
         this.imagemIcon = imagemIcon;
     }
 
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
+
     public Curso save(CursoRepository cursoRepository, ProfessorRepository professorRepository, CategoriaRepository categoriaRepository) {
         Professor professor = professorRepository.getOne(idProfessor);
         Categoria categoria = categoriaRepository.getOne(categoriaId);
-        Curso curso = new Curso(cargahoraria, descricao, nome, imagemIcon, professor, categoria);
+        Curso curso = new Curso(cargahoraria, descricao, nome, imagemIcon, professor, categoria, ativo);
         return cursoRepository.save(curso);
     }
 }

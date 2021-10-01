@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 public class AlunoDto {
 
     private Long id;
+    private String avatar;
     private String nomeCompleto;
     private String nomeNoCertificado;
     private String cpf;
@@ -23,6 +24,7 @@ public class AlunoDto {
 
     public AlunoDto(Aluno aluno) {
         this.id = aluno.getId();
+        this.avatar = aluno.getAvatar();
         this.nomeCompleto = aluno.getNomeCompleto();
         this.nomeNoCertificado = aluno.getNomeNoCertificado();
         this.cpf = aluno.getCpf();
@@ -47,6 +49,10 @@ public class AlunoDto {
 
     public Long getId() {
         return id;
+    }
+
+    public String getAvatar() {
+        return avatar;
     }
 
     public String getNomeCompleto() {

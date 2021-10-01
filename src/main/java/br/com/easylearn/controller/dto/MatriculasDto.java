@@ -27,6 +27,10 @@ public class MatriculasDto {
         return allMatricula.stream().map(MatriculasDto::new).collect(Collectors.toList());
     }
 
+    public static MatriculasDto converter(Matricula matricula) {
+        return new MatriculasDto(matricula);
+    }
+
     public Long getId() {
         return id;
     }

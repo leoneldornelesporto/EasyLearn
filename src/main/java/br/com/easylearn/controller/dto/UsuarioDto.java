@@ -9,16 +9,20 @@ public class UsuarioDto {
     private String avatar;
     private String nomeCompleto;
     private String nomeNoCertificado;
-    private String cpf;
-    private String usuarioNaUrl;
-    private String dataDeNascimento;
     private String email;
+    private String usuarioNaUrl;
+    private String cpf;
     private String biografia;
+    private String dataDeNascimento;
+    private String ocupacao;
     private String linkedin;
-    private String github;
     private String twitter;
+    private String github;
+    private String linkPersonalizado;
     private String empresa;
     private String cargo;
+    private String instituicao;
+    private String curso;
     private Boolean privacidadeDoPerfil;
 
     public UsuarioDto(Usuario usuario) {
@@ -29,13 +33,17 @@ public class UsuarioDto {
         this.cpf = usuario.getCpf();
         this.usuarioNaUrl = usuario.getUsuarioNaUrl();
         this.dataDeNascimento = usuario.getDataDeNascimento();
+        this.ocupacao = usuario.getOcupacao();
         this.email = usuario.getEmail();
         this.biografia = usuario.getBiografia();
         this.linkedin = usuario.getLinkedin();
         this.github = usuario.getGithub();
+        this.linkPersonalizado = usuario.getLinkPersonalizado();
         this.twitter = usuario.getTwitter();
         this.empresa = usuario.getEmpresa();
         this.cargo = usuario.getCargo();
+        this.instituicao = usuario.getInstituicao();
+        this.curso = usuario.getCurso();
         this.privacidadeDoPerfil = usuario.getPrivacidadeDoPerfil();
     }
 
@@ -105,5 +113,21 @@ public class UsuarioDto {
 
     public Boolean getPrivacidadeDoPerfil() {
         return privacidadeDoPerfil;
+    }
+
+    public String getOcupacao() {
+        return ocupacao;
+    }
+
+    public String getLinkPersonalizado() {
+        return linkPersonalizado;
+    }
+
+    public String getInstituicao() {
+        return instituicao;
+    }
+
+    public String getCurso() {
+        return curso;
     }
 }

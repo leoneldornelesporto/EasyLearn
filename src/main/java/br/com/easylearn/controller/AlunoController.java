@@ -48,7 +48,8 @@ public class AlunoController {
     @CacheEvict(value = "listaDeAlunos", allEntries = true)
     public ResponseEntity<? extends AlunoDto> saveAluno(@RequestBody AlunoForm alunoForm, UriComponentsBuilder uriBuilder) throws MessagingException {
         Aluno aluno = alunoForm.save(alunoRepository);
-        String link = "https://easylearn-app.herokuapp.com/ativarAluno/"+aluno.getId();
+        //String link = "https://easylearn-app.herokuapp.com/ativarAluno/"+aluno.getUuid();
+        String link = "http://localhost:8080/ativarAluno/"+aluno.getUuid();
         URI uri = uriBuilder.path("/v1/aluno/{id}").buildAndExpand(aluno.getId()).toUri();
         Mail email = new Mail(aluno.getEmail(),"Confirmação de Conta","Por gentiliza acesse esse link " +
                 "<a href='"+link+"'>aqui</a>");
@@ -70,11 +71,11 @@ public class AlunoController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("ativarAluno/{idAluno}")
+    @GetMapping("ativarAluno/{uuid}")
     @Transactional
     @CacheEvict(value = "listaDeAlunos", allEntries = true)
-    public ResponseEntity<? extends AlunoDto> ativarAluno(@PathVariable Long idAluno) {
-        Optional<Aluno> optional = alunoRepository.findById(idAluno);
+    public ResponseEntity<? extends AlunoDto> ativarAluno(@PathVariable String uuid) {
+        Optional<Aluno> optional = alunoRepository.findByUuid(uuid);
         if (optional.isPresent()) {
             Aluno aluno = optional.get();
             aluno.setAtivo(Boolean.TRUE);

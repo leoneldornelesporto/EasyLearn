@@ -52,7 +52,8 @@ public class TutorController {
     public ResponseEntity<? extends TutorDto> saveTutor(@RequestBody TutorForm tutorForm, UriComponentsBuilder uriBuilder) throws MessagingException {
         Tutor tutor = tutorForm.save(tutorRepository);
         URI uri = uriBuilder.path("/v1/tutor/{id}").buildAndExpand(tutor.getId()).toUri();
-        String link = "https://easylearn-app.herokuapp.com/ativarTutor/"+tutor.getId();
+        //String link = "https://easylearn-app.herokuapp.com/ativarTutor/"+tutor.getUuid();
+        String link = "http://localhost:8080/ativarAluno/"+tutor.getUuid();
         Mail email = new Mail(tutor.getEmail(),"Confirmação de Conta","Por gentiliza acesse esse link " +
                 "<a href='"+link+"'>aqui</a>");
         service.sendMailWithAttachments(email);
@@ -86,11 +87,11 @@ public class TutorController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("ativarTutor/{idTutor}")
+    @GetMapping("ativarTutor/{uuid}")
     @Transactional
     @CacheEvict(value = "listaDeProfessores", allEntries = true)
-    public ResponseEntity<? extends TutorDto> ativarTutor(@PathVariable Long idTutor) {
-        Optional<Tutor> optional = tutorRepository.findById(idTutor);
+    public ResponseEntity<? extends TutorDto> ativarTutor(@PathVariable String uuid) {
+        Optional<Tutor> optional = tutorRepository.findByUuid(uuid);
         if (optional.isPresent()) {
             Tutor tutor = optional.get();
             tutor.setAtivo(Boolean.TRUE);

@@ -57,7 +57,8 @@ public class ProfessorController {
     public ResponseEntity<? extends ProfessorDto> saveProfessor(@RequestBody ProfessorForm professorForm, UriComponentsBuilder uriBuilder) throws MessagingException {
         Professor professor = professorForm.save(professorRepository);
         URI uri = uriBuilder.path("/v1/professor/{id}").buildAndExpand(professor.getId()).toUri();
-        String link = "https://easylearn-app.herokuapp.com/ativarProfessor/"+professor.getId();
+        //String link = "https://easylearn-app.herokuapp.com/ativarProfessor/"+professor.getUuid();
+        String link = "http://localhost:8080/ativarAluno/"+professor.getUuid();
         Mail email = new Mail(professor.getEmail(),"Confirmação de Conta","Por gentiliza acesse esse link " +
                 "<a href='"+link+"'>aqui</a>");
         service.sendMailWithAttachments(email);
@@ -113,11 +114,11 @@ public class ProfessorController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("ativarProfessor/{idProfessor}")
+    @GetMapping("ativarProfessor/{uuid}")
     @Transactional
     @CacheEvict(value = "listaDeProfessores", allEntries = true)
-    public ResponseEntity<? extends ProfessorDto> ativarProfessor(@PathVariable Long idProfessor) {
-        Optional<Professor> optional = professorRepository.findById(idProfessor);
+    public ResponseEntity<? extends ProfessorDto> ativarProfessor(@PathVariable String uuid) {
+        Optional<Professor> optional = professorRepository.findByUuid(uuid);
         if (optional.isPresent()) {
             Professor professor = optional.get();
             professor.setAtivo(Boolean.TRUE);
