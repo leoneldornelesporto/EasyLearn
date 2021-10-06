@@ -11,6 +11,8 @@ import java.util.List;
 public class Formacao extends AbstractEntity{
     private String titulo;
     private String descricao;
+    private String subtitulo;
+    private String descricaoSubtitulo;
     @JsonIgnore
     @ManyToMany
     private List<Curso> cursoList;
@@ -55,5 +57,21 @@ public class Formacao extends AbstractEntity{
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public String getSubtitulo() {
+        return subtitulo;
+    }
+
+    public void setSubtitulo(String subtitulo) {
+        this.subtitulo = subtitulo;
+    }
+
+    public String getDescricaoSubtitulo() {
+        return descricaoSubtitulo;
+    }
+
+    public void setDescricaoSubtitulo(String descricaoSubtitulo) {
+        this.descricaoSubtitulo = descricaoSubtitulo;
     }
 }

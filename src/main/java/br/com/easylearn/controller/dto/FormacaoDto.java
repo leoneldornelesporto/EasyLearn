@@ -12,6 +12,8 @@ public class FormacaoDto {
     private Long id;
     private String titulo;
     private String descricao;
+    private String subtitulo;
+    private String descricaoSubtitulo;
     private List<CursoDto> cursoDtoList;
     private String categoria;
 
@@ -19,6 +21,8 @@ public class FormacaoDto {
         this.id = formacao.getId();
         this.titulo = formacao.getTitulo();
         this.descricao = formacao.getDescricao();
+        this.subtitulo = formacao.getSubtitulo();
+        this.descricaoSubtitulo = formacao.getDescricaoSubtitulo();
         this.cursoDtoList = CursoDto.converter(formacao.getCursoList());
         this.categoria = formacao.getCategoria().getNome();
     }
@@ -27,6 +31,8 @@ public class FormacaoDto {
         this.id = formacao.getId();
         this.titulo = formacao.getTitulo();
         this.descricao = formacao.getDescricao();
+        this.subtitulo = formacao.getSubtitulo();
+        this.descricaoSubtitulo = formacao.getDescricaoSubtitulo();
         this.cursoDtoList = CursoDto.converter(formacao.getCursoList(),moduloRepository);
         this.categoria = formacao.getCategoria().getNome();
     }
@@ -57,6 +63,14 @@ public class FormacaoDto {
 
     public String getDescricao() {
         return descricao;
+    }
+
+    public String getSubtitulo() {
+        return subtitulo;
+    }
+
+    public String getDescricaoSubtitulo() {
+        return descricaoSubtitulo;
     }
 
     public List<CursoDto> getCursoDtoList() {

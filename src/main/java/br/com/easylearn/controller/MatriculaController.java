@@ -3,8 +3,10 @@ package br.com.easylearn.controller;
 import br.com.easylearn.controller.dto.CursoDto;
 import br.com.easylearn.controller.dto.MatriculasDto;
 import br.com.easylearn.controller.form.MatriculaForm;
+import br.com.easylearn.domain.AssistirAula;
 import br.com.easylearn.domain.Matricula;
 import br.com.easylearn.repository.AlunoRepository;
+import br.com.easylearn.repository.AssistirAulaRepository;
 import br.com.easylearn.repository.CursoRepository;
 import br.com.easylearn.repository.MatriculaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +30,14 @@ public class MatriculaController {
     private final MatriculaRepository matriculaRepository;
     private final AlunoRepository alunoRepository;
     private final CursoRepository cursoRepository;
+    private final AssistirAulaRepository assistirAulaRepository;
 
     @Autowired
-    public MatriculaController(MatriculaRepository matriculaRepository, AlunoRepository alunoRepository, CursoRepository cursoRepository) {
+    public MatriculaController(MatriculaRepository matriculaRepository, AlunoRepository alunoRepository, CursoRepository cursoRepository, AssistirAulaRepository assistirAulaRepository) {
         this.matriculaRepository = matriculaRepository;
         this.alunoRepository = alunoRepository;
         this.cursoRepository = cursoRepository;
+        this.assistirAulaRepository = assistirAulaRepository;
     }
 
     @GetMapping
@@ -105,5 +109,29 @@ public class MatriculaController {
             return ResponseEntity.notFound().build();
         else
             return ResponseEntity.ok(cursoDtoList);
+    }
+
+    @GetMapping("/assistirAula/{idAluno}/{idAula}")
+    public Boolean assistirAula(@PathVariable Long idAluno, @PathVariable Long idAula){
+
+        try{
+            AssistirAula assistirAula = assistirAulaRepository.findByIdAlunoAndIdAula(idAluno,idAula);
+
+            if (assistirAula.getAssistido()){
+                return Boolean.TRUE;
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+        return Boolean.FALSE;
+    }
+
+    @PostMapping("/assistirAulaSave/{idAluno}/{idAula}")
+    public ResponseEntity<AssistirAula> assistirAulaSave(@PathVariable Long idAluno, @PathVariable Long idAula, UriComponentsBuilder uriBuilder){
+        AssistirAula assistirAula = new AssistirAula(idAluno,idAula);
+        AssistirAula save = assistirAulaRepository.save(assistirAula);
+        URI uri = uriBuilder.path("/v1/matricula/{id}").buildAndExpand(save.getId()).toUri();
+        return ResponseEntity.created(uri).body(save);
     }
 }
