@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -24,6 +25,18 @@ public class AulaController {
     @Autowired
     public AulaController(AulaRepository aulaRepository) {
         this.aulaRepository = aulaRepository;
+    }
+
+    @GetMapping("v1/protectedP/aulas")
+    @Transactional
+    @PreAuthorize("hasRole('PROFESSOR')")
+    @CacheEvict(value = "listaDeAulas", allEntries = true)
+    public ResponseEntity<? extends List<AulaDto>> returnAllAulas(){
+        List<AulaDto> converter = AulaDto.converter(aulaRepository.findAll());
+        if (converter.isEmpty())
+            return ResponseEntity.notFound().build();
+        else
+            return ResponseEntity.ok(converter);
     }
 
     @PostMapping("v1/protectedP/aulas")

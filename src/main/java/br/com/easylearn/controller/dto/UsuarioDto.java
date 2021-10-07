@@ -24,6 +24,9 @@ public class UsuarioDto {
     private String instituicao;
     private String curso;
     private Boolean privacidadeDoPerfil;
+    private Boolean isAluno;
+    private Boolean isProfessor;
+    private Boolean isTutor;
 
     public UsuarioDto(Usuario usuario) {
         this.id = usuario.getId();
@@ -45,6 +48,9 @@ public class UsuarioDto {
         this.instituicao = usuario.getInstituicao();
         this.curso = usuario.getCurso();
         this.privacidadeDoPerfil = usuario.getPrivacidadeDoPerfil();
+        this.isAluno = usuario.getAluno();
+        this.isProfessor = usuario.getProfessor();
+        this.isTutor = usuario.getTutor();
     }
 
     public static Page<UsuarioDto> converter(Page<Usuario> usuarios) {
@@ -129,5 +135,17 @@ public class UsuarioDto {
 
     public String getCurso() {
         return curso;
+    }
+
+    public Boolean getAluno() {
+        return isAluno;
+    }
+
+    public Boolean getProfessor() {
+        return isProfessor;
+    }
+
+    public Boolean getTutor() {
+        return isTutor;
     }
 }
