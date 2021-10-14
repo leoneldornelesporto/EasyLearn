@@ -41,7 +41,7 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
     private String cargo;
     private String linkPersonalizado;
     private Boolean privacidadeDoPerfil = Boolean.FALSE;
-    private Boolean ativo = Boolean.FALSE;
+    private Boolean ativo = Boolean.TRUE;
     @JsonIgnore
     @OneToMany
     private List<Ocorrencia> ocorrenciaList;

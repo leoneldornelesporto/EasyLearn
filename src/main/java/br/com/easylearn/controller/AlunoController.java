@@ -51,10 +51,10 @@ public class AlunoController {
     public ResponseEntity<? extends AlunoDto> saveAluno(@RequestBody AlunoForm alunoForm, UriComponentsBuilder uriBuilder) throws MessagingException {
         Aluno aluno = alunoForm.save(alunoRepository);
         //String link = "https://easylearn-app.herokuapp.com/confirmar_email="+aluno.getId();
-        String link = "http://localhost:3000/confirmar_email="+aluno.getId();
+        //String link = "http://localhost:3000/confirmar_email="+aluno.getId();
         URI uri = uriBuilder.path("/v1/aluno/{id}").buildAndExpand(aluno.getId()).toUri();
-        Mail email = new Mail(aluno.getEmail(),"Confirmação de Conta","Por gentiliza acesse esse link "+"<a href='"+link+"'>aqui</a>");
-        service.sendMailWithAttachments(email);
+        //Mail email = new Mail(aluno.getEmail(),"Confirmação de Conta","Por gentiliza acesse esse link "+"<a href='"+link+"'>aqui</a>");
+       //service.sendMailWithAttachments(email);
 
         return ResponseEntity.created(uri).body(new AlunoDto(aluno));
     }
