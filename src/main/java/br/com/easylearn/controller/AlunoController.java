@@ -7,6 +7,7 @@ import br.com.easylearn.controller.form.AtualizacaoAlunoForm;
 import br.com.easylearn.domain.Aluno;
 import br.com.easylearn.domain.Mail;
 import br.com.easylearn.repository.AlunoRepository;
+import jdk.jfr.BooleanFlag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import java.net.URI;
@@ -48,8 +50,8 @@ public class AlunoController {
     @CacheEvict(value = "listaDeAlunos", allEntries = true)
     public ResponseEntity<? extends AlunoDto> saveAluno(@RequestBody AlunoForm alunoForm, UriComponentsBuilder uriBuilder) throws MessagingException {
         Aluno aluno = alunoForm.save(alunoRepository);
-        //String link = "https://easylearn-app.herokuapp.com/ativarAluno/"+aluno.getUuid();
-        String link = "http://localhost:8080/ativarAluno/"+aluno.getUuid();
+        //String link = "https://easylearn-app.herokuapp.com/confirmar_email="+aluno.getId();
+        String link = "http://localhost:3000/confirmar_email="+aluno.getId();
         URI uri = uriBuilder.path("/v1/aluno/{id}").buildAndExpand(aluno.getId()).toUri();
         Mail email = new Mail(aluno.getEmail(),"Confirmação de Conta","Por gentiliza acesse esse link " +
                 "<a href='"+link+"'>aqui</a>");
@@ -71,11 +73,59 @@ public class AlunoController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("ativarAluno/{uuid}")
+    @PostMapping("v1/resetPassword/{email}")
     @Transactional
     @CacheEvict(value = "listaDeAlunos", allEntries = true)
-    public ResponseEntity<? extends AlunoDto> ativarAluno(@PathVariable String uuid) {
+    public ResponseEntity<? extends AlunoDto> enviaEmailComLinkDeRedefinicaoDeSenha(@PathVariable String email) throws MessagingException {
+        Optional<Aluno> byEmail = alunoRepository.findByEmail(email);
+
+        if (byEmail.isPresent()) {
+            //String link = "https://easylearn-app.herokuapp.com/resetPassword="+byEmail.get().getId()+"&email="+byEmail.get().getEmail();
+            String link = "http://localhost:3000/resetPassword="+byEmail.get().getId()+"&email="+byEmail.get().getEmail();
+            String assunto = "Olá "+byEmail.get().getNomeCompleto()+", Aparentemente, você pediu para alterar sua senha. Para fazer isso basta seguir o link: "+"<a href='"+link+"'>aqui</a>"+" Se não foi você, basta ignorar esse e-mail.";
+
+            Mail mail = new Mail(byEmail.get().getEmail(),"RECUPERAR SENHA",assunto);
+            service.sendMailWithAttachments(mail);
+            return ResponseEntity.ok(new AlunoDto(byEmail.get()));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("v1/resetPassword/{id}/{email}")
+    @Transactional
+    @CacheEvict(value = "listaDeAlunos", allEntries = true)
+    public ResponseEntity<? extends AlunoDto> redefinirSenha(@PathVariable Long id, @PathVariable String email, @RequestBody String senha){
+        Optional<Aluno> aluno = alunoRepository.findByIdAndEmail(id,email);
+
+        System.out.println(senha);
+
+        if (aluno.isPresent()){
+            aluno.get().setSenha(senha);
+            Aluno save = alunoRepository.save(aluno.get());
+            return ResponseEntity.ok(AlunoDto.converter(aluno.get()));
+        }
+        else
+            return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("ativarAluno/uuid/{uuid}")
+    @Transactional
+    @CacheEvict(value = "listaDeAlunos", allEntries = true)
+    public ResponseEntity<? extends AlunoDto> ativarAlunoByUuid(@PathVariable String uuid) {
         Optional<Aluno> optional = alunoRepository.findByUuid(uuid);
+        if (optional.isPresent()) {
+            Aluno aluno = optional.get();
+            aluno.setAtivo(Boolean.TRUE);
+            return ResponseEntity.ok(new AlunoDto(aluno));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("ativarAluno/id/{id}")
+    @Transactional
+    @CacheEvict(value = "listaDeAlunos", allEntries = true)
+    public ResponseEntity<? extends AlunoDto> ById(@PathVariable Long id) {
+        Optional<Aluno> optional = alunoRepository.findById(id);
         if (optional.isPresent()) {
             Aluno aluno = optional.get();
             aluno.setAtivo(Boolean.TRUE);

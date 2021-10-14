@@ -48,7 +48,7 @@ public class ModuloController {
         return ResponseEntity.created(uri).body(new ModuloDto(modulo));
     }
 
-    @GetMapping("v1/protectedA/modulo/{idModulo}")
+    @GetMapping("v1/protectedX/modulo/{idModulo}")
     @Transactional
     @PreAuthorize("hasRole('ALUNO') or hasRole('PROFESSOR')")
     @Cacheable(value = "listaDeModulos")
@@ -61,7 +61,7 @@ public class ModuloController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("v1/protectedA/modulo/curso/{uuidcurso}")
+    @GetMapping("v1/protectedX/modulo/curso/{uuidcurso}")
     @Transactional
     @PreAuthorize("hasRole('ALUNO') or hasRole('PROFESSOR')")
     @Cacheable(value = "listaDeModulos")
@@ -74,7 +74,20 @@ public class ModuloController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("v1/protectedA/modulo/curso/{uuidcurso}/aula/{idAula}")
+    @GetMapping("v1/protectedP/modulo")
+    @Transactional
+    @PreAuthorize("hasRole('PROFESSOR')")
+    @Cacheable(value = "listaDeModulos")
+    public ResponseEntity<? extends List<ModuloDto>> findAllModulos() {
+        List<Modulo> optional = moduloRepository.findAll();
+        if (!optional.isEmpty()) {
+            return ResponseEntity.ok(ModuloDto.converter(optional));
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("v1/protectedX/modulo/curso/{uuidcurso}/aula/{idAula}")
     @Transactional
     @PreAuthorize("hasRole('ALUNO') or hasRole('PROFESSOR')")
     public ResponseEntity<? extends AulaDto> findModulosByUuidCursoAndIdAula(@PathVariable String uuidcurso, @PathVariable Long idAula) {
@@ -90,7 +103,7 @@ public class ModuloController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("v1/protectedA/curso/{uuidcurso}/aula/{idAula}/modulo")
+    @GetMapping("v1/protectedX/curso/{uuidcurso}/aula/{idAula}/modulo")
     @Transactional
     @PreAuthorize("hasRole('ALUNO') or hasRole('PROFESSOR')")
     public ResponseEntity<? extends ModuloDto> findModuloByUuidCursoAndIdAula(@PathVariable String uuidcurso, @PathVariable Long idAula) {
