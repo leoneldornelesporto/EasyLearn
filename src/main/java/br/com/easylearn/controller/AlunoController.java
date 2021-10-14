@@ -45,7 +45,7 @@ public class AlunoController {
             return ResponseEntity.ok(alunoDtoList);
     }
 
-    @PostMapping("v1/salvar/aluno")
+    @PostMapping("v1/aluno")
     @Transactional
     @CacheEvict(value = "listaDeAlunos", allEntries = true)
     public ResponseEntity<? extends AlunoDto> saveAluno(@RequestBody AlunoForm alunoForm, UriComponentsBuilder uriBuilder) throws MessagingException {
