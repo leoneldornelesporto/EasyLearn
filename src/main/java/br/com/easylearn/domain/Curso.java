@@ -17,7 +17,7 @@ public class Curso extends AbstractEntity{
 	private Integer cargaHoraria;
 	private String data = getCurrentTimeStamp();
 	private String imagemIcon;
-	private Boolean ativo = Boolean.FALSE;
+	private Boolean ativo;
 
 	@OneToOne
 	private Categoria categoria;

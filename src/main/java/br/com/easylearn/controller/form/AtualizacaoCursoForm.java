@@ -12,6 +12,7 @@ public class AtualizacaoCursoForm {
     private Integer cargahoraria;
     private Long idCategoria;
     private String imagemIcon;
+    private Boolean ativo;
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -33,6 +34,10 @@ public class AtualizacaoCursoForm {
         this.imagemIcon = imagemIcon;
     }
 
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
+
     public Curso atualizar(Long idCurso, CursoRepository cursoRepository, CategoriaRepository categoriaRepository) {
         Curso curso = cursoRepository.getOne(idCurso);
         curso.setNome(nome);
@@ -41,6 +46,7 @@ public class AtualizacaoCursoForm {
         curso.setImagemIcon(imagemIcon);
         Categoria categoria = categoriaRepository.getOne(idCategoria);
         curso.setCategoria(categoria);
+        curso.setAtivo(ativo);
         return curso;
     }
 }
