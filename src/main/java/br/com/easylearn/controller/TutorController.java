@@ -53,10 +53,9 @@ public class TutorController {
         Tutor tutor = tutorForm.save(tutorRepository);
         URI uri = uriBuilder.path("/v1/tutor/{id}").buildAndExpand(tutor.getId()).toUri();
         //String link = "https://easylearn-app.herokuapp.com/ativarTutor/"+tutor.getUuid();
-        String link = "http://localhost:8080/ativarAluno/"+tutor.getUuid();
-        Mail email = new Mail(tutor.getEmail(),"Confirmação de Conta","Por gentiliza acesse esse link " +
-                "<a href='"+link+"'>aqui</a>");
-        service.sendMailWithAttachments(email);
+        //String link = "http://localhost:8080/ativarAluno/"+tutor.getUuid();
+        //Mail email = new Mail(tutor.getEmail(),"Confirmação de Conta","Por gentiliza acesse esse link " +"<a href='"+link+"'>aqui</a>");
+        //service.sendMailWithAttachments(email);
 
         return ResponseEntity.created(uri).body(new TutorDto(tutor));
     }
