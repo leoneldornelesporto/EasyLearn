@@ -100,4 +100,12 @@ public class AlunoForm {
     public void setCurso(String curso) {
         this.curso = curso;
     }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }

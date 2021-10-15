@@ -1,5 +1,7 @@
 package br.com.easylearn.controller;
 
+import br.com.easylearn.config.exception.ResourceBadRequestException;
+import br.com.easylearn.config.exception.ResourceNotFoundException;
 import br.com.easylearn.config.mailsender.SendMailServiceImpl;
 import br.com.easylearn.controller.dto.AlunoDto;
 import br.com.easylearn.controller.form.AlunoForm;
@@ -7,7 +9,6 @@ import br.com.easylearn.controller.form.AtualizacaoAlunoForm;
 import br.com.easylearn.domain.Aluno;
 import br.com.easylearn.domain.Mail;
 import br.com.easylearn.repository.AlunoRepository;
-import jdk.jfr.BooleanFlag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -48,7 +49,8 @@ public class AlunoController {
     @PostMapping("v1/salvar/aluno")
     @Transactional
     @CacheEvict(value = "listaDeAlunos", allEntries = true)
-    public ResponseEntity<? extends AlunoDto> saveAluno(@RequestBody AlunoForm alunoForm, UriComponentsBuilder uriBuilder) throws MessagingException {
+    public ResponseEntity<? extends AlunoDto> saveAluno(@RequestBody AlunoForm alunoForm, UriComponentsBuilder uriBuilder) {
+        verifyAlunoExistsByCpfAndEmail(alunoForm.getCpf(),alunoForm.getEmail());
         Aluno aluno = alunoForm.save(alunoRepository);
         //String link = "https://easylearn-app.herokuapp.com/confirmar_email="+aluno.getId();
         //String link = "http://localhost:3000/confirmar_email="+aluno.getId();
@@ -63,7 +65,8 @@ public class AlunoController {
     @PreAuthorize("hasRole('ALUNO')")
     @Transactional
     @CacheEvict(value = "listaDeAlunos", allEntries = true)
-    public ResponseEntity<? extends AlunoDto> atualizarAluno(@PathVariable Long idAluno, @RequestBody AtualizacaoAlunoForm form) {
+    public ResponseEntity<? extends AlunoDto> atualizarAluno(@PathVariable Long idAluno, @RequestBody AtualizacaoAlunoForm form){
+        verifyAlunoExists(idAluno);
         Optional<Aluno> optional = alunoRepository.findById(idAluno);
         if (optional.isPresent()) {
             Aluno aluno = form.atualizar(idAluno,alunoRepository);
@@ -96,11 +99,9 @@ public class AlunoController {
     public ResponseEntity<? extends AlunoDto> redefinirSenha(@PathVariable Long id, @PathVariable String email, @RequestBody String senha){
         Optional<Aluno> aluno = alunoRepository.findByIdAndEmail(id,email);
 
-        System.out.println(senha);
-
         if (aluno.isPresent()){
             aluno.get().setSenha(senha);
-            Aluno save = alunoRepository.save(aluno.get());
+            alunoRepository.save(aluno.get());
             return ResponseEntity.ok(AlunoDto.converter(aluno.get()));
         }
         else
@@ -123,7 +124,7 @@ public class AlunoController {
     @GetMapping("ativarAluno/id/{id}")
     @Transactional
     @CacheEvict(value = "listaDeAlunos", allEntries = true)
-    public ResponseEntity<? extends AlunoDto> ById(@PathVariable Long id) {
+    public ResponseEntity<? extends AlunoDto> ativarAlunoById(@PathVariable Long id) {
         Optional<Aluno> optional = alunoRepository.findById(id);
         if (optional.isPresent()) {
             Aluno aluno = optional.get();
@@ -131,5 +132,21 @@ public class AlunoController {
             return ResponseEntity.ok(new AlunoDto(aluno));
         }
         return ResponseEntity.notFound().build();
+    }
+
+    private void verifyAlunoExists(Long id){
+        if(!alunoRepository.findById(id).isPresent()){
+            throw new ResourceNotFoundException("Aluno not found for ID: "+id);
+        }
+    }
+
+    private void verifyAlunoExistsByCpfAndEmail(String cpf, String email){
+        if(alunoRepository.findByCpf(cpf).isPresent()){
+            throw new ResourceBadRequestException("Aluno exists: cpf: "+cpf);
+        }
+
+        if(alunoRepository.findByEmail(email).isPresent()){
+            throw new ResourceBadRequestException("Aluno exists: email: "+email);
+        }
     }
 }

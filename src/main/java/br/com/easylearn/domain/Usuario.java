@@ -15,7 +15,7 @@ import java.util.UUID;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TIPO_USUARIO", discriminatorType = DiscriminatorType.STRING)
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "cpf")})
+//@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "cpf"), @UniqueConstraint(columnNames = "email")})
 public abstract class Usuario extends AbstractEntity implements UserDetails {
 
     private static final long serialVersionUID = 1L;
@@ -24,12 +24,8 @@ public abstract class Usuario extends AbstractEntity implements UserDetails {
     private String nomeCompleto;
     private String nomeNoCertificado;
     private String ocupacao;
-    //@CPF(message = "Invalid CPF")
-    //@Column(unique = true, nullable = false)
     private String cpf;
     private String usuarioNaUrl;
-    //@Email(message = "Invalid e-mail")
-    //@Column(unique = true, nullable = false)
     private String email;
     private String senha;
     private String dataDeNascimento;
