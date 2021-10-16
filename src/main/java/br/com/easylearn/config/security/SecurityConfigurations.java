@@ -34,8 +34,6 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers("/*/protectedA/**").hasRole("ALUNO")
 				.antMatchers("/*/protectedP/**").hasRole("PROFESSOR")
-				.antMatchers("/*/protectedX/**").hasRole("ALUNO")
-				.antMatchers("/*/protectedX/**").hasRole("PROFESSOR")
 				.antMatchers("/*/protectedT/**").hasRole("TUTOR")
 				.and()
 				.httpBasic()
