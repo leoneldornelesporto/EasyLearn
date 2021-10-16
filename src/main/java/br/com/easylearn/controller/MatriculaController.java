@@ -134,4 +134,13 @@ public class MatriculaController {
         URI uri = uriBuilder.path("/v1/matricula/{id}").buildAndExpand(save.getId()).toUri();
         return ResponseEntity.created(uri).body(save);
     }
+
+    @PutMapping("/concluirCurso/{idAluno}/{idCurso}")
+    public ResponseEntity<MatriculasDto> concluirCurso(@PathVariable Long idAluno, @PathVariable Long idCurso, UriComponentsBuilder uriBuilder){
+        Matricula matricula = matriculaRepository.findByAlunoIdAndCursoId(idAluno,idCurso);
+        matricula.setCursoConcluido(Boolean.TRUE);
+        matriculaRepository.save(matricula);
+        URI uri = uriBuilder.path("/v1/matricula/{id}").buildAndExpand(matricula.getId()).toUri();
+        return ResponseEntity.created(uri).body(MatriculasDto.converter(matricula));
+    }
 }
