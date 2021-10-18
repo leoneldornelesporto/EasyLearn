@@ -4,7 +4,6 @@ import br.com.easylearn.controller.dto.CursoDto;
 import br.com.easylearn.controller.dto.MatriculasDto;
 import br.com.easylearn.controller.form.MatriculaForm;
 import br.com.easylearn.domain.AssistirAula;
-import br.com.easylearn.domain.Curso;
 import br.com.easylearn.domain.Matricula;
 import br.com.easylearn.domain.Modulo;
 import br.com.easylearn.repository.AlunoRepository;
@@ -97,20 +96,29 @@ public class MatriculaController {
             return ResponseEntity.ok(cursoDtoList);
     }
 
-    @GetMapping("/verificaById/porcentagem/aluno/{idAluno}/curso/{uuid}")
-    public ResponseEntity<List<Modulo>> verificaPorcentagemDoCurso(@PathVariable Long idAluno, @PathVariable String uuid){
+    @GetMapping("/verificaById/cursoConcluido/{idAluno}/{uuid}")
+    public ResponseEntity<? extends Boolean> verificaSeConcluiCurso(@PathVariable Long idAluno, @PathVariable String uuid){
         Matricula byAlunoIdAndCurso_uuid = matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno, uuid);
-        Curso curso = cursoRepository.findByUuid(uuid);
+
+        if (byAlunoIdAndCurso_uuid.equals(null))
+            return ResponseEntity.notFound().build();
+        else
+            return ResponseEntity.ok(byAlunoIdAndCurso_uuid.getCursoConcluido());
+    }
+
+    @GetMapping("/verificaById/porcentagem/aluno/{idAluno}/curso/{uuid}")
+    public ResponseEntity<Integer> verificaPorcentagemDoCurso(@PathVariable Long idAluno, @PathVariable String uuid){
+        Matricula byAlunoIdAndCurso_uuid = matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno, uuid);
 
         if (byAlunoIdAndCurso_uuid.equals(null))
             return ResponseEntity.notFound().build();
         else {
             List<AssistirAula> byIdAlunoAndUuidCurso = assistirAulaRepository.findByIdAlunoAndUuidCurso(idAluno, uuid);
-            //Integer total = verificaQuantidadeTotalDeAulas(byAlunoIdAndCurso_uuid.getCurso().getModuloList());
-            //Integer porcentagem = (byIdAlunoAndUuidCurso.size() * 100) / total;
-            //byAlunoIdAndCurso_uuid.setProgresso(porcentagem);
-            //Matricula save = matriculaRepository.save(byAlunoIdAndCurso_uuid);
-            return ResponseEntity.ok(curso.getModuloList());
+            Integer total = verificaQuantidadeTotalDeAulas(byAlunoIdAndCurso_uuid.getCurso().getModuloList());
+            Integer porcentagem = (byIdAlunoAndUuidCurso.size() * 100) / total;
+            byAlunoIdAndCurso_uuid.setProgresso(porcentagem);
+            Matricula save = matriculaRepository.save(byAlunoIdAndCurso_uuid);
+            return ResponseEntity.ok(save.getProgresso());
         }
     }
 
