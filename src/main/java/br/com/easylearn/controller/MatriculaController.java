@@ -5,6 +5,7 @@ import br.com.easylearn.controller.dto.MatriculasDto;
 import br.com.easylearn.controller.form.MatriculaForm;
 import br.com.easylearn.domain.AssistirAula;
 import br.com.easylearn.domain.Matricula;
+import br.com.easylearn.domain.Modulo;
 import br.com.easylearn.repository.AlunoRepository;
 import br.com.easylearn.repository.AssistirAulaRepository;
 import br.com.easylearn.repository.CursoRepository;
@@ -96,13 +97,26 @@ public class MatriculaController {
     }
 
     @GetMapping("/verificaById/porcentagem/aluno/{idAluno}/curso/{uuid}")
-    public ResponseEntity<? extends MatriculasDto> verificaPorcentagemDoCurso(@PathVariable Long idAluno, @PathVariable String uuid){
-        MatriculasDto converter = MatriculasDto.converter(matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno, uuid));
+    public ResponseEntity<Integer> verificaPorcentagemDoCurso(@PathVariable Long idAluno, @PathVariable String uuid){
+        Matricula byAlunoIdAndCurso_uuid = matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno, uuid);
+        List<AssistirAula> byIdAlunoAndUuidCurso = assistirAulaRepository.findByIdAlunoAndUuidCurso(idAluno, uuid);
+        Integer total = verificaQuantidadeTotalDeAulas(byAlunoIdAndCurso_uuid.getCurso().getModuloList());
+        Integer porcentagem = (byIdAlunoAndUuidCurso.size() * 100) / total;
+        byAlunoIdAndCurso_uuid.setProgresso(porcentagem);
+        Matricula save = matriculaRepository.save(byAlunoIdAndCurso_uuid);
 
-        if (converter.equals(null))
+        if (byAlunoIdAndCurso_uuid.equals(null))
             return ResponseEntity.notFound().build();
         else
-            return ResponseEntity.ok(converter);
+            return ResponseEntity.ok(save.getProgresso());
+    }
+
+    private Integer verificaQuantidadeTotalDeAulas(List<Modulo> moduloList) {
+        Integer total=0;
+        for (Modulo modulo : moduloList){
+            total+=modulo.getAulaList().size();
+        }
+        return total;
     }
 
     @GetMapping("/verificaById/cursosPausados/{idAluno}")
@@ -137,9 +151,9 @@ public class MatriculaController {
         return Boolean.FALSE;
     }
 
-    @PostMapping("/assistirAulaSave/{idAluno}/{idAula}")
-    public ResponseEntity<AssistirAula> assistirAulaSave(@PathVariable Long idAluno, @PathVariable Long idAula, UriComponentsBuilder uriBuilder){
-        AssistirAula assistirAula = new AssistirAula(idAluno,idAula);
+    @PostMapping("/assistirAulaSave/{idAluno}/{uuidCurso}/{idAula}")
+    public ResponseEntity<AssistirAula> assistirAulaSave(@PathVariable Long idAluno, @PathVariable String uuidCurso, @PathVariable Long idAula, UriComponentsBuilder uriBuilder){
+        AssistirAula assistirAula = new AssistirAula(idAluno,uuidCurso,idAula);
         AssistirAula save = assistirAulaRepository.save(assistirAula);
         URI uri = uriBuilder.path("/v1/matricula/{id}").buildAndExpand(save.getId()).toUri();
         return ResponseEntity.created(uri).body(save);
