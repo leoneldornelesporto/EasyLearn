@@ -4,6 +4,7 @@ import br.com.easylearn.controller.dto.CursoDto;
 import br.com.easylearn.controller.dto.MatriculasDto;
 import br.com.easylearn.controller.form.MatriculaForm;
 import br.com.easylearn.domain.AssistirAula;
+import br.com.easylearn.domain.Curso;
 import br.com.easylearn.domain.Matricula;
 import br.com.easylearn.domain.Modulo;
 import br.com.easylearn.repository.AlunoRepository;
@@ -99,6 +100,7 @@ public class MatriculaController {
     @GetMapping("/verificaById/porcentagem/aluno/{idAluno}/curso/{uuid}")
     public ResponseEntity<List<Modulo>> verificaPorcentagemDoCurso(@PathVariable Long idAluno, @PathVariable String uuid){
         Matricula byAlunoIdAndCurso_uuid = matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno, uuid);
+        Curso curso = cursoRepository.findByUuid(uuid);
 
         if (byAlunoIdAndCurso_uuid.equals(null))
             return ResponseEntity.notFound().build();
@@ -108,7 +110,7 @@ public class MatriculaController {
             //Integer porcentagem = (byIdAlunoAndUuidCurso.size() * 100) / total;
             //byAlunoIdAndCurso_uuid.setProgresso(porcentagem);
             //Matricula save = matriculaRepository.save(byAlunoIdAndCurso_uuid);
-            return ResponseEntity.ok(byAlunoIdAndCurso_uuid.getCurso().getModuloList());
+            return ResponseEntity.ok(curso.getModuloList());
         }
     }
 
