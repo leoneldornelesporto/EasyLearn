@@ -6,10 +6,7 @@ import br.com.easylearn.controller.form.MatriculaForm;
 import br.com.easylearn.domain.AssistirAula;
 import br.com.easylearn.domain.Matricula;
 import br.com.easylearn.domain.Modulo;
-import br.com.easylearn.repository.AlunoRepository;
-import br.com.easylearn.repository.AssistirAulaRepository;
-import br.com.easylearn.repository.CursoRepository;
-import br.com.easylearn.repository.MatriculaRepository;
+import br.com.easylearn.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -29,13 +26,15 @@ import java.util.List;
 public class MatriculaController {
 
     private final MatriculaRepository matriculaRepository;
+    private final ModuloRepository moduloRepository;
     private final AlunoRepository alunoRepository;
     private final CursoRepository cursoRepository;
     private final AssistirAulaRepository assistirAulaRepository;
 
     @Autowired
-    public MatriculaController(MatriculaRepository matriculaRepository, AlunoRepository alunoRepository, CursoRepository cursoRepository, AssistirAulaRepository assistirAulaRepository) {
+    public MatriculaController(MatriculaRepository matriculaRepository, AlunoRepository alunoRepository, CursoRepository cursoRepository, AssistirAulaRepository assistirAulaRepository, ModuloRepository moduloRepository) {
         this.matriculaRepository = matriculaRepository;
+        this.moduloRepository = moduloRepository;
         this.alunoRepository = alunoRepository;
         this.cursoRepository = cursoRepository;
         this.assistirAulaRepository = assistirAulaRepository;
@@ -107,18 +106,19 @@ public class MatriculaController {
     }
 
     @GetMapping("/verificaById/porcentagem/aluno/{idAluno}/curso/{uuid}")
-    public ResponseEntity<Integer> verificaPorcentagemDoCurso(@PathVariable Long idAluno, @PathVariable String uuid){
+    public ResponseEntity<List<Modulo>> verificaPorcentagemDoCurso(@PathVariable Long idAluno, @PathVariable String uuid){
         Matricula byAlunoIdAndCurso_uuid = matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno, uuid);
+        List<Modulo> byCursoUuid = moduloRepository.findByCursoUuid(uuid);
 
         if (byAlunoIdAndCurso_uuid.equals(null))
             return ResponseEntity.notFound().build();
         else {
             List<AssistirAula> byIdAlunoAndUuidCurso = assistirAulaRepository.findByIdAlunoAndUuidCurso(idAluno, uuid);
-            Integer total = verificaQuantidadeTotalDeAulas(byAlunoIdAndCurso_uuid.getCurso().getModuloList());
-            Integer porcentagem = (byIdAlunoAndUuidCurso.size() * 100) / total;
-            byAlunoIdAndCurso_uuid.setProgresso(porcentagem);
-            Matricula save = matriculaRepository.save(byAlunoIdAndCurso_uuid);
-            return ResponseEntity.ok(save.getProgresso());
+            //Integer total = verificaQuantidadeTotalDeAulas(byAlunoIdAndCurso_uuid.getCurso().getModuloList());
+            //Integer porcentagem = (byIdAlunoAndUuidCurso.size() * 100) / total;
+            //byAlunoIdAndCurso_uuid.setProgresso(porcentagem);
+            //Matricula save = matriculaRepository.save(byAlunoIdAndCurso_uuid);
+            return ResponseEntity.ok(byCursoUuid);
         }
     }
 
