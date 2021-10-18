@@ -19,6 +19,7 @@ import javax.transaction.Transactional;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("v1/protectedA/matricula")
@@ -164,10 +165,17 @@ public class MatriculaController {
 
     @PostMapping("/assistirAulaSave/{idAluno}/{uuidCurso}/{idAula}")
     public ResponseEntity<AssistirAula> assistirAulaSave(@PathVariable Long idAluno, @PathVariable String uuidCurso, @PathVariable Long idAula, UriComponentsBuilder uriBuilder){
-        AssistirAula assistirAula = new AssistirAula(idAluno,uuidCurso,idAula);
-        AssistirAula save = assistirAulaRepository.save(assistirAula);
-        URI uri = uriBuilder.path("/v1/matricula/{id}").buildAndExpand(save.getId()).toUri();
-        return ResponseEntity.created(uri).body(save);
+        Optional<AssistirAula> byId = assistirAulaRepository.findById(idAula);
+
+        if (byId.isPresent()){
+            return ResponseEntity.notFound().build();
+        }
+        else {
+            AssistirAula assistirAula = new AssistirAula(idAluno,uuidCurso,idAula);
+            AssistirAula save = assistirAulaRepository.save(assistirAula);
+            URI uri = uriBuilder.path("/v1/matricula/{id}").buildAndExpand(save.getId()).toUri();
+            return ResponseEntity.created(uri).body(save);
+        }
     }
 
     @PutMapping("/concluirCurso/{idAluno}/{idCurso}")
@@ -177,5 +185,11 @@ public class MatriculaController {
         matriculaRepository.save(matricula);
         URI uri = uriBuilder.path("/v1/matricula/{id}").buildAndExpand(matricula.getId()).toUri();
         return ResponseEntity.created(uri).body(MatriculasDto.converter(matricula));
+    }
+
+    @DeleteMapping("/todo")
+    public Boolean a(){
+        assistirAulaRepository.deleteAll();
+        return Boolean.TRUE;
     }
 }
