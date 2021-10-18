@@ -106,7 +106,7 @@ public class MatriculaController {
     }
 
     @GetMapping("/verificaById/porcentagem/aluno/{idAluno}/curso/{uuid}")
-    public ResponseEntity<List<Modulo>> verificaPorcentagemDoCurso(@PathVariable Long idAluno, @PathVariable String uuid){
+    public ResponseEntity<Integer> verificaPorcentagemDoCurso(@PathVariable Long idAluno, @PathVariable String uuid){
         Matricula byAlunoIdAndCurso_uuid = matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno, uuid);
         List<Modulo> byCursoUuid = moduloRepository.findByCursoUuid(uuid);
 
@@ -114,11 +114,11 @@ public class MatriculaController {
             return ResponseEntity.notFound().build();
         else {
             List<AssistirAula> byIdAlunoAndUuidCurso = assistirAulaRepository.findByIdAlunoAndUuidCurso(idAluno, uuid);
-            //Integer total = verificaQuantidadeTotalDeAulas(byAlunoIdAndCurso_uuid.getCurso().getModuloList());
-            //Integer porcentagem = (byIdAlunoAndUuidCurso.size() * 100) / total;
-            //byAlunoIdAndCurso_uuid.setProgresso(porcentagem);
-            //Matricula save = matriculaRepository.save(byAlunoIdAndCurso_uuid);
-            return ResponseEntity.ok(byCursoUuid);
+            Integer total = verificaQuantidadeTotalDeAulas(byCursoUuid);
+            Integer porcentagem = (byIdAlunoAndUuidCurso.size() * 100) / total;
+            byAlunoIdAndCurso_uuid.setProgresso(porcentagem);
+            Matricula save = matriculaRepository.save(byAlunoIdAndCurso_uuid);
+            return ResponseEntity.ok(save.getProgresso());
         }
     }
 
