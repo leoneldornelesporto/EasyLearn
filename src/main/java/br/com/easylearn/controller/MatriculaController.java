@@ -95,6 +95,16 @@ public class MatriculaController {
             return ResponseEntity.ok(cursoDtoList);
     }
 
+    @GetMapping("/verificaById/porcentagem/aluno/{idAluno}/curso/{uuid}")
+    public ResponseEntity<? extends MatriculasDto> verificaPorcentagemDoCurso(@PathVariable Long idAluno, @PathVariable String uuid){
+        MatriculasDto converter = MatriculasDto.converter(matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno, uuid));
+
+        if (converter.equals(null))
+            return ResponseEntity.notFound().build();
+        else
+            return ResponseEntity.ok(converter);
+    }
+
     @GetMapping("/verificaById/cursosPausados/{idAluno}")
     public ResponseEntity<? extends List<CursoDto>> verificarSePauseiAlgumCursoNaMinhaMatricula(@PathVariable Long idAluno){
         List<MatriculasDto> matriculasDtos = MatriculasDto.converter(matriculaRepository.findAllByAlunoIdAndCursoPausadoIsTrue(idAluno));
