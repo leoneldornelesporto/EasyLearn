@@ -106,9 +106,9 @@ public class MatriculaController {
             List<AssistirAula> byIdAlunoAndUuidCurso = assistirAulaRepository.findByIdAlunoAndUuidCurso(idAluno, uuid);
             Integer total = verificaQuantidadeTotalDeAulas(byAlunoIdAndCurso_uuid.getCurso().getModuloList());
             Integer porcentagem = (byIdAlunoAndUuidCurso.size() * 100) / total;
-            byAlunoIdAndCurso_uuid.setProgresso(porcentagem);
-            Matricula save = matriculaRepository.save(byAlunoIdAndCurso_uuid);
-            return ResponseEntity.ok(save.getProgresso());
+            //byAlunoIdAndCurso_uuid.setProgresso(porcentagem);
+            //Matricula save = matriculaRepository.save(byAlunoIdAndCurso_uuid);
+            return ResponseEntity.ok(total);
         }
     }
 
@@ -167,15 +167,5 @@ public class MatriculaController {
         matriculaRepository.save(matricula);
         URI uri = uriBuilder.path("/v1/matricula/{id}").buildAndExpand(matricula.getId()).toUri();
         return ResponseEntity.created(uri).body(MatriculasDto.converter(matricula));
-    }
-
-    @DeleteMapping("/aqui")
-    public ResponseEntity<Boolean> aqui(){
-        Long cont=1L;
-        for(int i=1;i<469;i++){
-            assistirAulaRepository.deleteById(cont);
-            cont++;
-        }
-        return ResponseEntity.ok(true);
     }
 }
