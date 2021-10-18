@@ -103,12 +103,12 @@ public class MatriculaController {
         if (byAlunoIdAndCurso_uuid.equals(null))
             return ResponseEntity.notFound().build();
         else {
-            List<AssistirAula> byIdAlunoAndUuidCurso = assistirAulaRepository.findByIdAlunoAndUuidCurso(idAluno, uuid);
-            Integer total = verificaQuantidadeTotalDeAulas(byAlunoIdAndCurso_uuid.getCurso().getModuloList());
-            Integer porcentagem = (byIdAlunoAndUuidCurso.size() * 100) / total;
+           // List<AssistirAula> byIdAlunoAndUuidCurso = assistirAulaRepository.findByIdAlunoAndUuidCurso(idAluno, uuid);
+            //Integer total = verificaQuantidadeTotalDeAulas(byAlunoIdAndCurso_uuid.getCurso().getModuloList());
+            //Integer porcentagem = (byIdAlunoAndUuidCurso.size() * 100) / total;
             //byAlunoIdAndCurso_uuid.setProgresso(porcentagem);
             //Matricula save = matriculaRepository.save(byAlunoIdAndCurso_uuid);
-            return ResponseEntity.ok(total);
+            return ResponseEntity.ok(22);
         }
     }
 
