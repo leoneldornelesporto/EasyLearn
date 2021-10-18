@@ -168,4 +168,14 @@ public class MatriculaController {
         URI uri = uriBuilder.path("/v1/matricula/{id}").buildAndExpand(matricula.getId()).toUri();
         return ResponseEntity.created(uri).body(MatriculasDto.converter(matricula));
     }
+
+    @DeleteMapping("/aqui")
+    public ResponseEntity<Boolean> aqui(){
+        Long cont=1L;
+        for(int i=1;i<469;i++){
+            assistirAulaRepository.deleteById(cont);
+            cont++;
+        }
+        return ResponseEntity.ok(true);
+    }
 }
