@@ -165,7 +165,7 @@ public class MatriculaController {
 
     @PostMapping("/assistirAulaSave/{idAluno}/{uuidCurso}/{idAula}")
     public ResponseEntity<AssistirAula> assistirAulaSave(@PathVariable Long idAluno, @PathVariable String uuidCurso, @PathVariable Long idAula, UriComponentsBuilder uriBuilder){
-        Optional<AssistirAula> byId = assistirAulaRepository.findById(idAula);
+        Optional<AssistirAula> byId = assistirAulaRepository.findByIdAula(idAula);
 
         if (byId.isPresent()){
             return ResponseEntity.notFound().build();
