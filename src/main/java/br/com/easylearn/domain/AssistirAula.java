@@ -1,6 +1,5 @@
 package br.com.easylearn.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
@@ -8,7 +7,6 @@ public class AssistirAula extends AbstractEntity{
 
     private Long idAluno;
     private String uuidCurso;
-    @Column(unique=true)
     private Long idAula;
     private Boolean assistido = Boolean.FALSE;
 

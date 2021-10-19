@@ -165,17 +165,10 @@ public class MatriculaController {
 
     @PostMapping("/assistirAulaSave/{idAluno}/{uuidCurso}/{idAula}")
     public ResponseEntity<AssistirAula> assistirAulaSave(@PathVariable Long idAluno, @PathVariable String uuidCurso, @PathVariable Long idAula, UriComponentsBuilder uriBuilder){
-        Optional<AssistirAula> byId = assistirAulaRepository.findByIdAula(idAula);
-
-        if (byId.isPresent()){
-            return ResponseEntity.notFound().build();
-        }
-        else {
-            AssistirAula assistirAula = new AssistirAula(idAluno,uuidCurso,idAula);
-            AssistirAula save = assistirAulaRepository.save(assistirAula);
-            URI uri = uriBuilder.path("/v1/matricula/{id}").buildAndExpand(save.getId()).toUri();
-            return ResponseEntity.created(uri).body(save);
-        }
+        AssistirAula assistirAula = new AssistirAula(idAluno,uuidCurso,idAula);
+        AssistirAula save = assistirAulaRepository.save(assistirAula);
+        URI uri = uriBuilder.path("/v1/matricula/{id}").buildAndExpand(save.getId()).toUri();
+        return ResponseEntity.created(uri).body(save);
     }
 
     @PutMapping("/concluirCurso/{idAluno}/{idCurso}")
