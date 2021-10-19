@@ -10,4 +10,6 @@ public interface AssistirAulaRepository extends JpaRepository<AssistirAula,Long>
     Optional<AssistirAula> findByIdAula(Long idAula);
     AssistirAula findByIdAlunoAndIdAula(Long idAluno, Long idAula);
     List<AssistirAula> findByIdAlunoAndUuidCurso(Long idAluno, String uuidCurso);
+
+    Optional<AssistirAula> findByIdAlunoAndUuidCursoAndIdAula(Long idAluno, String uuidCurso, Long idAula);
 }
