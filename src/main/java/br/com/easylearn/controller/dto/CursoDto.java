@@ -24,6 +24,9 @@ public class CursoDto {
     private String avatar;
     private String linkedin;
     private Boolean ativo;
+    private Integer transcricao;
+    private Integer valorCurso;
+
 
     public CursoDto(Curso curso, ModuloRepository moduloRepository) {
         this.id = curso.getId();
@@ -45,7 +48,10 @@ public class CursoDto {
         this.avatar = curso.getProfessor().getAvatar();
         this.linkedin = curso.getProfessor().getLinkedin();
         this.ativo = curso.getAtivo();
+        this.transcricao = curso.getTranscricao();
+        this.valorCurso = curso.getValorCurso();
     }
+
     public CursoDto(Curso curso) {
         this.id = curso.getId();
         this.nome = curso.getNome();
@@ -60,6 +66,8 @@ public class CursoDto {
         this.avatar = curso.getProfessor().getAvatar();
         this.linkedin = curso.getProfessor().getLinkedin();
         this.ativo = curso.getAtivo();
+        this.transcricao = curso.getTranscricao();
+        this.valorCurso = curso.getValorCurso();
     }
 
     public static List<CursoDto> converter(List<Curso> allCursos) {
@@ -140,5 +148,13 @@ public class CursoDto {
 
     public Boolean getAtivo() {
         return ativo;
+    }
+
+    public Integer getTranscricao() {
+        return transcricao;
+    }
+
+    public Integer getValorCurso() {
+        return valorCurso;
     }
 }

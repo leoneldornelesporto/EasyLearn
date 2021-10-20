@@ -15,9 +15,11 @@ public class Curso extends AbstractEntity{
 	private String nome;
 	private String descricao;
 	private Integer cargaHoraria;
+	private Integer valorCurso;
 	private String data = getCurrentTimeStamp();
 	private String imagemIcon;
 	private Boolean ativo;
+	private Integer transcricao;
 
 	@OneToOne
 	private Categoria categoria;
@@ -87,6 +89,14 @@ public class Curso extends AbstractEntity{
 
 	public void setCargaHoraria(Integer cargaHoraria) {
 		this.cargaHoraria = cargaHoraria;
+	}
+
+	public Integer getValorCurso() {
+		return valorCurso;
+	}
+
+	public void setValorCurso(Integer valorCurso) {
+		this.valorCurso = valorCurso;
 	}
 
 	public String getImagemIcon() {
@@ -187,5 +197,13 @@ public class Curso extends AbstractEntity{
 
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public Integer getTranscricao() {
+		return transcricao;
+	}
+
+	public void setTranscricao(Integer transcricao) {
+		this.transcricao = transcricao;
 	}
 }
