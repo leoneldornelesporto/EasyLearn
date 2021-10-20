@@ -11,4 +11,6 @@ public interface MatriculaRepository extends JpaRepository<Matricula,Long> {
     Matricula findByAlunoIdAndCurso_Uuid(Long idAluno, String uuid);
     List<Matricula> findAllByAlunoIdAndCursoConcluidoIsTrue(Long id);
     List<Matricula> findAllByAlunoIdAndCursoPausadoIsTrue(Long idAluno);
+    @Query("SELECT count(m.id) FROM Matricula m where m.curso.uuid = :uuid AND m.cursoConcluido = true")
+    Integer findByAllMatriculasSum(String uuid);
 }

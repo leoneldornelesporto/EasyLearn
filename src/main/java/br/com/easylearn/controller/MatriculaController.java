@@ -1,5 +1,6 @@
 package br.com.easylearn.controller;
 
+import br.com.easylearn.controller.dto.AlunoDto;
 import br.com.easylearn.controller.dto.CursoDto;
 import br.com.easylearn.controller.dto.MatriculasDto;
 import br.com.easylearn.controller.form.MatriculaForm;
@@ -161,6 +162,16 @@ public class MatriculaController {
         }
 
         return Boolean.FALSE;
+    }
+
+
+    @GetMapping("/quantidadeDePessoasMatriculasEmUmCurso/{uuid}")
+    public ResponseEntity<? extends Integer> findAllAlunosMatriculadosEmUmCurso(@PathVariable String uuid){
+        Integer total = matriculaRepository.findByAllMatriculasSum(uuid);
+        if (total.equals(null))
+            return ResponseEntity.notFound().build();
+        else
+            return ResponseEntity.ok(total);
     }
 
     @PostMapping("/assistirAulaSave/{idAluno}/{uuidCurso}/{idAula}")
