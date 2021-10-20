@@ -118,9 +118,6 @@ public class MatriculaController {
             Integer total = verificaQuantidadeTotalDeAulas(byCursoUuid);
             Integer porcentagem = (byIdAlunoAndUuidCurso.size() * 100) / total;
             byAlunoIdAndCurso_uuid.setProgresso(porcentagem);
-            if(total.equals(100)){
-                byAlunoIdAndCurso_uuid.setCursoConcluido(Boolean.TRUE);
-            }
             Matricula save = matriculaRepository.save(byAlunoIdAndCurso_uuid);
             return ResponseEntity.ok(save.getProgresso());
         }
@@ -181,9 +178,18 @@ public class MatriculaController {
         }
     }
 
-    @PutMapping("/concluirCurso/{idAluno}/{idCurso}")
-    public ResponseEntity<MatriculasDto> concluirCurso(@PathVariable Long idAluno, @PathVariable Long idCurso, UriComponentsBuilder uriBuilder){
+    @PutMapping("/concluirCursoById/{idAluno}/{idCurso}")
+    public ResponseEntity<MatriculasDto> concluirCursoById(@PathVariable Long idAluno, @PathVariable Long idCurso, UriComponentsBuilder uriBuilder){
         Matricula matricula = matriculaRepository.findByAlunoIdAndCursoId(idAluno,idCurso);
+        matricula.setCursoConcluido(Boolean.TRUE);
+        matriculaRepository.save(matricula);
+        URI uri = uriBuilder.path("/v1/matricula/{id}").buildAndExpand(matricula.getId()).toUri();
+        return ResponseEntity.created(uri).body(MatriculasDto.converter(matricula));
+    }
+
+    @PutMapping("/concluirCursoByUuid/{idAluno}/{uuid}")
+    public ResponseEntity<MatriculasDto> concluirCursoByUuid(@PathVariable Long idAluno, @PathVariable String uuid, UriComponentsBuilder uriBuilder){
+        Matricula matricula = matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno,uuid);
         matricula.setCursoConcluido(Boolean.TRUE);
         matriculaRepository.save(matricula);
         URI uri = uriBuilder.path("/v1/matricula/{id}").buildAndExpand(matricula.getId()).toUri();
