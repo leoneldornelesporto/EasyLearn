@@ -118,6 +118,9 @@ public class MatriculaController {
             Integer total = verificaQuantidadeTotalDeAulas(byCursoUuid);
             Integer porcentagem = (byIdAlunoAndUuidCurso.size() * 100) / total;
             byAlunoIdAndCurso_uuid.setProgresso(porcentagem);
+            if(total.equals(100)){
+                byAlunoIdAndCurso_uuid.setCursoConcluido(Boolean.TRUE);
+            }
             Matricula save = matriculaRepository.save(byAlunoIdAndCurso_uuid);
             return ResponseEntity.ok(save.getProgresso());
         }
