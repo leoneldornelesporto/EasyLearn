@@ -44,6 +44,10 @@ public class CursoController {
     public ResponseEntity<? extends List<CursoDto>> findAllCursos(){
         List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findCursosByAtivoTrue(),moduloRepository);
 
+        Optional<Curso> byId = cursoRepository.findById(6L);
+        byId.get().setValorCurso(10000);
+        cursoRepository.save(byId.get());
+
         if (cursoDtoList.isEmpty())
             return ResponseEntity.notFound().build();
         else
