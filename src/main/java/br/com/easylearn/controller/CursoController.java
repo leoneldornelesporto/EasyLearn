@@ -43,13 +43,6 @@ public class CursoController {
     @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends List<CursoDto>> findAllCursos(){
         List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findCursosByAtivoTrue(),moduloRepository);
-
-        for (Curso curso : cursoRepository.findAll()) {
-            curso.setValorCurso(10000);
-            cursoRepository.save(curso);
-        }
-
-
         if (cursoDtoList.isEmpty())
             return ResponseEntity.notFound().build();
         else
