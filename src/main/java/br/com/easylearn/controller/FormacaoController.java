@@ -23,8 +23,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("v1/protectedA/formacao")
-//@PreAuthorize("hasRole('PROFESSOR')")
+@RequestMapping("v1/protectedP/formacao")
+@PreAuthorize("hasRole('PROFESSOR')")
 @RestController
 public class FormacaoController {
 
