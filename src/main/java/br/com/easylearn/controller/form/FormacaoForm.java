@@ -11,21 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FormacaoForm {
-    //private List<Long> idCursos;
     private Long idCurso;
     private String titulo;
     private String descricao;
     private Long idCategoria;
 
-    /*
+
     public Formacao save(FormacaoRepository formacaoRepository, CursoRepository cursoRepository, CategoriaRepository categoriaRepository) {
         Formacao formacao = new Formacao(titulo,descricao);
-        List<Curso> cursoList = new ArrayList<>();
+        List<Curso> cursoList = formacao.getCursoList();
 
-        for(Long idCurso : idCursos){
-            Curso curso = cursoRepository.getOne(idCurso);
-            cursoList.add(curso);
-        }
+        Curso curso = cursoRepository.getOne(idCurso);
+        cursoList.add(curso);
+
 
         Categoria categoria = categoriaRepository.getOne(idCategoria);
 
@@ -34,7 +32,7 @@ public class FormacaoForm {
 
         return formacaoRepository.save(formacao);
     }
-     */
+
 
     public void setIdCurso(Long idCurso) {
         this.idCurso = idCurso;
@@ -50,16 +48,5 @@ public class FormacaoForm {
 
     public void setIdCategoria(Long idCategoria) {
         this.idCategoria = idCategoria;
-    }
-
-    public Formacao save(FormacaoRepository formacaoRepository, CursoRepository cursoRepository, CategoriaRepository categoriaRepository) {
-        Formacao formacao = new Formacao(titulo,descricao);
-        Curso curso = cursoRepository.getOne(idCurso);
-        Categoria categoria = categoriaRepository.getOne(idCategoria);
-
-        formacao.setCategoria(categoria);
-        formacao.setCurso(curso);
-
-        return formacaoRepository.save(formacao);
     }
 }

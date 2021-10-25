@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import java.util.List;
 
@@ -15,8 +14,8 @@ public class Formacao extends AbstractEntity{
     private String subtitulo;
     private String descricaoSubtitulo;
     @JsonIgnore
-    @ManyToOne
-    private Curso curso;
+    @ManyToMany
+    private List<Curso> cursoList;
     @OneToOne
     private Categoria categoria;
 
@@ -44,12 +43,12 @@ public class Formacao extends AbstractEntity{
         this.descricao = descricao;
     }
 
-    public Curso getCurso() {
-        return curso;
+    public List<Curso> getCursoList() {
+        return cursoList;
     }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setCursoList(List<Curso> cursoList) {
+        this.cursoList = cursoList;
     }
 
     public Categoria getCategoria() {
