@@ -23,8 +23,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("v1/protectedP/formacao")
-@PreAuthorize("hasRole('PROFESSOR')")
+@RequestMapping("v1/formacao")
 @RestController
 public class FormacaoController {
 
@@ -69,7 +68,7 @@ public class FormacaoController {
             return ResponseEntity.ok(formacaoDtoList);
     }
 
-    @PostMapping
+    @PostMapping("/protectedP")
     @Transactional
     public ResponseEntity<? extends FormacaoDto> saveFormacao(@RequestBody FormacaoForm formacaoForm, UriComponentsBuilder uriBuilder){
         Formacao formacao  = formacaoForm.save(formacaoRepository,cursoRepository,categoriaRepository);
@@ -77,7 +76,7 @@ public class FormacaoController {
         return ResponseEntity.created(uri).body(new FormacaoDto(formacao));
     }
 
-    @PutMapping("{idFormacao}")
+    @PutMapping("/protectedP/{idFormacao}")
     @Transactional
     public ResponseEntity<? extends FormacaoDto> atualizarFormacao(@PathVariable Long idFormacao, @RequestBody AtualizacaoFormacaoForm form) {
         Optional<Formacao> optional = formacaoRepository.findById(idFormacao);
@@ -88,7 +87,7 @@ public class FormacaoController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("{idFormacao}")
+    @DeleteMapping("/protectedP/{idFormacao}")
     @Transactional
     public ResponseEntity<?> removerFormacao(@PathVariable Long idFormacao) {
         Optional<Formacao> optional = formacaoRepository.findById(idFormacao);
