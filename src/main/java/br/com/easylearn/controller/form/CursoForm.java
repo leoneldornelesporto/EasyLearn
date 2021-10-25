@@ -2,9 +2,11 @@ package br.com.easylearn.controller.form;
 
 import br.com.easylearn.domain.Categoria;
 import br.com.easylearn.domain.Curso;
+import br.com.easylearn.domain.Formacao;
 import br.com.easylearn.domain.Professor;
 import br.com.easylearn.repository.CategoriaRepository;
 import br.com.easylearn.repository.CursoRepository;
+import br.com.easylearn.repository.FormacaoRepository;
 import br.com.easylearn.repository.ProfessorRepository;
 
 public class CursoForm {
@@ -16,6 +18,7 @@ public class CursoForm {
     private Long categoriaId;
     private String imagemIcon;
     private Boolean ativo;
+    private Long idFormacao;
 
     public void setIdProfessor(Long idProfessor) {
         this.idProfessor = idProfessor;
@@ -45,10 +48,15 @@ public class CursoForm {
         this.ativo = ativo;
     }
 
-    public Curso save(CursoRepository cursoRepository, ProfessorRepository professorRepository, CategoriaRepository categoriaRepository) {
+    public void setIdFormacao(Long idFormacao) {
+        this.idFormacao = idFormacao;
+    }
+
+    public Curso save(CursoRepository cursoRepository, ProfessorRepository professorRepository, CategoriaRepository categoriaRepository, FormacaoRepository formacaoRepository) {
         Professor professor = professorRepository.getOne(idProfessor);
         Categoria categoria = categoriaRepository.getOne(categoriaId);
-        Curso curso = new Curso(cargahoraria, descricao, nome, imagemIcon, professor, categoria, ativo);
+        Formacao formacao = formacaoRepository.getById(idFormacao);
+        Curso curso = new Curso(cargahoraria, descricao, nome, imagemIcon, professor, categoria, ativo, formacao);
         return cursoRepository.save(curso);
     }
 }

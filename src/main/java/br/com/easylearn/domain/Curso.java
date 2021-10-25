@@ -23,8 +23,8 @@ public class Curso extends AbstractEntity{
 
 	@OneToOne
 	private Categoria categoria;
-	@OneToMany
-	private List<Formacao> formacaoList;
+	@OneToOne
+	private Formacao formacao;
 	@OneToMany
 	private List<Reforco> reforcoList;
 	@OneToMany
@@ -45,8 +45,19 @@ public class Curso extends AbstractEntity{
 	public Curso() {
 	}
 
-	public Curso(Integer carga_horaria, String descricao, String nome, String imagemIcon, Professor professor,Categoria categoria, Boolean ativo) {
+	public Curso(Integer carga_horaria, String descricao, String nome, String imagemIcon, Professor professor, Categoria categoria, Boolean ativo, Formacao formacao) {
 		this.cargaHoraria = carga_horaria;
+		this.descricao = descricao;
+		this.nome = nome;
+		this.imagemIcon = imagemIcon;
+		this.professor = professor;
+		this.categoria = categoria;
+		this.ativo = ativo;
+		this.formacao = formacao;
+	}
+
+	public Curso(Integer cargahoraria, String descricao, String nome, String imagemIcon, Professor professor, Categoria categoria, Boolean ativo) {
+		this.cargaHoraria = cargahoraria;
 		this.descricao = descricao;
 		this.nome = nome;
 		this.imagemIcon = imagemIcon;
@@ -115,12 +126,12 @@ public class Curso extends AbstractEntity{
 		this.categoria = categoria;
 	}
 
-	public List<Formacao> getFormacaoList() {
-		return formacaoList;
+	public Formacao getFormacao() {
+		return formacao;
 	}
 
-	public void setFormacaoList(List<Formacao> formacaoList) {
-		this.formacaoList = formacaoList;
+	public void setFormacao(Formacao formacao) {
+		this.formacao = formacao;
 	}
 
 	public List<Reforco> getReforcoList() {

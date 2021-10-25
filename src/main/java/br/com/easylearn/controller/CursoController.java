@@ -6,10 +6,7 @@ import br.com.easylearn.controller.dto.ModuloDto;
 import br.com.easylearn.controller.form.AtualizacaoCursoForm;
 import br.com.easylearn.controller.form.CursoForm;
 import br.com.easylearn.domain.Curso;
-import br.com.easylearn.repository.CategoriaRepository;
-import br.com.easylearn.repository.CursoRepository;
-import br.com.easylearn.repository.ModuloRepository;
-import br.com.easylearn.repository.ProfessorRepository;
+import br.com.easylearn.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -30,13 +27,15 @@ public class CursoController {
     private final ProfessorRepository professorRepository;
     private final CategoriaRepository categoriaRepository;
     private final ModuloRepository moduloRepository;
+    private final FormacaoRepository formacaoRepository;
 
     @Autowired
-    public CursoController(CursoRepository cursoRepository, ProfessorRepository professorRepository, CategoriaRepository categoriaRepository, ModuloRepository moduloRepository) {
+    public CursoController(CursoRepository cursoRepository, ProfessorRepository professorRepository, CategoriaRepository categoriaRepository, ModuloRepository moduloRepository, FormacaoRepository formacaoRepository) {
         this.cursoRepository = cursoRepository;
         this.professorRepository = professorRepository;
         this.categoriaRepository = categoriaRepository;
         this.moduloRepository = moduloRepository;
+        this.formacaoRepository = formacaoRepository;
     }
 
     @GetMapping("v1/curso")
@@ -114,7 +113,7 @@ public class CursoController {
     @PreAuthorize("hasRole('PROFESSOR')")
     @CacheEvict(value = "listaDeCursos", allEntries = true)
     public ResponseEntity<? extends CursoDto> saveCurso(@RequestBody CursoForm cursoForm, UriComponentsBuilder uriBuilder){
-        Curso curso  = cursoForm.save(cursoRepository,professorRepository,categoriaRepository);
+        Curso curso  = cursoForm.save(cursoRepository,professorRepository,categoriaRepository,formacaoRepository);
         URI uri = uriBuilder.path("/v1/curso/{id}").buildAndExpand(curso.getId()).toUri();
         return ResponseEntity.created(uri).body(new CursoDto(curso, moduloRepository));
     }
