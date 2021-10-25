@@ -12,14 +12,9 @@ import java.util.List;
 
 public class AtualizacaoFormacaoForm {
 
-    private Long idCurso;
     private String titulo;
     private String descricao;
     private Long idCategoria;
-
-    public void setIdCurso(Long idCurso) {
-        this.idCurso = idCurso;
-    }
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
@@ -38,15 +33,9 @@ public class AtualizacaoFormacaoForm {
         formacao.setTitulo(titulo);
         formacao.setDescricao(descricao);
 
-        List<Curso> cursoList = formacao.getCursoList();
-
-        Curso curso = cursoRepository.getOne(idCurso);
-        cursoList.add(curso);
-
         Categoria categoria = categoriaRepository.getOne(idCategoria);
 
         formacao.setCategoria(categoria);
-        formacao.setCursoList(cursoList);
 
         return formacao;
     }
