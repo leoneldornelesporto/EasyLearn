@@ -1,6 +1,5 @@
 package br.com.easylearn.controller;
 
-import br.com.easylearn.controller.dto.AlunoDto;
 import br.com.easylearn.controller.dto.CursoDto;
 import br.com.easylearn.controller.dto.MatriculasDto;
 import br.com.easylearn.controller.form.MatriculaForm;
