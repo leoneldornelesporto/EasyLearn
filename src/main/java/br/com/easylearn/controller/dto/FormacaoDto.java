@@ -14,7 +14,7 @@ public class FormacaoDto {
     private String descricao;
     private String subtitulo;
     private String descricaoSubtitulo;
-    private List<CursoDto> cursoDtoList;
+    private CursoDto cursoDto;
     private String categoria;
 
     public FormacaoDto(Formacao formacao) {
@@ -23,7 +23,8 @@ public class FormacaoDto {
         this.descricao = formacao.getDescricao();
         this.subtitulo = formacao.getSubtitulo();
         this.descricaoSubtitulo = formacao.getDescricaoSubtitulo();
-        this.cursoDtoList = CursoDto.converter(formacao.getCursoList());
+        //this.cursoDtoList = CursoDto.converter(formacao.getCursoList());
+        this.cursoDto = CursoDto.converter(formacao.getCurso());
         this.categoria = formacao.getCategoria().getNome();
     }
 
@@ -33,7 +34,8 @@ public class FormacaoDto {
         this.descricao = formacao.getDescricao();
         this.subtitulo = formacao.getSubtitulo();
         this.descricaoSubtitulo = formacao.getDescricaoSubtitulo();
-        this.cursoDtoList = CursoDto.converter(formacao.getCursoList(),moduloRepository);
+        //this.cursoDtoList = CursoDto.converter(formacao.getCursoList(),moduloRepository);
+        this.cursoDto = CursoDto.converter(formacao.getCurso());
         this.categoria = formacao.getCategoria().getNome();
     }
 
@@ -73,8 +75,8 @@ public class FormacaoDto {
         return descricaoSubtitulo;
     }
 
-    public List<CursoDto> getCursoDtoList() {
-        return cursoDtoList;
+    public CursoDto getCursoDto() {
+        return cursoDto;
     }
 
     public String getCategoria() {

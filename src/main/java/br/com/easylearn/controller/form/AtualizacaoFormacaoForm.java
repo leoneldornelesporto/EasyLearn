@@ -12,13 +12,14 @@ import java.util.List;
 
 public class AtualizacaoFormacaoForm {
 
-    private List<Long> idCursos;
+    //private List<Long> idCursos;
+    private Long idCurso;
     private String titulo;
     private String descricao;
     private Long idCategoria;
 
-    public void setIdCursos(List<Long> idCursos) {
-        this.idCursos = idCursos;
+    public void setIdCurso(Long idCurso) {
+        this.idCurso = idCurso;
     }
 
     public void setTitulo(String titulo) {
@@ -33,6 +34,7 @@ public class AtualizacaoFormacaoForm {
         this.idCategoria = idCategoria;
     }
 
+    /*
     public Formacao atualizar(Long idFormacao, FormacaoRepository formacaoRepository, CursoRepository cursoRepository, CategoriaRepository categoriaRepository) {
         Formacao formacao = formacaoRepository.getOne(idFormacao);
         formacao.setTitulo(titulo);
@@ -52,4 +54,19 @@ public class AtualizacaoFormacaoForm {
 
         return formacao;
     }
+     */
+
+    public Formacao atualizar(Long idFormacao, FormacaoRepository formacaoRepository, CursoRepository cursoRepository, CategoriaRepository categoriaRepository) {
+        Formacao formacao = formacaoRepository.getOne(idFormacao);
+        formacao.setTitulo(titulo);
+        formacao.setDescricao(descricao);
+        Curso curso = cursoRepository.getOne(idCurso);
+        Categoria categoria = categoriaRepository.getOne(idCategoria);
+
+        formacao.setCategoria(categoria);
+        formacao.setCurso(curso);
+
+        return formacao;
+    }
+
 }
