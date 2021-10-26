@@ -125,7 +125,7 @@ public class CursoController {
     public ResponseEntity<? extends CursoDto> atualizarCurso(@PathVariable Long idCurso, @RequestBody AtualizacaoCursoForm form) {
         Optional<Curso> optional = cursoRepository.findById(idCurso);
         if (optional.isPresent()) {
-            Curso curso = form.atualizar(idCurso, cursoRepository,categoriaRepository);
+            Curso curso = form.atualizar(idCurso, cursoRepository,categoriaRepository,formacaoRepository);
             return ResponseEntity.ok(new CursoDto(curso, moduloRepository));
         }
 
