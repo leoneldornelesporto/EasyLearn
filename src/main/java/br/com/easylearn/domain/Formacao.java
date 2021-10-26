@@ -22,9 +22,11 @@ public class Formacao extends AbstractEntity{
     public Formacao() {
     }
 
-    public Formacao(String titulo, String descricao) {
+    public Formacao(String titulo, String descricao, String subtitulo, String descricaoSubtitulo) {
         this.titulo = titulo;
         this.descricao = descricao;
+        this.subtitulo = subtitulo;
+        this.descricaoSubtitulo = descricaoSubtitulo;
     }
 
     public String getTitulo() {

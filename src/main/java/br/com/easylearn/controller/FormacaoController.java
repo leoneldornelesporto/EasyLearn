@@ -96,7 +96,7 @@ public class FormacaoController {
     @PostMapping("/protectedP")
     @Transactional
     public ResponseEntity<? extends FormacaoDto> saveFormacao(@RequestBody FormacaoForm formacaoForm, UriComponentsBuilder uriBuilder){
-        Formacao formacao  = formacaoForm.save(formacaoRepository,cursoRepository,categoriaRepository);
+        Formacao formacao  = formacaoForm.save(formacaoRepository,categoriaRepository);
         URI uri = uriBuilder.path("/v1/formacao/{id}").buildAndExpand(formacao.getId()).toUri();
         return ResponseEntity.created(uri).body(new FormacaoDto(formacao));
     }
@@ -106,7 +106,7 @@ public class FormacaoController {
     public ResponseEntity<? extends FormacaoDto> atualizarFormacao(@PathVariable Long idFormacao, @RequestBody AtualizacaoFormacaoForm form) {
         Optional<Formacao> optional = formacaoRepository.findById(idFormacao);
         if (optional.isPresent()) {
-            Formacao formacao = form.atualizar(idFormacao, formacaoRepository,cursoRepository,categoriaRepository);
+            Formacao formacao = form.atualizar(idFormacao, formacaoRepository,categoriaRepository);
             return ResponseEntity.ok(new FormacaoDto(formacao));
         }
         return ResponseEntity.notFound().build();

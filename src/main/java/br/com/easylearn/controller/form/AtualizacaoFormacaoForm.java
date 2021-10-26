@@ -14,7 +14,23 @@ public class AtualizacaoFormacaoForm {
 
     private String titulo;
     private String descricao;
+    private String subtitulo;
+    private String descricaoSubtitulo;
     private Long idCategoria;
+
+    public Formacao atualizar(Long idFormacao, FormacaoRepository formacaoRepository, CategoriaRepository categoriaRepository) {
+        Formacao formacao = formacaoRepository.getOne(idFormacao);
+        formacao.setTitulo(titulo);
+        formacao.setDescricao(descricao);
+        formacao.setTitulo(titulo);
+        formacao.setDescricaoSubtitulo(descricaoSubtitulo);
+
+        Categoria categoria = categoriaRepository.getOne(idCategoria);
+
+        formacao.setCategoria(categoria);
+
+        return formacao;
+    }
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
@@ -24,19 +40,15 @@ public class AtualizacaoFormacaoForm {
         this.descricao = descricao;
     }
 
-    public void setIdCategoria(Long idCategoria) {
-        this.idCategoria = idCategoria;
+    public void setSubtitulo(String subtitulo) {
+        this.subtitulo = subtitulo;
     }
 
-    public Formacao atualizar(Long idFormacao, FormacaoRepository formacaoRepository, CursoRepository cursoRepository, CategoriaRepository categoriaRepository) {
-        Formacao formacao = formacaoRepository.getOne(idFormacao);
-        formacao.setTitulo(titulo);
-        formacao.setDescricao(descricao);
+    public void setDescricaoSubtitulo(String descricaoSubtitulo) {
+        this.descricaoSubtitulo = descricaoSubtitulo;
+    }
 
-        Categoria categoria = categoriaRepository.getOne(idCategoria);
-
-        formacao.setCategoria(categoria);
-
-        return formacao;
+    public void setIdCategoria(Long idCategoria) {
+        this.idCategoria = idCategoria;
     }
 }
