@@ -22,7 +22,7 @@ public class AtualizacaoFormacaoForm {
         Formacao formacao = formacaoRepository.getOne(idFormacao);
         formacao.setTitulo(titulo);
         formacao.setDescricao(descricao);
-        formacao.setTitulo(titulo);
+        formacao.setSubtitulo(subtitulo);
         formacao.setDescricaoSubtitulo(descricaoSubtitulo);
 
         Categoria categoria = categoriaRepository.getOne(idCategoria);
