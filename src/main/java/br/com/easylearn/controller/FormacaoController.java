@@ -1,10 +1,12 @@
 package br.com.easylearn.controller;
 
+import br.com.easylearn.controller.dto.CursoDto;
 import br.com.easylearn.controller.dto.FormacaoDto;
 import br.com.easylearn.controller.dto.FormacoesDto;
 import br.com.easylearn.controller.form.AtualizacaoFormacaoForm;
 import br.com.easylearn.controller.form.FormacaoForm;
 import br.com.easylearn.domain.Categoria;
+import br.com.easylearn.domain.Curso;
 import br.com.easylearn.domain.Formacao;
 import br.com.easylearn.repository.CategoriaRepository;
 import br.com.easylearn.repository.CursoRepository;
@@ -20,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +59,28 @@ public class FormacaoController {
             return ResponseEntity.notFound().build();
         else
             return ResponseEntity.ok(formacaoDtoList);
+    }
+
+    @GetMapping("byId/{id}")
+    public ResponseEntity<? extends List<CursoDto>> findAllFormacoesById(@PathVariable Long id){
+        List<Curso> all = cursoRepository.findAll();
+        List<Curso> cursoList = new ArrayList<>();
+
+        try{
+            for (Curso curso:all){
+                if(curso.getFormacao().getId().equals(id)){
+                    cursoList.add(curso);
+                }
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+
+        if (cursoList.isEmpty())
+            return ResponseEntity.notFound().build();
+        else
+            return ResponseEntity.ok(CursoDto.converter(cursoList));
     }
 
 
