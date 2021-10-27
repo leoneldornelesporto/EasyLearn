@@ -54,6 +54,7 @@ public class ModuloController {
     @Cacheable(value = "listaDeModulos")
     public ResponseEntity<? extends ModuloDto> findModuloById(@PathVariable Long idModulo) {
         Optional<Modulo> optional = moduloRepository.findById(idModulo);
+
         if (optional.isPresent()) {
             return ResponseEntity.ok(new ModuloDto(optional.get()));
         }
