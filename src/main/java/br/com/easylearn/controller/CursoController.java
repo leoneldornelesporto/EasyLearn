@@ -1,9 +1,7 @@
 package br.com.easylearn.controller;
 
-import br.com.easylearn.controller.dto.AulaDto;
 import br.com.easylearn.controller.dto.CursoDto;
-import br.com.easylearn.controller.dto.ModuloDto;
-import br.com.easylearn.controller.form.AtualizacaoCursoForm;
+import br.com.easylearn.controller.dto.ProfessorDto;
 import br.com.easylearn.controller.form.CursoForm;
 import br.com.easylearn.domain.Curso;
 import br.com.easylearn.repository.*;
@@ -69,6 +67,19 @@ public class CursoController {
             return ResponseEntity.notFound().build();
         else
             return ResponseEntity.ok(cursoDtoList);
+    }
+
+    @PostMapping("v1/protectedP/curso")
+    @Transactional
+    @PreAuthorize("hasRole('PROFESSOR')")
+    @CacheEvict(value = "listaDeCursos", allEntries = true)
+    public ResponseEntity<?> saveCurso(@RequestBody CursoForm cursoForm, UriComponentsBuilder uriBuilder) {
+        Curso curso = cursoForm.save(cursoRepository,professorRepository,categoriaRepository,formacaoRepository);
+        URI uri = uriBuilder.path("/v1/protectedP/curso/{id}").buildAndExpand(curso.getId()).toUri();
+        if (!curso.equals(null)) {
+            return ResponseEntity.created(uri).body(new CursoDto(curso));
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("v1/protectedP/curso/{idCurso}")
