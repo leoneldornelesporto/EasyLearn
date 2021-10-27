@@ -18,6 +18,8 @@ public class CursoForm {
     private Long categoriaId;
     private String imagemIcon;
     private Boolean ativo;
+    private Integer transcricao;
+    private Integer valorCurso;
     private Long idFormacao;
 
     public void setIdProfessor(Long idProfessor) {
@@ -48,6 +50,14 @@ public class CursoForm {
         this.ativo = ativo;
     }
 
+    public void setTranscricao(Integer transcricao) {
+        this.transcricao = transcricao;
+    }
+
+    public void setValorCurso(Integer valorCurso) {
+        this.valorCurso = valorCurso;
+    }
+
     public void setIdFormacao(Long idFormacao) {
         this.idFormacao = idFormacao;
     }
@@ -56,7 +66,7 @@ public class CursoForm {
         Professor professor = professorRepository.getOne(idProfessor);
         Categoria categoria = categoriaRepository.getOne(categoriaId);
         Formacao formacao = formacaoRepository.getById(idFormacao);
-        Curso curso = new Curso(cargahoraria, descricao, nome, imagemIcon, professor, categoria, ativo, formacao);
+        Curso curso = new Curso(cargahoraria, descricao, nome, imagemIcon, professor, categoria, ativo, formacao, transcricao, valorCurso);
         return cursoRepository.save(curso);
     }
 }

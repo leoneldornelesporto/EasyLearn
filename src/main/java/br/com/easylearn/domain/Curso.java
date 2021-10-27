@@ -66,6 +66,19 @@ public class Curso extends AbstractEntity{
 		this.ativo = ativo;
 	}
 
+	public Curso(Integer cargahoraria, String descricao, String nome, String imagemIcon, Professor professor, Categoria categoria, Boolean ativo, Formacao formacao, Integer transcricao, Integer valorCurso) {
+		this.cargaHoraria = cargahoraria;
+		this.descricao = descricao;
+		this.nome = nome;
+		this.imagemIcon = imagemIcon;
+		this.professor = professor;
+		this.categoria = categoria;
+		this.ativo = ativo;
+		this.formacao = formacao;
+		this.transcricao = transcricao;
+		this.valorCurso = valorCurso;
+	}
+
 	public String getUuid() {
 		return uuid;
 	}

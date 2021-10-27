@@ -36,7 +36,6 @@ public class CursoDto {
         this.categoria = curso.getCategoria().getNome();
         this.imagemIcon = curso.getImagemIcon();
         this.uuid = curso.getUuid();
-
         this.nomeProfessor = curso.getProfessor().getNomeCompleto();
         this.biografia = curso.getProfessor().getBiografia();
         this.avatar = curso.getProfessor().getAvatar();
