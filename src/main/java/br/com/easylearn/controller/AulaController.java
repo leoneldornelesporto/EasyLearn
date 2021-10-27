@@ -5,6 +5,8 @@ import br.com.easylearn.controller.form.AtualizacaoAulaForm;
 import br.com.easylearn.controller.form.AulaForm;
 import br.com.easylearn.domain.Aula;
 import br.com.easylearn.repository.AulaRepository;
+import br.com.easylearn.repository.CursoRepository;
+import br.com.easylearn.repository.ModuloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +23,14 @@ import java.util.Optional;
 public class AulaController {
 
     private final AulaRepository aulaRepository;
+    private final CursoRepository cursoRepository;
+    private final ModuloRepository moduloRepository;
 
     @Autowired
-    public AulaController(AulaRepository aulaRepository) {
+    public AulaController(AulaRepository aulaRepository, CursoRepository cursoRepository, ModuloRepository moduloRepository) {
         this.aulaRepository = aulaRepository;
+        this.cursoRepository = cursoRepository;
+        this.moduloRepository = moduloRepository;
     }
 
     @GetMapping("v1/protectedP/aulas")
@@ -44,7 +50,7 @@ public class AulaController {
     @PreAuthorize("hasRole('PROFESSOR')")
     @CacheEvict(value = "listaDeAulas", allEntries = true)
     public ResponseEntity<? extends AulaDto> saveAula(@RequestBody AulaForm aulaForm, UriComponentsBuilder uriBuilder){
-        Aula aula  = aulaForm.save(aulaRepository);
+        Aula aula  = aulaForm.save(aulaRepository,cursoRepository,moduloRepository);
         URI uri = uriBuilder.path("/v1/aula/{id}").buildAndExpand(aula.getId()).toUri();
         return ResponseEntity.created(uri).body(new AulaDto(aula));
     }

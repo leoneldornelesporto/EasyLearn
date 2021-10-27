@@ -1,12 +1,7 @@
 package br.com.easylearn.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import java.util.List;
 
 @Entity
 public class Aula extends AbstractEntity{
@@ -15,7 +10,10 @@ public class Aula extends AbstractEntity{
     private String titulo;
     private String urlVideo;
     private String transcricao;
-    private Boolean visualizada = Boolean.FALSE;
+    @ManyToOne
+    private Curso curso;
+    @ManyToOne
+    private Modulo modulo;
 
     public Aula() {
     }
@@ -55,15 +53,23 @@ public class Aula extends AbstractEntity{
         return transcricao;
     }
 
-    public Boolean getVisualizada() {
-        return visualizada;
-    }
-
-    public void setVisualizada(Boolean visualizada) {
-        this.visualizada = visualizada;
-    }
-
     public void setTranscricao(String transcricao) {
         this.transcricao = transcricao;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
+
+    public Modulo getModulo() {
+        return modulo;
+    }
+
+    public void setModulo(Modulo modulo) {
+        this.modulo = modulo;
     }
 }
