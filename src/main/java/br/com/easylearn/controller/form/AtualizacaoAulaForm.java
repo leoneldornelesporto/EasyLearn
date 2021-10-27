@@ -1,7 +1,11 @@
 package br.com.easylearn.controller.form;
 
 import br.com.easylearn.domain.Aula;
+import br.com.easylearn.domain.Curso;
+import br.com.easylearn.domain.Modulo;
 import br.com.easylearn.repository.AulaRepository;
+import br.com.easylearn.repository.CursoRepository;
+import br.com.easylearn.repository.ModuloRepository;
 
 public class AtualizacaoAulaForm {
 
@@ -9,6 +13,8 @@ public class AtualizacaoAulaForm {
     private String titulo;
     private String urlVideo;
     private String transcricao;
+    private Long idCurso;
+    private Long idModulo;
 
     public void setIndice(Integer indice) {
         this.indice = indice;
@@ -26,12 +32,24 @@ public class AtualizacaoAulaForm {
         this.transcricao = transcricao;
     }
 
-    public Aula atualizar(Long idAula, AulaRepository aulaRepository) {
+    public void setIdCurso(Long idCurso) {
+        this.idCurso = idCurso;
+    }
+
+    public void setIdModulo(Long idModulo) {
+        this.idModulo = idModulo;
+    }
+
+    public Aula atualizar(Long idAula, AulaRepository aulaRepository, CursoRepository cursoRepository, ModuloRepository moduloRepository) {
         Aula aula = aulaRepository.getOne(idAula);
+        Curso curso = cursoRepository.getOne(idCurso);
+        Modulo modulo = moduloRepository.getOne(idModulo);
         aula.setIndice(indice);
         aula.setTitulo(titulo);
         aula.setUrlVideo(urlVideo);
         aula.setTranscricao(transcricao);
+        aula.setCurso(curso);
+        aula.setModulo(modulo);
         return aula;
     }
 }

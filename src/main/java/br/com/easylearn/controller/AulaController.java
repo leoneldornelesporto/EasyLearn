@@ -62,7 +62,7 @@ public class AulaController {
     public ResponseEntity<? extends AulaDto> atualizarAula(@PathVariable Long idAula, @RequestBody AtualizacaoAulaForm form) {
         Optional<Aula> optional = aulaRepository.findById(idAula);
         if (optional.isPresent()) {
-            Aula aula = form.atualizar(idAula, aulaRepository);
+            Aula aula = form.atualizar(idAula, aulaRepository,cursoRepository,moduloRepository);
             return ResponseEntity.ok(new AulaDto(aula));
         }
 
