@@ -12,9 +12,11 @@ public class AtualizacaoCursoForm {
     private String nome;
     private String descricao;
     private Integer cargahoraria;
-    private Long idCategoria;
+    private Long categoriaId;
     private String imagemIcon;
     private Boolean ativo;
+    private Integer transcricao;
+    private Integer valorCurso;
     private Long idFormacao;
 
     public void setNome(String nome) {
@@ -29,8 +31,8 @@ public class AtualizacaoCursoForm {
         this.cargahoraria = cargahoraria;
     }
 
-    public void setIdCategoria(Long idCategoria) {
-        this.idCategoria = idCategoria;
+    public void setCategoriaId(Long categoriaId) {
+        this.categoriaId = categoriaId;
     }
 
     public void setImagemIcon(String imagemIcon) {
@@ -41,21 +43,31 @@ public class AtualizacaoCursoForm {
         this.ativo = ativo;
     }
 
+    public void setTranscricao(Integer transcricao) {
+        this.transcricao = transcricao;
+    }
+
+    public void setValorCurso(Integer valorCurso) {
+        this.valorCurso = valorCurso;
+    }
+
     public void setIdFormacao(Long idFormacao) {
         this.idFormacao = idFormacao;
     }
 
     public Curso atualizar(Long idCurso, CursoRepository cursoRepository, CategoriaRepository categoriaRepository, FormacaoRepository formacaoRepository) {
         Curso curso = cursoRepository.getOne(idCurso);
-        Formacao byId = formacaoRepository.getById(idFormacao);
-        curso.setFormacao(byId);
+        Formacao formacao = formacaoRepository.getById(idFormacao);
+        curso.setFormacao(formacao);
         curso.setNome(nome);
         curso.setDescricao(descricao);
         curso.setCargaHoraria(cargahoraria);
+        Categoria categoria = categoriaRepository.getOne(categoriaId);
         curso.setImagemIcon(imagemIcon);
-        Categoria categoria = categoriaRepository.getOne(idCategoria);
         curso.setCategoria(categoria);
         curso.setAtivo(ativo);
+        curso.setTranscricao(transcricao);
+        curso.setValorCurso(valorCurso);
         return curso;
     }
 }

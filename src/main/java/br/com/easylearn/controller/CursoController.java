@@ -2,6 +2,7 @@ package br.com.easylearn.controller;
 
 import br.com.easylearn.controller.dto.CursoDto;
 import br.com.easylearn.controller.dto.ProfessorDto;
+import br.com.easylearn.controller.form.AtualizacaoCursoForm;
 import br.com.easylearn.controller.form.CursoForm;
 import br.com.easylearn.domain.Curso;
 import br.com.easylearn.repository.*;
@@ -86,6 +87,19 @@ public class CursoController {
     @CacheEvict(value = "listaDeCursos", allEntries = true)
     public ResponseEntity<?> saveCurso(@RequestBody CursoForm cursoForm, UriComponentsBuilder uriBuilder) {
         Curso curso = cursoForm.save(cursoRepository,professorRepository,categoriaRepository,formacaoRepository);
+        URI uri = uriBuilder.path("/v1/protectedP/curso/{id}").buildAndExpand(curso.getId()).toUri();
+        if (!curso.equals(null)) {
+            return ResponseEntity.created(uri).body(new CursoDto(curso));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("v1/protectedP/curso/{idCurso}")
+    @Transactional
+    @PreAuthorize("hasRole('PROFESSOR')")
+    @CacheEvict(value = "listaDeCursos", allEntries = true)
+    public ResponseEntity<?> atualizarCurso(@PathVariable Long idCurso, @RequestBody AtualizacaoCursoForm atualizacaoCursoForm, UriComponentsBuilder uriBuilder) {
+        Curso curso = atualizacaoCursoForm.atualizar(idCurso,cursoRepository,categoriaRepository,formacaoRepository);
         URI uri = uriBuilder.path("/v1/protectedP/curso/{id}").buildAndExpand(curso.getId()).toUri();
         if (!curso.equals(null)) {
             return ResponseEntity.created(uri).body(new CursoDto(curso));
