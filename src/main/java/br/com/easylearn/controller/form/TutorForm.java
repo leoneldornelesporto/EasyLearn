@@ -3,6 +3,8 @@ package br.com.easylearn.controller.form;
 import br.com.easylearn.domain.Tutor;
 import br.com.easylearn.repository.TutorRepository;
 
+import java.util.Optional;
+
 public class TutorForm {
 
     private String nomeCompleto;
@@ -25,8 +27,13 @@ public class TutorForm {
     private String curso;
 
     public Tutor save(TutorRepository tutorRepository) {
-        Tutor tutor = new Tutor(nomeCompleto,nomeNoCertificado,ocupacao,cpf,usuarioNaUrl,email,senha,dataDeNascimento,biografia,linkedin,github,twitter,empresa,cargo,linkPersonalizado,avatar,instituicao,curso);
-        return tutorRepository.save(tutor);
+        Optional<Tutor> tutorFindByCpf = tutorRepository.findByCpf(cpf);
+        if(tutorFindByCpf.isPresent()){
+            return null;
+        }else{
+            Tutor tutor = new Tutor(nomeCompleto,nomeNoCertificado,ocupacao,cpf,usuarioNaUrl,email,senha,dataDeNascimento,biografia,linkedin,github,twitter,empresa,cargo,linkPersonalizado,avatar,instituicao,curso);
+            return tutorRepository.save(tutor);
+        }
     }
 
     public void setNomeCompleto(String nomeCompleto) {
