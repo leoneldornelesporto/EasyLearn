@@ -1,10 +1,7 @@
 package br.com.easylearn.controller.dto;
 
 import br.com.easylearn.domain.Curso;
-import br.com.easylearn.domain.Modulo;
-import br.com.easylearn.repository.ModuloRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
