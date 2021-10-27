@@ -74,9 +74,8 @@ public class ModuloController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("v1/protectedP/modulo")
+    @GetMapping("v1/modulo")
     @Transactional
-    @PreAuthorize("hasRole('PROFESSOR')")
     @Cacheable(value = "listaDeModulos")
     public ResponseEntity<? extends List<ModuloDto>> findAllModulos() {
         List<Modulo> optional = moduloRepository.findAll();
