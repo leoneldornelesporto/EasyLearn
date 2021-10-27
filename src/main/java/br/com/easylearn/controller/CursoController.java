@@ -36,6 +36,17 @@ public class CursoController {
         this.formacaoRepository = formacaoRepository;
     }
 
+    @GetMapping("/v1/curso")
+    @Cacheable(value = "listaDeCursos")
+    public ResponseEntity<? extends List<CursoDto>> findAllCursos(){
+        List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findAll());
+
+        if (cursoDtoList.isEmpty())
+            return ResponseEntity.notFound().build();
+        else
+            return ResponseEntity.ok(cursoDtoList);
+    }
+
     @GetMapping("v1/curso/categoria/{idCategoria}")
     @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends List<CursoDto>> findAllCursosByCategoria(@PathVariable Long idCategoria){
