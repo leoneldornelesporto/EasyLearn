@@ -1,6 +1,8 @@
 package br.com.easylearn.controller.form;
 
+import br.com.easylearn.domain.Curso;
 import br.com.easylearn.domain.Modulo;
+import br.com.easylearn.repository.CursoRepository;
 import br.com.easylearn.repository.ModuloRepository;
 
 public class ModuloForm {
@@ -8,9 +10,12 @@ public class ModuloForm {
     private Integer indice;
     private String titulo;
     private String tituloSecundario;
+    private Long idCurso;
 
-    public Modulo save(ModuloRepository moduloRepository) {
+    public Modulo save(ModuloRepository moduloRepository, CursoRepository cursoRepository) {
         Modulo modulo = new Modulo(indice,titulo,tituloSecundario);
+        Curso curso = cursoRepository.getOne(idCurso);
+        modulo.setCurso(curso);
         return moduloRepository.save(modulo);
     }
 
@@ -26,4 +31,7 @@ public class ModuloForm {
         this.tituloSecundario = tituloSecundario;
     }
 
+    public void setIdCurso(Long idCurso) {
+        this.idCurso = idCurso;
+    }
 }

@@ -11,8 +11,6 @@ public class Aula extends AbstractEntity{
     private String urlVideo;
     private String transcricao;
     @ManyToOne
-    private Curso curso;
-    @ManyToOne
     private Modulo modulo;
 
     public Aula() {
@@ -55,14 +53,6 @@ public class Aula extends AbstractEntity{
 
     public void setTranscricao(String transcricao) {
         this.transcricao = transcricao;
-    }
-
-    public Curso getCurso() {
-        return curso;
-    }
-
-    public void setCurso(Curso curso) {
-        this.curso = curso;
     }
 
     public Modulo getModulo() {

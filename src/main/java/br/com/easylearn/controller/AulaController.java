@@ -50,7 +50,7 @@ public class AulaController {
     @PreAuthorize("hasRole('PROFESSOR')")
     @CacheEvict(value = "listaDeAulas", allEntries = true)
     public ResponseEntity<? extends AulaDto> saveAula(@RequestBody AulaForm aulaForm, UriComponentsBuilder uriBuilder){
-        Aula aula  = aulaForm.save(aulaRepository,cursoRepository,moduloRepository);
+        Aula aula  = aulaForm.save(aulaRepository,moduloRepository);
         URI uri = uriBuilder.path("/v1/aula/{id}").buildAndExpand(aula.getId()).toUri();
         return ResponseEntity.created(uri).body(new AulaDto(aula));
     }
@@ -62,7 +62,7 @@ public class AulaController {
     public ResponseEntity<? extends AulaDto> atualizarAula(@PathVariable Long idAula, @RequestBody AtualizacaoAulaForm form) {
         Optional<Aula> optional = aulaRepository.findById(idAula);
         if (optional.isPresent()) {
-            Aula aula = form.atualizar(idAula, aulaRepository,cursoRepository,moduloRepository);
+            Aula aula = form.atualizar(idAula,aulaRepository,moduloRepository);
             return ResponseEntity.ok(new AulaDto(aula));
         }
 
