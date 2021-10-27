@@ -3,6 +3,7 @@ package br.com.easylearn.controller;
 import br.com.easylearn.config.mailsender.SendMailServiceImpl;
 import br.com.easylearn.controller.dto.AlunoDto;
 import br.com.easylearn.controller.dto.ProfessorDto;
+import br.com.easylearn.controller.dto.TutorDto;
 import br.com.easylearn.controller.form.AlunoForm;
 import br.com.easylearn.controller.form.AtualizacaoAlunoForm;
 import br.com.easylearn.controller.form.AtualizacaoProfessorForm;
@@ -10,6 +11,7 @@ import br.com.easylearn.controller.form.ProfessorForm;
 import br.com.easylearn.domain.Aluno;
 import br.com.easylearn.domain.Mail;
 import br.com.easylearn.domain.Professor;
+import br.com.easylearn.domain.Tutor;
 import br.com.easylearn.repository.AlunoRepository;
 import br.com.easylearn.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,12 +58,20 @@ public class ProfessorController {
     @CacheEvict(value = "listaDeProfessores", allEntries = true)
     public ResponseEntity<? extends ProfessorDto> saveProfessor(@RequestBody ProfessorForm professorForm, UriComponentsBuilder uriBuilder) throws MessagingException {
         Professor professor = professorForm.save(professorRepository);
-        URI uri = uriBuilder.path("/v1/professor/{id}").buildAndExpand(professor.getId()).toUri();
-        //String link = "https://easylearn-app.herokuapp.com/ativarProfessor/"+professor.getUuid();
-        //String link = "http://localhost:8080/ativarAluno/"+professor.getUuid();
-        //Mail email = new Mail(professor.getEmail(),"Confirmação de Conta","Por gentiliza acesse esse link " +"<a href='"+link+"'>aqui</a>");
-        //service.sendMailWithAttachments(email);
-        return ResponseEntity.created(uri).body(new ProfessorDto(professor));
+        try {
+            if (!professor.equals(null)){
+                URI uri = uriBuilder.path("/v1/professor/{id}").buildAndExpand(professor.getId()).toUri();
+                //String link = "https://easylearn-app.herokuapp.com/ativarProfessor/"+professor.getUuid();
+                //String link = "http://localhost:8080/ativarAluno/"+professor.getUuid();
+                //Mail email = new Mail(professor.getEmail(),"Confirmação de Conta","Por gentiliza acesse esse link " +"<a href='"+link+"'>aqui</a>");
+                //service.sendMailWithAttachments(email);
+                return ResponseEntity.created(uri).body(new ProfessorDto(professor));
+            }
+        }
+        catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PreAuthorize("hasRole('PROFESSOR')")

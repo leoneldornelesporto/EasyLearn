@@ -1,7 +1,10 @@
 package br.com.easylearn.controller.form;
 
 import br.com.easylearn.domain.Professor;
+import br.com.easylearn.domain.Tutor;
 import br.com.easylearn.repository.ProfessorRepository;
+
+import java.util.Optional;
 
 public class ProfessorForm {
 
@@ -25,8 +28,14 @@ public class ProfessorForm {
     private String curso;
 
     public Professor save(ProfessorRepository professorRepository) {
-        Professor professor = new Professor(nomeCompleto,nomeNoCertificado,ocupacao,cpf,usuarioNaUrl,email,senha,dataDeNascimento,biografia,linkedin,github,twitter,empresa,cargo,linkPersonalizado,avatar,instituicao,curso);
-        return professorRepository.save(professor);
+        Optional<Professor> byCpf = professorRepository.findByCpf(cpf);
+
+        if(byCpf.isPresent()){
+            return null;
+        }else{
+            Professor professor = new Professor(nomeCompleto,nomeNoCertificado,ocupacao,cpf,usuarioNaUrl,email,senha,dataDeNascimento,biografia,linkedin,github,twitter,empresa,cargo,linkPersonalizado,avatar,instituicao,curso);
+            return professorRepository.save(professor);
+        }
     }
 
     public void setNomeCompleto(String nomeCompleto) {
