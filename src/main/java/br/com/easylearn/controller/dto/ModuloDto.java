@@ -12,12 +12,14 @@ public class ModuloDto {
     private Integer indice;
     private String titulo;
     private String tituloSecundario;
+    private String nomeCurso;
 
     public ModuloDto(Modulo modulo) {
         this.id = modulo.getId();
         this.indice = modulo.getIndice();
         this.titulo = modulo.getTitulo();
         this.tituloSecundario = modulo.getTituloSecundario();
+        this.nomeCurso = modulo.getCurso().getNome();
     }
 
     public static List<ModuloDto> converter(List<Modulo> allModulos) {
@@ -38,5 +40,9 @@ public class ModuloDto {
 
     public String getTituloSecundario() {
         return tituloSecundario;
+    }
+
+    public String getNomeCurso() {
+        return nomeCurso;
     }
 }
