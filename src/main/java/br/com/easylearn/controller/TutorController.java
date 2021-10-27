@@ -59,7 +59,7 @@ public class TutorController {
             //service.sendMailWithAttachments(email);
             return ResponseEntity.created(uri).body(new TutorDto(tutor));
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.badRequest().build();
     }
 
     @PutMapping("v1/protectedT/tutor/{idTutor}")
