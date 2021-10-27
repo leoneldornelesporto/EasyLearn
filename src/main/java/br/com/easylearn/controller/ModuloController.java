@@ -43,7 +43,7 @@ public class ModuloController {
     @PreAuthorize("hasRole('PROFESSOR')")
     @CacheEvict(value = "listaDeModulos", allEntries = true)
     public ResponseEntity<? extends ModuloDto> saveModulo(@RequestBody ModuloForm moduloForm, UriComponentsBuilder uriBuilder){
-        Modulo modulo  = moduloForm.save(moduloRepository,cursoRepository,aulaRepository);
+        Modulo modulo  = moduloForm.save(moduloRepository);
         URI uri = uriBuilder.path("/v1/modulo/{id}").buildAndExpand(modulo.getId()).toUri();
         return ResponseEntity.created(uri).body(new ModuloDto(modulo));
     }
@@ -125,7 +125,7 @@ public class ModuloController {
     public ResponseEntity<? extends ModuloDto> atualizarModulo(@PathVariable Long idModulo, @RequestBody AtualizacaoModuloForm form) {
         Optional<Modulo> optional = moduloRepository.findById(idModulo);
         if (optional.isPresent()) {
-            Modulo modulo = form.atualizar(idModulo, moduloRepository,aulaRepository);
+            Modulo modulo = form.atualizar(idModulo, moduloRepository);
             return ResponseEntity.ok(new ModuloDto(modulo));
         }
 

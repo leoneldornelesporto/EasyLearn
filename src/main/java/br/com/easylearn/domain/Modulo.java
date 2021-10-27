@@ -23,13 +23,10 @@ public class Modulo extends AbstractEntity{
     @OneToMany
     private List<Aula> aulaList;
 
-    public Modulo(Integer indice, String titulo, String tituloSecundario,Curso curso, List<Aula> aulaList, List<String> subtitulo) {
+    public Modulo(Integer indice, String titulo, String tituloSecundario) {
         this.indice = indice;
         this.titulo = titulo;
         this.tituloSecundario = tituloSecundario;
-        this.curso = curso;
-        this.aulaList = aulaList;
-        this.subtitulo = subtitulo;
     }
 
     public Modulo() {
