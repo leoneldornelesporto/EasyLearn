@@ -106,31 +106,6 @@ public class MatriculaController {
             return ResponseEntity.ok(byAlunoIdAndCurso_uuid.getCursoConcluido());
     }
 
-    @GetMapping("/verificaById/porcentagem/aluno/{idAluno}/curso/{uuid}")
-    public ResponseEntity<Integer> verificaPorcentagemDoCurso(@PathVariable Long idAluno, @PathVariable String uuid){
-        Matricula byAlunoIdAndCurso_uuid = matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno, uuid);
-        List<Modulo> byCursoUuid = moduloRepository.findByCursoUuid(uuid);
-
-        if (byAlunoIdAndCurso_uuid.equals(null))
-            return ResponseEntity.notFound().build();
-        else {
-            List<AssistirAula> byIdAlunoAndUuidCurso = assistirAulaRepository.findByIdAlunoAndUuidCurso(idAluno, uuid);
-            Integer total = verificaQuantidadeTotalDeAulas(byCursoUuid);
-            Integer porcentagem = (byIdAlunoAndUuidCurso.size() * 100) / total;
-            byAlunoIdAndCurso_uuid.setProgresso(porcentagem);
-            Matricula save = matriculaRepository.save(byAlunoIdAndCurso_uuid);
-            return ResponseEntity.ok(save.getProgresso());
-        }
-    }
-
-    private Integer verificaQuantidadeTotalDeAulas(List<Modulo> moduloList) {
-        Integer total=0;
-        for (Modulo modulo : moduloList){
-            total+=modulo.getAulaList().size();
-        }
-        return total;
-    }
-
     @GetMapping("/verificaById/cursosPausados/{idAluno}")
     public ResponseEntity<? extends List<CursoDto>> verificarSePauseiAlgumCursoNaMinhaMatricula(@PathVariable Long idAluno){
         List<MatriculasDto> matriculasDtos = MatriculasDto.converter(matriculaRepository.findAllByAlunoIdAndCursoPausadoIsTrue(idAluno));

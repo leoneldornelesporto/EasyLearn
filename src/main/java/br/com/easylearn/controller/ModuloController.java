@@ -62,19 +62,6 @@ public class ModuloController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("v1/protectedA/modulo/curso/{uuidcurso}")
-    @Transactional
-    @PreAuthorize("hasRole('ALUNO') or hasRole('PROFESSOR')")
-    @Cacheable(value = "listaDeModulos")
-    public ResponseEntity<? extends List<ModuloDto>> findAllModulosByUuidCurso(@PathVariable String uuidcurso) {
-        List<Modulo> optional = moduloRepository.findByCursoUuid(uuidcurso);
-        if (!optional.isEmpty()) {
-            return ResponseEntity.ok(ModuloDto.converter(optional));
-        }
-
-        return ResponseEntity.notFound().build();
-    }
-
     @GetMapping("v1/modulo")
     @Transactional
     @Cacheable(value = "listaDeModulos")
@@ -84,38 +71,6 @@ public class ModuloController {
             return ResponseEntity.ok(ModuloDto.converter(optional));
         }
 
-        return ResponseEntity.notFound().build();
-    }
-
-    @GetMapping("v1/protectedA/modulo/curso/{uuidcurso}/aula/{idAula}")
-    @Transactional
-    @PreAuthorize("hasRole('ALUNO') or hasRole('PROFESSOR')")
-    public ResponseEntity<? extends AulaDto> findModulosByUuidCursoAndIdAula(@PathVariable String uuidcurso, @PathVariable Long idAula) {
-        List<Modulo> optional = moduloRepository.findByCursoUuid(uuidcurso);
-
-        for (Modulo modulo:optional){
-            for(Aula aula:modulo.getAulaList()){
-                if (aula.getId().equals(idAula)){
-                    return ResponseEntity.ok(new AulaDto(aula));
-                }
-            }
-        }
-        return ResponseEntity.notFound().build();
-    }
-
-    @GetMapping("v1/protectedA/curso/{uuidcurso}/aula/{idAula}/modulo")
-    @Transactional
-    @PreAuthorize("hasRole('ALUNO') or hasRole('PROFESSOR')")
-    public ResponseEntity<? extends ModuloDto> findModuloByUuidCursoAndIdAula(@PathVariable String uuidcurso, @PathVariable Long idAula) {
-        List<Modulo> optional = moduloRepository.findByCursoUuid(uuidcurso);
-
-        for (Modulo modulo:optional){
-            for(Aula aula:modulo.getAulaList()){
-                if (aula.getId().equals(idAula)){
-                    return ResponseEntity.ok(new ModuloDto(modulo));
-                }
-            }
-        }
         return ResponseEntity.notFound().build();
     }
 
