@@ -34,6 +34,10 @@ public class FormacaoDto {
         this.categoria = formacao.getCategoria().getNome();
     }
 
+    public static FormacaoDto converter(Formacao formacao) {
+        return new FormacaoDto(formacao);
+    }
+
     public static List<FormacaoDto> converter(List<Formacao> allFormacoes) {
         return allFormacoes.stream().map(FormacaoDto::new).collect(Collectors.toList());
     }

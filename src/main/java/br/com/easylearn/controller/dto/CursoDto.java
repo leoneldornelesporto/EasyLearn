@@ -25,6 +25,7 @@ public class CursoDto {
     private Integer transcricao;
     private Integer valorCurso;
     private Integer qtdAlunosMatriculados;
+    private FormacaoDto formacaoDto;
 
     public CursoDto(Curso curso) {
         this.id = curso.getId();
@@ -42,6 +43,7 @@ public class CursoDto {
         this.ativo = curso.getAtivo();
         this.transcricao = curso.getTranscricao();
         this.valorCurso = curso.getValorCurso();
+        this.formacaoDto = FormacaoDto.converter(curso.getFormacao());
     }
 
     public CursoDto(Curso curso, MatriculaRepository matriculaRepository) {
@@ -61,6 +63,7 @@ public class CursoDto {
         this.transcricao = curso.getTranscricao();
         this.valorCurso = curso.getValorCurso();
         this.qtdAlunosMatriculados = matriculaRepository.findByAllMatriculasSum(uuid);
+        this.formacaoDto = FormacaoDto.converter(curso.getFormacao());
     }
 
     public static CursoDto converter(Curso curso) {
@@ -146,5 +149,9 @@ public class CursoDto {
 
     public Integer getQtdAlunosMatriculados() {
         return qtdAlunosMatriculados;
+    }
+
+    public FormacaoDto getFormacaoDto() {
+        return formacaoDto;
     }
 }
