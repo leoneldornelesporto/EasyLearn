@@ -66,7 +66,7 @@ public class CursoDto {
         this.valorCurso = curso.getValorCurso();
         this.qtdAlunosMatriculados = matriculaRepository.findByAllMatriculasSum(uuid);
         this.formacaoDto = FormacaoDto.converter(curso.getFormacao());
-        this.moduloDto = ModuloDto.converter(moduloRepository.findByCursoId(curso.getId()));
+        this.moduloDto = ModuloDto.converter(moduloRepository.findAllByCursoId(curso.getId()));
     }
 
     public static CursoDto converter(Curso curso) {
