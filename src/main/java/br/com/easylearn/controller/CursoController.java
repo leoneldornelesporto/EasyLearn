@@ -102,7 +102,7 @@ public class CursoController {
         Curso curso = cursoForm.save(cursoRepository,professorRepository,categoriaRepository,formacaoRepository);
         URI uri = uriBuilder.path("/v1/protectedP/curso/{id}").buildAndExpand(curso.getId()).toUri();
         if (!curso.equals(null)) {
-            return ResponseEntity.created(uri).body(new CursoDto(curso, matriculaRepository,moduloRepository));
+            return ResponseEntity.created(uri).body(new CursoDto(curso, matriculaRepository));
         }
         return ResponseEntity.notFound().build();
     }
@@ -115,7 +115,7 @@ public class CursoController {
         Curso curso = atualizacaoCursoForm.atualizar(idCurso,cursoRepository,categoriaRepository,formacaoRepository);
         URI uri = uriBuilder.path("/v1/protectedP/curso/{id}").buildAndExpand(curso.getId()).toUri();
         if (!curso.equals(null)) {
-            return ResponseEntity.created(uri).body(new CursoDto(curso, matriculaRepository,moduloRepository));
+            return ResponseEntity.created(uri).body(new CursoDto(curso, matriculaRepository));
         }
         return ResponseEntity.notFound().build();
     }
