@@ -21,6 +21,10 @@ public class ModuloDto {
         this.nomeCurso = modulo.getCurso().getNome();
     }
 
+    public static ModuloDto converter(Modulo modulo) {
+        return new ModuloDto(modulo);
+    }
+
     public static List<ModuloDto> converter(List<Modulo> allModulos) {
         return allModulos.stream().map(ModuloDto::new).collect(Collectors.toList());
     }

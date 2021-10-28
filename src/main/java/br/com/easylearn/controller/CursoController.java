@@ -26,20 +26,22 @@ public class CursoController {
     private final CategoriaRepository categoriaRepository;
     private final FormacaoRepository formacaoRepository;
     private final MatriculaRepository matriculaRepository;
+    private final ModuloRepository moduloRepository;
 
     @Autowired
-    public CursoController(CursoRepository cursoRepository, ProfessorRepository professorRepository, CategoriaRepository categoriaRepository, FormacaoRepository formacaoRepository, MatriculaRepository matriculaRepository) {
+    public CursoController(CursoRepository cursoRepository, ProfessorRepository professorRepository, CategoriaRepository categoriaRepository, FormacaoRepository formacaoRepository, MatriculaRepository matriculaRepository, ModuloRepository moduloRepository) {
         this.cursoRepository = cursoRepository;
         this.professorRepository = professorRepository;
         this.categoriaRepository = categoriaRepository;
         this.formacaoRepository = formacaoRepository;
         this.matriculaRepository = matriculaRepository;
+        this.moduloRepository = moduloRepository;
     }
 
     @GetMapping("/v1/curso")
     @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends List<CursoDto>> findAllCursos(){
-        List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findAll(),matriculaRepository);
+        List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findAll(),matriculaRepository,moduloRepository);
 
         if (cursoDtoList.isEmpty())
             return ResponseEntity.notFound().build();
@@ -50,7 +52,7 @@ public class CursoController {
     @GetMapping("v1/curso/categoria/{idCategoria}")
     @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends List<CursoDto>> findAllCursosByCategoria(@PathVariable Long idCategoria){
-        List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findByCategoriaId(idCategoria),matriculaRepository);
+        List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findByCategoriaId(idCategoria),matriculaRepository,moduloRepository);
 
         if (cursoDtoList.isEmpty())
             return ResponseEntity.notFound().build();
@@ -61,7 +63,7 @@ public class CursoController {
     @GetMapping("v1/curso/id/{id}")
     @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends CursoDto> findCursosById(@PathVariable Long id){
-        CursoDto curso = CursoDto.converter(cursoRepository.getById(id),matriculaRepository);
+        CursoDto curso = CursoDto.converter(cursoRepository.getById(id),matriculaRepository,moduloRepository);
 
         if (curso == null)
             return ResponseEntity.notFound().build();
@@ -72,7 +74,7 @@ public class CursoController {
     @GetMapping("v1/curso/uuid/{uuid}")
     @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends CursoDto> findCursosByUuid(@PathVariable String uuid){
-        CursoDto cursoDto = CursoDto.converter(cursoRepository.findByUuid(uuid),matriculaRepository);
+        CursoDto cursoDto = CursoDto.converter(cursoRepository.findByUuid(uuid),matriculaRepository,moduloRepository);
 
         if (cursoDto == null)
             return ResponseEntity.notFound().build();
@@ -84,7 +86,7 @@ public class CursoController {
     @GetMapping("v1/curso/nome/{nome}")
     @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends List<CursoDto>> findCursosByNome(@PathVariable String nome){
-        List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findByNomeContaining(nome),matriculaRepository);
+        List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findByNomeContaining(nome),matriculaRepository,moduloRepository);
 
         if (cursoDtoList.isEmpty())
             return ResponseEntity.notFound().build();
@@ -100,7 +102,7 @@ public class CursoController {
         Curso curso = cursoForm.save(cursoRepository,professorRepository,categoriaRepository,formacaoRepository);
         URI uri = uriBuilder.path("/v1/protectedP/curso/{id}").buildAndExpand(curso.getId()).toUri();
         if (!curso.equals(null)) {
-            return ResponseEntity.created(uri).body(new CursoDto(curso, matriculaRepository));
+            return ResponseEntity.created(uri).body(new CursoDto(curso, matriculaRepository,moduloRepository));
         }
         return ResponseEntity.notFound().build();
     }
@@ -113,7 +115,7 @@ public class CursoController {
         Curso curso = atualizacaoCursoForm.atualizar(idCurso,cursoRepository,categoriaRepository,formacaoRepository);
         URI uri = uriBuilder.path("/v1/protectedP/curso/{id}").buildAndExpand(curso.getId()).toUri();
         if (!curso.equals(null)) {
-            return ResponseEntity.created(uri).body(new CursoDto(curso, matriculaRepository));
+            return ResponseEntity.created(uri).body(new CursoDto(curso, matriculaRepository,moduloRepository));
         }
         return ResponseEntity.notFound().build();
     }

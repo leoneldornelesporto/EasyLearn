@@ -2,6 +2,7 @@ package br.com.easylearn.controller.dto;
 
 import br.com.easylearn.domain.Curso;
 import br.com.easylearn.repository.MatriculaRepository;
+import br.com.easylearn.repository.ModuloRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class CursoDto {
     private Integer valorCurso;
     private Integer qtdAlunosMatriculados;
     private FormacaoDto formacaoDto;
+    private ModuloDto moduloDto;
 
     public CursoDto(Curso curso) {
         this.id = curso.getId();
@@ -46,7 +48,7 @@ public class CursoDto {
         this.formacaoDto = FormacaoDto.converter(curso.getFormacao());
     }
 
-    public CursoDto(Curso curso, MatriculaRepository matriculaRepository) {
+    public CursoDto(Curso curso, MatriculaRepository matriculaRepository, ModuloRepository moduloRepository) {
         this.id = curso.getId();
         this.nome = curso.getNome();
         this.descricao = curso.getDescricao();
@@ -64,24 +66,25 @@ public class CursoDto {
         this.valorCurso = curso.getValorCurso();
         this.qtdAlunosMatriculados = matriculaRepository.findByAllMatriculasSum(uuid);
         this.formacaoDto = FormacaoDto.converter(curso.getFormacao());
+        this.moduloDto = ModuloDto.converter(moduloRepository.findByCursoUuid(curso.getUuid()));
     }
 
     public static CursoDto converter(Curso curso) {
         return new CursoDto(curso);
     }
 
-    public static CursoDto converter(Curso curso, MatriculaRepository matriculaRepository) {
-        return new CursoDto(curso,matriculaRepository);
+    public static CursoDto converter(Curso curso, MatriculaRepository matriculaRepository, ModuloRepository moduloRepository) {
+        return new CursoDto(curso,matriculaRepository,moduloRepository);
     }
 
     public static List<CursoDto> converter(List<Curso> allCursos) {
         return allCursos.stream().map(CursoDto::new).collect(Collectors.toList());
     }
 
-    public static List<CursoDto> converter(List<Curso> allCursos, MatriculaRepository matriculaRepository) {
+    public static List<CursoDto> converter(List<Curso> allCursos, MatriculaRepository matriculaRepository, ModuloRepository moduloRepository) {
         List<CursoDto> cursoDtoList = new ArrayList<>();
         for (Curso curso : allCursos){
-            CursoDto cursoDto = new CursoDto(curso,matriculaRepository);
+            CursoDto cursoDto = new CursoDto(curso,matriculaRepository,moduloRepository);
             cursoDtoList.add(cursoDto);
         }
         return cursoDtoList;
