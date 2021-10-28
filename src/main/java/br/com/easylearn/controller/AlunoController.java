@@ -61,8 +61,7 @@ public class AlunoController {
         return ResponseEntity.created(uri).body(new AlunoDto(aluno));
     }
 
-    @PutMapping("v1/aluno/{idAluno}")
-    @PreAuthorize("hasRole('ALUNO')")
+    @PutMapping("v1/x/{idAluno}")
     @Transactional
     @CacheEvict(value = "listaDeAlunos", allEntries = true)
     public ResponseEntity<? extends AlunoDto> atualizarAluno(@PathVariable Long idAluno, @RequestBody AtualizacaoAlunoForm form){
