@@ -70,6 +70,18 @@ public class CursoController {
             return ResponseEntity.ok(curso);
     }
 
+    @GetMapping("v1/curso/{uuid}")
+    @Cacheable(value = "listaDeCursos")
+    public ResponseEntity<? extends CursoDto> findCursosByUuid(@PathVariable String uuid){
+        CursoDto cursoDto = CursoDto.converter(cursoRepository.findByUuid(uuid));
+
+        if (cursoDto == null)
+            return ResponseEntity.notFound().build();
+        else
+            return ResponseEntity.ok(cursoDto);
+    }
+
+
     @GetMapping("v1/curso/nome/{nome}")
     @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends List<CursoDto>> findCursosByNome(@PathVariable String nome){
