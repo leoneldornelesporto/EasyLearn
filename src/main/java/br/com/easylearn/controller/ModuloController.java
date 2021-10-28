@@ -56,7 +56,7 @@ public class ModuloController {
         Optional<Modulo> optional = moduloRepository.findById(idModulo);
 
         if (optional.isPresent()) {
-            return ResponseEntity.ok(new ModuloDto(optional.get()));
+            return ResponseEntity.ok(new ModuloDto(optional.get(),aulaRepository));
         }
 
         return ResponseEntity.notFound().build();
@@ -68,7 +68,7 @@ public class ModuloController {
     public ResponseEntity<? extends List<ModuloDto>> findAllModulos() {
         List<Modulo> optional = moduloRepository.findAll();
         if (!optional.isEmpty()) {
-            return ResponseEntity.ok(ModuloDto.converter(optional));
+            return ResponseEntity.ok(ModuloDto.converter(optional,aulaRepository));
         }
 
         return ResponseEntity.notFound().build();
@@ -82,7 +82,7 @@ public class ModuloController {
         Optional<Modulo> optional = moduloRepository.findById(idModulo);
         if (optional.isPresent()) {
             Modulo modulo = form.atualizar(idModulo, moduloRepository,cursoRepository);
-            return ResponseEntity.ok(new ModuloDto(modulo));
+            return ResponseEntity.ok(new ModuloDto(modulo,aulaRepository));
         }
 
         return ResponseEntity.notFound().build();

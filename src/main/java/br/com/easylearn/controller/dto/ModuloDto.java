@@ -1,9 +1,10 @@
 package br.com.easylearn.controller.dto;
 
 import br.com.easylearn.domain.Modulo;
+import br.com.easylearn.repository.AulaRepository;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ModuloDto {
 
@@ -12,6 +13,7 @@ public class ModuloDto {
     private String titulo;
     private String tituloSecundario;
     private String nomeCurso;
+    private List<AulaDto> aulaDto;
 
     public ModuloDto(Modulo modulo) {
         this.id = modulo.getId();
@@ -21,12 +23,27 @@ public class ModuloDto {
         this.nomeCurso = modulo.getCurso().getNome();
     }
 
-    public static ModuloDto converter(Modulo modulo) {
-        return new ModuloDto(modulo);
+    public ModuloDto(Modulo modulo, AulaRepository aulaRepository) {
+        this.id = modulo.getId();
+        this.indice = modulo.getIndice();
+        this.titulo = modulo.getTitulo();
+        this.tituloSecundario = modulo.getTituloSecundario();
+        this.nomeCurso = modulo.getCurso().getNome();
+        this.aulaDto = AulaDto.converter(aulaRepository.findByModuloId(id));
     }
 
-    public static List<ModuloDto> converter(List<Modulo> allModulos) {
-        return allModulos.stream().map(ModuloDto::new).collect(Collectors.toList());
+    public static ModuloDto converter(Modulo modulo, AulaRepository aulaRepository) {
+        return new ModuloDto(modulo,aulaRepository);
+    }
+
+    public static List<ModuloDto> converter(List<Modulo> allModulos,AulaRepository aulaRepository) {
+        List<ModuloDto> moduloDtoList = new ArrayList<>();
+
+        for (Modulo modulo:allModulos){
+            ModuloDto moduloDto = new ModuloDto(modulo,aulaRepository);
+            moduloDtoList.add(moduloDto);
+        }
+        return moduloDtoList;
     }
 
     public Long getId() {
@@ -47,5 +64,9 @@ public class ModuloDto {
 
     public String getNomeCurso() {
         return nomeCurso;
+    }
+
+    public List<AulaDto> getAulaDto() {
+        return aulaDto;
     }
 }
