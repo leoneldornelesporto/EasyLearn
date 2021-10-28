@@ -61,7 +61,7 @@ public class AlunoController {
         return ResponseEntity.created(uri).body(new AlunoDto(aluno));
     }
 
-    @PutMapping("v1/protectedA/aluno/{idAluno}")
+    @PutMapping("v1/aluno/{idAluno}")
     @PreAuthorize("hasRole('ALUNO')")
     @Transactional
     @CacheEvict(value = "listaDeAlunos", allEntries = true)
