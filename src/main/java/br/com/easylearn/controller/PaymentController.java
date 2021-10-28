@@ -30,7 +30,6 @@ public class PaymentController {
     @PostMapping
     public ResponseEntity<? extends Payment> savePayment(@RequestBody Payment payment){
         Payment save = paymentRepository.save(payment);
-
         if (save == null)
             return ResponseEntity.notFound().build();
         else
