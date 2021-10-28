@@ -58,7 +58,7 @@ public class CursoController {
             return ResponseEntity.ok(cursoDtoList);
     }
 
-    @GetMapping("v1/curso/{id}")
+    @GetMapping("v1/curso/id/{id}")
     @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends CursoDto> findCursosById(@PathVariable Long id){
         CursoDto curso = CursoDto.converter(cursoRepository.getById(id),matriculaRepository);
@@ -69,7 +69,7 @@ public class CursoController {
             return ResponseEntity.ok(curso);
     }
 
-    @GetMapping("v1/curso/{uuid}")
+    @GetMapping("v1/curso/uuid/{uuid}")
     @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends CursoDto> findCursosByUuid(@PathVariable String uuid){
         CursoDto cursoDto = CursoDto.converter(cursoRepository.findByUuid(uuid),matriculaRepository);
