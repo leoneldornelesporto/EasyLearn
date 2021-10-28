@@ -27,6 +27,7 @@ public class CursoDto {
     private Integer valorCurso;
     private Integer qtdAlunosMatriculados;
     private FormacaoDto formacaoDto;
+    private List<ModuloDto> moduloDto;
 
     public CursoDto(Curso curso) {
         this.id = curso.getId();
@@ -47,7 +48,7 @@ public class CursoDto {
         this.formacaoDto = FormacaoDto.converter(curso.getFormacao());
     }
 
-    public CursoDto(Curso curso, MatriculaRepository matriculaRepository) {
+    public CursoDto(Curso curso, MatriculaRepository matriculaRepository, ModuloRepository moduloRepository) {
         this.id = curso.getId();
         this.nome = curso.getNome();
         this.descricao = curso.getDescricao();
@@ -65,6 +66,7 @@ public class CursoDto {
         this.valorCurso = curso.getValorCurso();
         this.qtdAlunosMatriculados = matriculaRepository.findByAllMatriculasSum(uuid);
         this.formacaoDto = FormacaoDto.converter(curso.getFormacao());
+        this.moduloDto = ModuloDto.converter(moduloRepository.findAllByCursoId(curso.getId()));
     }
 
     public static CursoDto converter(Curso curso) {
@@ -72,7 +74,7 @@ public class CursoDto {
     }
 
     public static CursoDto converter(Curso curso, MatriculaRepository matriculaRepository, ModuloRepository moduloRepository) {
-        return new CursoDto(curso,matriculaRepository);
+        return new CursoDto(curso,matriculaRepository,moduloRepository);
     }
 
     public static List<CursoDto> converter(List<Curso> allCursos) {
@@ -82,7 +84,7 @@ public class CursoDto {
     public static List<CursoDto> converter(List<Curso> allCursos, MatriculaRepository matriculaRepository, ModuloRepository moduloRepository) {
         List<CursoDto> cursoDtoList = new ArrayList<>();
         for (Curso curso : allCursos){
-            CursoDto cursoDto = new CursoDto(curso,matriculaRepository);
+            CursoDto cursoDto = new CursoDto(curso,matriculaRepository,moduloRepository);
             cursoDtoList.add(cursoDto);
         }
         return cursoDtoList;
@@ -154,5 +156,9 @@ public class CursoDto {
 
     public FormacaoDto getFormacaoDto() {
         return formacaoDto;
+    }
+
+    public List<ModuloDto> getModuloDto() {
+        return moduloDto;
     }
 }
