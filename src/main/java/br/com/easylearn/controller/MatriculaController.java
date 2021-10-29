@@ -4,8 +4,8 @@ import br.com.easylearn.controller.dto.CursoDto;
 import br.com.easylearn.controller.dto.MatriculasDto;
 import br.com.easylearn.controller.form.MatriculaForm;
 import br.com.easylearn.domain.AssistirAula;
+import br.com.easylearn.domain.Aula;
 import br.com.easylearn.domain.Matricula;
-import br.com.easylearn.domain.Modulo;
 import br.com.easylearn.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -31,14 +31,16 @@ public class MatriculaController {
     private final AlunoRepository alunoRepository;
     private final CursoRepository cursoRepository;
     private final AssistirAulaRepository assistirAulaRepository;
+    private final AulaRepository aulaRepository;
 
     @Autowired
-    public MatriculaController(MatriculaRepository matriculaRepository, AlunoRepository alunoRepository, CursoRepository cursoRepository, AssistirAulaRepository assistirAulaRepository, ModuloRepository moduloRepository) {
+    public MatriculaController(MatriculaRepository matriculaRepository, ModuloRepository moduloRepository, AlunoRepository alunoRepository, CursoRepository cursoRepository, AssistirAulaRepository assistirAulaRepository, AulaRepository aulaRepository) {
         this.matriculaRepository = matriculaRepository;
         this.moduloRepository = moduloRepository;
         this.alunoRepository = alunoRepository;
         this.cursoRepository = cursoRepository;
         this.assistirAulaRepository = assistirAulaRepository;
+        this.aulaRepository = aulaRepository;
     }
 
     @GetMapping
@@ -68,6 +70,20 @@ public class MatriculaController {
         }catch (Exception e){
             return ResponseEntity.notFound().build();
         }
+    }
+
+
+    @GetMapping("/porcentagemCurso/{idAluno}/{uuidCurso}")
+    public Integer verificarPorcentagemCurso(@PathVariable Long idAluno, @PathVariable String uuidCurso){
+        Integer sum=0;
+
+        for (Aula aula : aulaRepository.findAll()) {
+            if(aula.getModulo().getCurso().getUuid().equals(uuidCurso)){
+                sum++;
+            }
+        }
+
+        return sum;
     }
 
     @GetMapping("/verificaByUuid/{idAluno}/{uuid}")
