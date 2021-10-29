@@ -35,4 +35,10 @@ public class PaymentController {
         else
             return ResponseEntity.ok(save);
     }
+
+    @DeleteMapping("/todos")
+    public Boolean b(){
+        paymentRepository.deleteAll();
+        return Boolean.TRUE;
+    }
 }
