@@ -1,14 +1,13 @@
 package br.com.easylearn.controller;
 
-import br.com.easylearn.controller.dto.AulaDto;
 import br.com.easylearn.controller.dto.ModuloDto;
 import br.com.easylearn.controller.form.AtualizacaoModuloForm;
 import br.com.easylearn.controller.form.ModuloForm;
-import br.com.easylearn.domain.Aula;
 import br.com.easylearn.domain.Modulo;
 import br.com.easylearn.repository.AulaRepository;
 import br.com.easylearn.repository.CursoRepository;
 import br.com.easylearn.repository.ModuloRepository;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,9 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
-import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;

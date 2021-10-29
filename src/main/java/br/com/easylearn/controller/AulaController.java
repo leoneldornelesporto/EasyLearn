@@ -1,11 +1,9 @@
 package br.com.easylearn.controller;
 
 import br.com.easylearn.controller.dto.AulaDto;
-import br.com.easylearn.controller.dto.ModuloDto;
 import br.com.easylearn.controller.form.AtualizacaoAulaForm;
 import br.com.easylearn.controller.form.AulaForm;
 import br.com.easylearn.domain.Aula;
-import br.com.easylearn.domain.Modulo;
 import br.com.easylearn.repository.AulaRepository;
 import br.com.easylearn.repository.CursoRepository;
 import br.com.easylearn.repository.ModuloRepository;
@@ -46,6 +44,18 @@ public class AulaController {
             return ResponseEntity.notFound().build();
         else
             return ResponseEntity.ok(converter);
+    }
+
+    @GetMapping("v1/protectedA/aulas/modulo/{id}")
+    @Transactional
+    @PreAuthorize("hasRole('PROFESSOR')")
+    @CacheEvict(value = "listaDeAulas", allEntries = true)
+    public ResponseEntity<Long> retornaIdDoModuloQueAAulaFazParte(@PathVariable Long id){
+        Optional<Aula> byId = aulaRepository.findById(id);
+        if (byId.isPresent())
+            return ResponseEntity.ok(byId.get().getModulo().getId());
+        else
+            return ResponseEntity.notFound().build();
     }
 
     @GetMapping("v1/protectedA/aulas/{id}")
