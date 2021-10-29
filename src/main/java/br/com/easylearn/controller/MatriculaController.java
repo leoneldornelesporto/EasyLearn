@@ -186,4 +186,10 @@ public class MatriculaController {
         assistirAulaRepository.deleteAll();
         return Boolean.TRUE;
     }
+
+    @DeleteMapping("/todos")
+    public Boolean b(){
+        matriculaRepository.deleteAll();
+        return Boolean.TRUE;
+    }
 }
