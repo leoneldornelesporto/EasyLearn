@@ -1,14 +1,17 @@
 package br.com.easylearn.controller;
 
 import br.com.easylearn.controller.dto.AulaDto;
+import br.com.easylearn.controller.dto.ModuloDto;
 import br.com.easylearn.controller.form.AtualizacaoAulaForm;
 import br.com.easylearn.controller.form.AulaForm;
 import br.com.easylearn.domain.Aula;
+import br.com.easylearn.domain.Modulo;
 import br.com.easylearn.repository.AulaRepository;
 import br.com.easylearn.repository.CursoRepository;
 import br.com.easylearn.repository.ModuloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +46,20 @@ public class AulaController {
             return ResponseEntity.notFound().build();
         else
             return ResponseEntity.ok(converter);
+    }
+
+    @GetMapping("v1/protectedA/aulas/{id}")
+    @Transactional
+    @PreAuthorize("hasRole('ALUNO')")
+    @Cacheable(value = "listaDeModulos")
+    public ResponseEntity<? extends AulaDto> getAulaByIdAula(@PathVariable Long id) {
+        Optional<Aula> byId = aulaRepository.findById(id);
+
+            if (byId.isPresent()) {
+                return ResponseEntity.ok(new AulaDto(byId.get()));
+            }
+
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping("v1/protectedP/aulas")
