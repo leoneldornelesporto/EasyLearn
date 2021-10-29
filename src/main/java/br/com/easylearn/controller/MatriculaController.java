@@ -75,7 +75,8 @@ public class MatriculaController {
 
     @GetMapping("/porcentagemCurso/{idAluno}/{uuidCurso}")
     public Integer verificarPorcentagemCurso(@PathVariable Long idAluno, @PathVariable String uuidCurso){
-        Integer sum=0;
+        Integer sum=0, total=0;
+        List<AssistirAula> byIdAlunoAndUuidCurso = assistirAulaRepository.findByIdAlunoAndUuidCurso(idAluno, uuidCurso);
 
         for (Aula aula : aulaRepository.findAll()) {
             if(aula.getModulo().getCurso().getUuid().equals(uuidCurso)){
@@ -83,7 +84,9 @@ public class MatriculaController {
             }
         }
 
-        return sum;
+        total = (sum * 100) / byIdAlunoAndUuidCurso.size();
+
+        return total;
     }
 
     @GetMapping("/verificaByUuid/{idAluno}/{uuid}")
