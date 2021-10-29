@@ -46,9 +46,8 @@ public class AulaController {
             return ResponseEntity.ok(converter);
     }
 
-    @GetMapping("v1/protectedA/aulas/modulo/{id}")
+    @GetMapping("v1/aulasS/modulo/{id}")
     @Transactional
-    @PreAuthorize("hasRole('PROFESSOR')")
     @CacheEvict(value = "listaDeAulas", allEntries = true)
     public ResponseEntity<Long> retornaIdDoModuloQueAAulaFazParte(@PathVariable Long id){
         Optional<Aula> byId = aulaRepository.findById(id);
