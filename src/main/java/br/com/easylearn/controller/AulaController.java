@@ -62,6 +62,7 @@ public class AulaController {
         return ResponseEntity.notFound().build();
     }
 
+
     @PostMapping("v1/protectedP/aulas")
     @Transactional
     @PreAuthorize("hasRole('PROFESSOR')")
