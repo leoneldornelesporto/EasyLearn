@@ -84,7 +84,7 @@ public class MatriculaController {
             }
         }
 
-        total = (sum * 100) / byIdAlunoAndUuidCurso.size();
+        total = (byIdAlunoAndUuidCurso.size() * 100) / sum;
 
         return total;
     }
