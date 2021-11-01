@@ -67,7 +67,7 @@ public class ModuloController {
         List<Modulo> allByCursoId = moduloRepository.findAllByCursoId(idCurso);
 
         if (!allByCursoId.isEmpty()) {
-            return ResponseEntity.ok(ModuloDto.converter(allByCursoId));
+            return ResponseEntity.ok(ModuloDto.converter(allByCursoId,aulaRepository));
         }
 
         return ResponseEntity.notFound().build();
