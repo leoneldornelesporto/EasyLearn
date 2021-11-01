@@ -5,6 +5,7 @@ import br.com.easylearn.repository.AulaRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ModuloDto {
 
@@ -44,6 +45,10 @@ public class ModuloDto {
             moduloDtoList.add(moduloDto);
         }
         return moduloDtoList;
+    }
+
+    public static List<ModuloDto> converter(List<Modulo> allByCursoId) {
+        return allByCursoId.stream().map(ModuloDto::new).collect(Collectors.toList());
     }
 
     public Long getId() {

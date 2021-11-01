@@ -59,6 +59,20 @@ public class ModuloController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("v1/protectedA/modulo/idCurso/{idCurso}")
+    @Transactional
+    @PreAuthorize("hasRole('ALUNO')")
+    @Cacheable(value = "listaDeModulos")
+    public ResponseEntity<? extends List<ModuloDto>> findAllModuloByIdCurso(@PathVariable Long idCurso) {
+        List<Modulo> allByCursoId = moduloRepository.findAllByCursoId(idCurso);
+
+        if (!allByCursoId.isEmpty()) {
+            return ResponseEntity.ok(ModuloDto.converter(allByCursoId));
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
     @GetMapping("v1/modulo")
     @Transactional
     @Cacheable(value = "listaDeModulos")
