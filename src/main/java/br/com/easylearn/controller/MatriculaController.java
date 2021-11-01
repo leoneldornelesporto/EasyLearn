@@ -118,11 +118,11 @@ public class MatriculaController {
     @GetMapping("/verificaById/cursoConcluido/{idAluno}/{uuid}")
     public ResponseEntity<? extends Boolean> verificaSeConcluiCurso(@PathVariable Long idAluno, @PathVariable String uuid){
         Matricula byAlunoIdAndCurso_uuid = matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno, uuid);
-
-        if (byAlunoIdAndCurso_uuid.equals(null))
-            return ResponseEntity.notFound().build();
-        else
+        try{
             return ResponseEntity.ok(byAlunoIdAndCurso_uuid.getCursoConcluido());
+        }catch (Exception e){
+            return ResponseEntity.ok(Boolean.FALSE);
+        }
     }
 
     @GetMapping("/verificaById/cursosPausados/{idAluno}")
