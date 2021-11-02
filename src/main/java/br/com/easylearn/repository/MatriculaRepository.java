@@ -5,9 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MatriculaRepository extends JpaRepository<Matricula,Long> {
-    Matricula findByAlunoIdAndCursoId(Long idAluno, Long idCurso);
+    Optional<Matricula>  findByAlunoIdAndCursoId(Long idAluno, Long idCurso);
     Matricula findByAlunoIdAndCurso_Uuid(Long idAluno, String uuid);
     List<Matricula> findAllByAlunoIdAndCursoConcluidoIsTrue(Long id);
     List<Matricula> findAllByAlunoIdAndCursoPausadoIsTrue(Long idAluno);

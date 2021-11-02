@@ -57,15 +57,20 @@ public class MatriculaController {
     @Transactional
     @CacheEvict(value = "listaDeMatriculas", allEntries = true)
     public ResponseEntity<? extends MatriculasDto> saveMatricula(@RequestBody MatriculaForm matriculaForm, UriComponentsBuilder uriBuilder){
-        Matricula matricula = matriculaForm.save(matriculaRepository,alunoRepository,cursoRepository);
-        URI uri = uriBuilder.path("/v1/matricula/{id}").buildAndExpand(matricula.getId()).toUri();
-        return ResponseEntity.created(uri).body(new MatriculasDto(matricula));
+        Optional<Matricula> byAlunoIdAndCursoId = matriculaRepository.findByAlunoIdAndCursoId(matriculaForm.getIdAluno(), matriculaForm.getIdCurso());
+
+        if (!byAlunoIdAndCursoId.isPresent()){
+            Matricula matricula = matriculaForm.save(matriculaRepository,alunoRepository,cursoRepository);
+            URI uri = uriBuilder.path("/v1/matricula/{id}").buildAndExpand(matricula.getId()).toUri();
+            return ResponseEntity.created(uri).body(new MatriculasDto(matricula));
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/verificaById/{idAluno}/{idCurso}")
     public ResponseEntity<? extends MatriculasDto> verificarSeEstouMatriculadoEmAlgumCursoPorId(@PathVariable Long idAluno, @PathVariable Long idCurso){
         try {
-            MatriculasDto matriculasDtos = MatriculasDto.converter(matriculaRepository.findByAlunoIdAndCursoId(idAluno,idCurso));
+            MatriculasDto matriculasDtos = MatriculasDto.converter(matriculaRepository.findByAlunoIdAndCursoId(idAluno,idCurso).get());
             return ResponseEntity.ok(matriculasDtos);
         }catch (Exception e){
             return ResponseEntity.notFound().build();
@@ -184,7 +189,7 @@ public class MatriculaController {
 
     @PutMapping("/concluirCursoById/{idAluno}/{idCurso}")
     public ResponseEntity<MatriculasDto> concluirCursoById(@PathVariable Long idAluno, @PathVariable Long idCurso, UriComponentsBuilder uriBuilder){
-        Matricula matricula = matriculaRepository.findByAlunoIdAndCursoId(idAluno,idCurso);
+        Matricula matricula = matriculaRepository.findByAlunoIdAndCursoId(idAluno,idCurso).get();
         matricula.setCursoConcluido(Boolean.TRUE);
         matriculaRepository.save(matricula);
         URI uri = uriBuilder.path("/v1/matricula/{id}").buildAndExpand(matricula.getId()).toUri();

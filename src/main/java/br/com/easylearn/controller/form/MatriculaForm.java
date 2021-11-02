@@ -37,4 +37,12 @@ public class MatriculaForm {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public Long getIdAluno() {
+        return idAluno;
+    }
+
+    public Long getIdCurso() {
+        return idCurso;
+    }
 }
