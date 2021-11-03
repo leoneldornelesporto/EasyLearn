@@ -12,14 +12,14 @@ public class FormacoesDto {
     private Long id;
     private String titulo;
     private String descricao;
-    //private Integer quantidadeDeCursos;
+    private Integer quantidadeDeCursos;
     private String categoria;
 
     public FormacoesDto(Formacao formacao) {
         this.id = formacao.getId();
         this.titulo = formacao.getTitulo();
         this.descricao = formacao.getDescricao();
-        //this.quantidadeDeCursos = formacao.getCursoList().size();
+        this.quantidadeDeCursos = formacao.getCursoList().size();
         this.categoria = formacao.getCategoria().getNome();
     }
 
@@ -41,5 +41,9 @@ public class FormacoesDto {
 
     public String getCategoria() {
         return categoria;
+    }
+
+    public Integer getQuantidadeDeCursos() {
+        return quantidadeDeCursos;
     }
 }
