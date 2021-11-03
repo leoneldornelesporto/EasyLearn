@@ -48,7 +48,6 @@ public class ModuloController {
     @GetMapping("v1/protectedA/modulo/{idModulo}")
     @Transactional
     @PreAuthorize("hasRole('ALUNO')")
-    @Cacheable(value = "listaDeModulos")
     public ResponseEntity<? extends ModuloDto> findModuloById(@PathVariable Long idModulo) {
         Optional<Modulo> optional = moduloRepository.findById(idModulo);
 
@@ -62,7 +61,6 @@ public class ModuloController {
     @GetMapping("v1/protectedA/modulo/idCurso/{idCurso}")
     @Transactional
     @PreAuthorize("hasRole('ALUNO')")
-    @Cacheable(value = "listaDeModulos")
     public ResponseEntity<? extends List<ModuloDto>> findAllModuloByIdCurso(@PathVariable Long idCurso) {
         List<Modulo> allByCursoId = moduloRepository.findAllByCursoId(idCurso);
 
@@ -75,7 +73,6 @@ public class ModuloController {
 
     @GetMapping("v1/modulo")
     @Transactional
-    @Cacheable(value = "listaDeModulos")
     public ResponseEntity<? extends List<ModuloDto>> findAllModulos() {
         List<Modulo> optional = moduloRepository.findAll();
         if (!optional.isEmpty()) {
@@ -88,7 +85,6 @@ public class ModuloController {
     @PutMapping("v1/protectedP/modulo/{idModulo}")
     @Transactional
     @PreAuthorize("hasRole('PROFESSOR')")
-    @CacheEvict(value = "listaDeModulos", allEntries = true)
     public ResponseEntity<? extends ModuloDto> atualizarModulo(@PathVariable Long idModulo, @RequestBody AtualizacaoModuloForm form) {
         Optional<Modulo> optional = moduloRepository.findById(idModulo);
         if (optional.isPresent()) {
@@ -102,7 +98,6 @@ public class ModuloController {
     @DeleteMapping("v1/protectedP/modulo/{idModulo}")
     @Transactional
     @PreAuthorize("hasRole('PROFESSOR')")
-    @CacheEvict(value = "listaDeModulos", allEntries = true)
     public ResponseEntity<?> removerModulo(@PathVariable Long idModulo) {
         Optional<Modulo> optional = moduloRepository.findById(idModulo);
         if (optional.isPresent()) {
