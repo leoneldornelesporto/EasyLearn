@@ -5,7 +5,6 @@ import br.com.easylearn.controller.dto.FormacaoDto;
 import br.com.easylearn.controller.dto.FormacoesDto;
 import br.com.easylearn.controller.form.AtualizacaoFormacaoForm;
 import br.com.easylearn.controller.form.FormacaoForm;
-import br.com.easylearn.domain.Categoria;
 import br.com.easylearn.domain.Curso;
 import br.com.easylearn.domain.Formacao;
 import br.com.easylearn.repository.CategoriaRepository;
@@ -13,10 +12,7 @@ import br.com.easylearn.repository.CursoRepository;
 import br.com.easylearn.repository.FormacaoRepository;
 import br.com.easylearn.repository.ModuloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 

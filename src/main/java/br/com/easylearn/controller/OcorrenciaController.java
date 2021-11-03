@@ -7,8 +7,6 @@ import br.com.easylearn.repository.CursoRepository;
 import br.com.easylearn.repository.OcorrenciaRepository;
 import br.com.easylearn.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +33,6 @@ public class OcorrenciaController {
 
     @GetMapping
     @PreAuthorize("hasRole('ALUNO') or hasRole('PROFESSOR') or hasRole('TUTOR')")
-    @Cacheable(value = "listaDeOcorrencias")
     public ResponseEntity<? extends List<OcorrenciaDto>> findAllOcorrencias(){
         List<OcorrenciaDto> ocorrenciaDtos = OcorrenciaDto.converter(ocorrenciaRepository.findAll());
         if (ocorrenciaDtos.isEmpty())
@@ -47,7 +44,6 @@ public class OcorrenciaController {
     @PostMapping
     @Transactional
     @PreAuthorize("hasRole('ALUNO') or hasRole('PROFESSOR') or hasRole('TUTOR')")
-    @CacheEvict(value = "listaDeOcorrencias", allEntries = true)
     public ResponseEntity<? extends OcorrenciaDto> saveOcorrencia(@RequestBody OcorrenciaForm ocorrenciaForm, UriComponentsBuilder uriBuilder){
         Ocorrencia ocorrencia = ocorrenciaForm.save(ocorrenciaRepository,usuarioRepository,cursoRepository);
         URI uri = uriBuilder.path("/v1/ocorrencia/{id}").buildAndExpand(ocorrencia.getId()).toUri();

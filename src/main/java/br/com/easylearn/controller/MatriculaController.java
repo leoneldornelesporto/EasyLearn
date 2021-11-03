@@ -8,8 +8,6 @@ import br.com.easylearn.domain.Aula;
 import br.com.easylearn.domain.Matricula;
 import br.com.easylearn.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,7 +43,6 @@ public class MatriculaController {
     }
 
     @GetMapping
-    @Cacheable(value = "listaDeMatriculas")
     public ResponseEntity<? extends List<MatriculasDto>> findAllMatriculas(){
         List<MatriculasDto> matriculasDtos = MatriculasDto.converter(matriculaRepository.findAll());
         if (matriculasDtos.isEmpty())
@@ -55,7 +52,6 @@ public class MatriculaController {
     }
 
     @GetMapping("/verificaByIdSeMatriculeiAlgumCurso/{idAluno}/{uuidCurso}")
-    @Cacheable(value = "listaDeMatriculas")
     public ResponseEntity<? extends Boolean> verificaByIdSeMatriculeiAlgumCurso(@PathVariable Long idAluno, @PathVariable String uuidCurso){
 
         try{
@@ -72,7 +68,6 @@ public class MatriculaController {
 
     @PostMapping
     @Transactional
-    @CacheEvict(value = "listaDeMatriculas", allEntries = true)
     public ResponseEntity<? extends MatriculasDto> saveMatricula(@RequestBody MatriculaForm matriculaForm, UriComponentsBuilder uriBuilder){
         Optional<Matricula> byAlunoIdAndCursoId = matriculaRepository.findByAlunoIdAndCursoId(matriculaForm.getIdAluno(), matriculaForm.getIdCurso());
 

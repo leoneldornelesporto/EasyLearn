@@ -37,7 +37,6 @@ public class TutorController {
 
     @GetMapping("v1/protectedT/tutor")
     @PreAuthorize("hasRole('TUTOR')")
-    @Cacheable(value = "listaDeTutores")
     public ResponseEntity<? extends List<TutorDto>> findAllTutores(){
         List<TutorDto> tutorDtoList = TutorDto.converter(tutorRepository.findAll());
         if (tutorDtoList.isEmpty())
@@ -48,7 +47,6 @@ public class TutorController {
 
     @PostMapping("v1/SalvarTutor")
     @Transactional
-    @CacheEvict(value = "listaDeTutores", allEntries = true)
     public ResponseEntity<? extends TutorDto> saveTutor(@RequestBody TutorForm tutorForm, UriComponentsBuilder uriBuilder) throws MessagingException {
         Tutor tutor = tutorForm.save(tutorRepository);
         try {
@@ -70,7 +68,6 @@ public class TutorController {
     @PutMapping("v1/protectedT/tutor/{idTutor}")
     @PreAuthorize("hasRole('TUTOR')")
     @Transactional
-    @CacheEvict(value = "listaDeTutores", allEntries = true)
     public ResponseEntity<? extends TutorDto> atualizarTutor(@PathVariable Long idTutor, @RequestBody AtualizacaoTutorForm form) {
         Optional<Tutor> optional = tutorRepository.findById(idTutor);
         if (optional.isPresent()) {
@@ -83,7 +80,6 @@ public class TutorController {
     @DeleteMapping("v1/protectedT/tutor/{idTutor}")
     @PreAuthorize("hasRole('TUTOR')")
     @Transactional
-    @CacheEvict(value = "listaDeTutores", allEntries = true)
     public ResponseEntity<?> removerTutor(@PathVariable Long idTutor) {
         Optional<Tutor> optional = tutorRepository.findById(idTutor);
         if (optional.isPresent()) {
@@ -95,7 +91,6 @@ public class TutorController {
 
     @GetMapping("ativarTutor/{uuid}")
     @Transactional
-    @CacheEvict(value = "listaDeProfessores", allEntries = true)
     public ResponseEntity<? extends TutorDto> ativarTutor(@PathVariable String uuid) {
         Optional<Tutor> optional = tutorRepository.findByUuid(uuid);
         if (optional.isPresent()) {

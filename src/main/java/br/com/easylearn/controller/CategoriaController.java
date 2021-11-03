@@ -1,7 +1,6 @@
 package br.com.easylearn.controller;
 
 import br.com.easylearn.controller.dto.CategoriaDto;
-import br.com.easylearn.controller.dto.CursoDto;
 import br.com.easylearn.controller.form.AtualizacaoCategoriaForm;
 import br.com.easylearn.controller.form.CategoriaForm;
 import br.com.easylearn.domain.Categoria;
@@ -30,7 +29,6 @@ public class CategoriaController {
     }
 
     @GetMapping("v1/categoria")
-    @Cacheable(value = "listaDeCategorias")
     public ResponseEntity<? extends List<CategoriaDto>> findAllCategorias(){
         List<CategoriaDto> categoriaDtoList = CategoriaDto.converter(categoriaRepository.findAll());
 
@@ -43,7 +41,6 @@ public class CategoriaController {
     @PostMapping("v1/protectedP/categoria")
     @PreAuthorize("hasRole('PROFESSOR')")
     @Transactional
-    @CacheEvict(value = "listaDeCategorias", allEntries = true)
     public ResponseEntity<? extends CategoriaDto> saveCategoria(@RequestBody CategoriaForm categoriaForm, UriComponentsBuilder uriBuilder){
         Categoria categoria  = categoriaForm.save(categoriaRepository);
         URI uri = uriBuilder.path("/v1/categoria/{id}").buildAndExpand(categoria.getId()).toUri();
@@ -53,7 +50,6 @@ public class CategoriaController {
     @PutMapping("v1/protectedP/categoria/{idCategoria}")
     @PreAuthorize("hasRole('PROFESSOR')")
     @Transactional
-    @CacheEvict(value = "listaDeCategorias", allEntries = true)
     public ResponseEntity<? extends CategoriaDto> atualizarCategoria(@PathVariable Long idCategoria, @RequestBody AtualizacaoCategoriaForm form) {
         Optional<Categoria> optional = categoriaRepository.findById(idCategoria);
         if (optional.isPresent()) {
@@ -66,7 +62,6 @@ public class CategoriaController {
     @DeleteMapping("v1/protectedP/categoria/{idCategoria}")
     @PreAuthorize("hasRole('PROFESSOR')")
     @Transactional
-    @CacheEvict(value = "listaDeCategorias", allEntries = true)
     public ResponseEntity<?> removerTutor(@PathVariable Long idCategoria) {
         Optional<Categoria> optional = categoriaRepository.findById(idCategoria);
         if (optional.isPresent()) {

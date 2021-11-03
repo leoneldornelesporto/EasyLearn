@@ -10,8 +10,6 @@ import br.com.easylearn.domain.Aluno;
 import br.com.easylearn.domain.Mail;
 import br.com.easylearn.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +35,6 @@ public class AlunoController {
 
     @GetMapping("v1/protectedA/aluno")
     @PreAuthorize("hasRole('ALUNO')")
-    @Cacheable(value = "listaDeAlunos")
     public ResponseEntity<? extends List<AlunoDto>> findAllAlunos(){
         List<AlunoDto> alunoDtoList = AlunoDto.converter(alunoRepository.findAll());
         if (alunoDtoList.isEmpty())
@@ -48,7 +45,6 @@ public class AlunoController {
 
     @PostMapping("v1/salvar/aluno")
     @Transactional
-    @CacheEvict(value = "listaDeAlunos", allEntries = true)
     public ResponseEntity<? extends AlunoDto> saveAluno(@RequestBody AlunoForm alunoForm, UriComponentsBuilder uriBuilder) {
         verifyAlunoExistsByCpfAndEmail(alunoForm.getCpf(),alunoForm.getEmail());
         Aluno aluno = alunoForm.save(alunoRepository);
@@ -64,7 +60,6 @@ public class AlunoController {
     @PutMapping("v1/aluno/{idAluno}")
     @PreAuthorize("hasRole('ALUNO')")
     @Transactional
-    @CacheEvict(value = "listaDeAlunos", allEntries = true)
     public ResponseEntity<? extends AlunoDto> atualizarAluno(@PathVariable Long idAluno, @RequestBody AtualizacaoAlunoForm form){
         verifyAlunoExists(idAluno);
         Optional<Aluno> optional = alunoRepository.findById(idAluno);
@@ -77,7 +72,6 @@ public class AlunoController {
 
     @PostMapping("v1/resetPassword/{email}")
     @Transactional
-    @CacheEvict(value = "listaDeAlunos", allEntries = true)
     public ResponseEntity<? extends AlunoDto> enviaEmailComLinkDeRedefinicaoDeSenha(@PathVariable String email) throws MessagingException {
         Optional<Aluno> byEmail = alunoRepository.findByEmail(email);
 
@@ -95,7 +89,6 @@ public class AlunoController {
 
     @PutMapping("v1/resetPassword/{id}/{email}")
     @Transactional
-    @CacheEvict(value = "listaDeAlunos", allEntries = true)
     public ResponseEntity<? extends AlunoDto> redefinirSenha(@PathVariable Long id, @PathVariable String email, @RequestBody String senha){
         Optional<Aluno> aluno = alunoRepository.findByIdAndEmail(id,email);
 
@@ -110,7 +103,6 @@ public class AlunoController {
 
     @GetMapping("ativarAluno/uuid/{uuid}")
     @Transactional
-    @CacheEvict(value = "listaDeAlunos", allEntries = true)
     public ResponseEntity<? extends AlunoDto> ativarAlunoByUuid(@PathVariable String uuid) {
         Optional<Aluno> optional = alunoRepository.findByUuid(uuid);
         if (optional.isPresent()) {
@@ -123,7 +115,6 @@ public class AlunoController {
 
     @GetMapping("ativarAluno/id/{id}")
     @Transactional
-    @CacheEvict(value = "listaDeAlunos", allEntries = true)
     public ResponseEntity<? extends AlunoDto> ativarAlunoById(@PathVariable Long id) {
         Optional<Aluno> optional = alunoRepository.findById(id);
         if (optional.isPresent()) {

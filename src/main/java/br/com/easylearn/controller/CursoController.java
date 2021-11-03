@@ -41,7 +41,6 @@ public class CursoController {
     }
 
     @GetMapping("/v1/curso")
-    @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends List<CursoDto>> findAllCursos(){
         List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findAll(),matriculaRepository,moduloRepository,aulaRepository);
 
@@ -52,7 +51,6 @@ public class CursoController {
     }
 
     @GetMapping("v1/curso/categoria/{idCategoria}")
-    @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends List<CursoDto>> findAllCursosByCategoria(@PathVariable Long idCategoria){
         List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findByCategoriaId(idCategoria),matriculaRepository,moduloRepository,aulaRepository);
 
@@ -63,7 +61,6 @@ public class CursoController {
     }
 
     @GetMapping("v1/curso/id/{id}")
-    @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends CursoDto> findCursosById(@PathVariable Long id){
         CursoDto curso = CursoDto.converter(cursoRepository.getById(id),matriculaRepository,moduloRepository,aulaRepository);
 
@@ -74,7 +71,6 @@ public class CursoController {
     }
 
     @GetMapping("v1/curso/uuid/{uuid}")
-    @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends CursoDto> findCursosByUuid(@PathVariable String uuid){
         CursoDto cursoDto = CursoDto.converter(cursoRepository.findByUuid(uuid),matriculaRepository,moduloRepository,aulaRepository);
 
@@ -88,7 +84,6 @@ public class CursoController {
 
 
     @GetMapping("v1/curso/nome/{nome}")
-    @Cacheable(value = "listaDeCursos")
     public ResponseEntity<? extends List<CursoDto>> findCursosByNome(@PathVariable String nome){
         List<CursoDto> cursoDtoList = CursoDto.converter(cursoRepository.findByNomeContaining(nome),matriculaRepository,moduloRepository,aulaRepository);
 
@@ -101,7 +96,6 @@ public class CursoController {
     @PostMapping("v1/protectedP/curso")
     @Transactional
     @PreAuthorize("hasRole('PROFESSOR')")
-    @CacheEvict(value = "listaDeCursos", allEntries = true)
     public ResponseEntity<?> saveCurso(@RequestBody CursoForm cursoForm, UriComponentsBuilder uriBuilder) {
         Curso curso = cursoForm.save(cursoRepository,professorRepository,categoriaRepository,formacaoRepository);
         URI uri = uriBuilder.path("/v1/protectedP/curso/{id}").buildAndExpand(curso.getId()).toUri();
@@ -114,7 +108,6 @@ public class CursoController {
     @PutMapping("v1/protectedP/curso/{idCurso}")
     @Transactional
     @PreAuthorize("hasRole('PROFESSOR')")
-    @CacheEvict(value = "listaDeCursos", allEntries = true)
     public ResponseEntity<?> atualizarCurso(@PathVariable Long idCurso, @RequestBody AtualizacaoCursoForm atualizacaoCursoForm, UriComponentsBuilder uriBuilder) {
         Curso curso = atualizacaoCursoForm.atualizar(idCurso,cursoRepository,categoriaRepository,formacaoRepository);
         URI uri = uriBuilder.path("/v1/protectedP/curso/{id}").buildAndExpand(curso.getId()).toUri();
@@ -127,7 +120,6 @@ public class CursoController {
     @DeleteMapping("v1/protectedP/curso/{idCurso}")
     @Transactional
     @PreAuthorize("hasRole('PROFESSOR')")
-    @CacheEvict(value = "listaDeCursos", allEntries = true)
     public ResponseEntity<?> removerCurso(@PathVariable Long idCurso) {
         Optional<Curso> optional = cursoRepository.findById(idCurso);
         if (optional.isPresent()) {

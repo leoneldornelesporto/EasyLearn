@@ -46,7 +46,6 @@ public class ReforcoController {
 
     @PostMapping
     @Transactional
-    @CacheEvict(value = "listaDeReforcos", allEntries = true)
     public ResponseEntity<? extends ReforcoDto> saveReforco(@RequestBody ReforcoForm reforcoForm, UriComponentsBuilder uriBuilder){
         Reforco reforco = reforcoForm.save(tutorRepository,reforcoRepository,cursoRepository);
         URI uri = uriBuilder.path("/v1/reforco/{id}").buildAndExpand(reforco.getId()).toUri();

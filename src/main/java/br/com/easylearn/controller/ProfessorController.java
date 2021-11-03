@@ -44,7 +44,6 @@ public class ProfessorController {
 
     @PreAuthorize("hasRole('PROFESSOR')")
     @GetMapping("v1/protectedP/professor")
-    @Cacheable(value = "listaDeProfessores")
     public ResponseEntity<? extends List<ProfessorDto>> findAllProfessores(){
         List<ProfessorDto> professorDtoList = ProfessorDto.converter(professorRepository.findAll());
         if (professorDtoList.isEmpty())
@@ -55,7 +54,6 @@ public class ProfessorController {
 
     @PostMapping("v1/salvar/professor")
     @Transactional
-    @CacheEvict(value = "listaDeProfessores", allEntries = true)
     public ResponseEntity<? extends ProfessorDto> saveProfessor(@RequestBody ProfessorForm professorForm, UriComponentsBuilder uriBuilder) throws MessagingException {
         Professor professor = professorForm.save(professorRepository);
         try {
@@ -77,7 +75,6 @@ public class ProfessorController {
     @PreAuthorize("hasRole('PROFESSOR')")
     @PutMapping("v1/protectedP/professor/{idProfessor}")
     @Transactional
-    @CacheEvict(value = "listaDeProfessores", allEntries = true)
     public ResponseEntity<? extends ProfessorDto> atualizarProfessor(@PathVariable Long idProfessor, @RequestBody AtualizacaoProfessorForm form) {
         Optional<Professor> optional = professorRepository.findById(idProfessor);
         if (optional.isPresent()) {
@@ -90,7 +87,6 @@ public class ProfessorController {
     @PreAuthorize("hasRole('PROFESSOR')")
     @DeleteMapping("v1/protectedP/professor/{idProfessor}")
     @Transactional
-    @CacheEvict(value = "listaDeProfessores", allEntries = true)
     public ResponseEntity<?> removerProfessor(@PathVariable Long idProfessor) {
         Optional<Professor> optional = professorRepository.findById(idProfessor);
         if (optional.isPresent()) {
@@ -103,7 +99,6 @@ public class ProfessorController {
     @PreAuthorize("hasRole('PROFESSOR')")
     @PostMapping("v1/protectedP/professor/salvar/aluno")
     @Transactional
-    @CacheEvict(value = "listaDeProfessores", allEntries = true)
     public ResponseEntity<? extends AlunoDto> saveAluno(@RequestBody AlunoForm alunoForm, UriComponentsBuilder uriBuilder){
         Aluno aluno = alunoForm.save(alunoRepository);
         URI uri = uriBuilder.path("/v1/aluno/{id}").buildAndExpand(aluno.getId()).toUri();
@@ -113,7 +108,6 @@ public class ProfessorController {
     @PreAuthorize("hasRole('PROFESSOR')")
     @DeleteMapping("v1/protectedP/professor/salvar/aluno/{idAluno}")
     @Transactional
-    @CacheEvict(value = "listaDeProfessores", allEntries = true)
     public ResponseEntity<?> removerAluno(@PathVariable Long idAluno) {
         Optional<Aluno> optional = alunoRepository.findById(idAluno);
         if (optional.isPresent()) {
@@ -125,7 +119,6 @@ public class ProfessorController {
 
     @GetMapping("ativarProfessor/{uuid}")
     @Transactional
-    @CacheEvict(value = "listaDeProfessores", allEntries = true)
     public ResponseEntity<? extends ProfessorDto> ativarProfessor(@PathVariable String uuid) {
         Optional<Professor> optional = professorRepository.findByUuid(uuid);
         if (optional.isPresent()) {
