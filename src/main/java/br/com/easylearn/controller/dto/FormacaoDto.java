@@ -46,6 +46,7 @@ public class FormacaoDto {
         this.subtitulo = formacao.getSubtitulo();
         this.descricaoSubtitulo = formacao.getDescricaoSubtitulo();
         this.categoria = formacao.getCategoria().getNome();
+        this.qtdCursos = formacao.getCursoList().size();
     }
 
     public static FormacaoDto converter(Formacao formacao) {
