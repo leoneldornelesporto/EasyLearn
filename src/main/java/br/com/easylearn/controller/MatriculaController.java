@@ -10,6 +10,7 @@ import br.com.easylearn.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +52,17 @@ public class MatriculaController {
             return ResponseEntity.notFound().build();
         else
             return ResponseEntity.ok(matriculasDtos);
+    }
+
+    @GetMapping("/verificaByIdSeMatriculeiAlgumCurso/{idAluno}/{uuidCurso}")
+    @Cacheable(value = "listaDeMatriculas")
+    public ResponseEntity<? extends Boolean> verificaByIdSeMatriculeiAlgumCurso(@PathVariable Long idAluno, @PathVariable String uuidCurso){
+        Optional<Matricula> byAlunoIdAndCurso_uuid = matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno, uuidCurso);
+        if(byAlunoIdAndCurso_uuid.isPresent()){
+            return ResponseEntity.ok(Boolean.TRUE);
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Boolean.FALSE);
     }
 
     @PostMapping
@@ -97,7 +109,7 @@ public class MatriculaController {
     @GetMapping("/verificaByUuid/{idAluno}/{uuid}")
     public ResponseEntity<? extends MatriculasDto> verificarSeEstouMatriculadoEmAlgumCursoPorUuid(@PathVariable Long idAluno, @PathVariable String uuid){
         try {
-            MatriculasDto matriculasDtos = MatriculasDto.converter(matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno,uuid));
+            MatriculasDto matriculasDtos = MatriculasDto.converter(matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno,uuid).get());
             return ResponseEntity.ok(matriculasDtos);
         }catch (Exception e){
             return ResponseEntity.notFound().build();
@@ -122,7 +134,7 @@ public class MatriculaController {
 
     @GetMapping("/verificaById/cursoConcluido/{idAluno}/{uuid}")
     public ResponseEntity<? extends Boolean> verificaSeConcluiCurso(@PathVariable Long idAluno, @PathVariable String uuid){
-        Matricula byAlunoIdAndCurso_uuid = matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno, uuid);
+        Matricula byAlunoIdAndCurso_uuid = matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno, uuid).get();
         try{
             return ResponseEntity.ok(byAlunoIdAndCurso_uuid.getCursoConcluido());
         }catch (Exception e){
@@ -198,7 +210,7 @@ public class MatriculaController {
 
     @PutMapping("/concluirCursoByUuid/{idAluno}/{uuid}")
     public ResponseEntity<MatriculasDto> concluirCursoByUuid(@PathVariable Long idAluno, @PathVariable String uuid, UriComponentsBuilder uriBuilder){
-        Matricula matricula = matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno,uuid);
+        Matricula matricula = matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno,uuid).get();
         matricula.setCursoConcluido(Boolean.TRUE);
         matriculaRepository.save(matricula);
         URI uri = uriBuilder.path("/v1/matricula/{id}").buildAndExpand(matricula.getId()).toUri();
