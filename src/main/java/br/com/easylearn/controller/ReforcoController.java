@@ -7,8 +7,6 @@ import br.com.easylearn.repository.CursoRepository;
 import br.com.easylearn.repository.ReforcoRepository;
 import br.com.easylearn.repository.TutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +33,6 @@ public class ReforcoController {
     }
 
     @GetMapping
-    @Cacheable(value = "listaDeReforcos")
     public ResponseEntity<? extends List<ReforcoDto>> findAllReforcos(){
         List<ReforcoDto> reforcoDtos = ReforcoDto.converter(reforcoRepository.findAll());
         if (reforcoDtos.isEmpty())

@@ -6,8 +6,6 @@ import br.com.easylearn.controller.form.CursoForm;
 import br.com.easylearn.domain.Curso;
 import br.com.easylearn.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -79,9 +77,6 @@ public class CursoController {
         else
             return ResponseEntity.ok(cursoDto);
     }
-
-
-
 
     @GetMapping("v1/curso/nome/{nome}")
     public ResponseEntity<? extends List<CursoDto>> findCursosByNome(@PathVariable String nome){

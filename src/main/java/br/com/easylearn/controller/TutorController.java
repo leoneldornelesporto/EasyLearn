@@ -1,17 +1,12 @@
 package br.com.easylearn.controller;
 
 import br.com.easylearn.config.mailsender.SendMailServiceImpl;
-import br.com.easylearn.controller.dto.ProfessorDto;
 import br.com.easylearn.controller.dto.TutorDto;
 import br.com.easylearn.controller.form.AtualizacaoTutorForm;
 import br.com.easylearn.controller.form.TutorForm;
-import br.com.easylearn.domain.Mail;
-import br.com.easylearn.domain.Professor;
 import br.com.easylearn.domain.Tutor;
 import br.com.easylearn.repository.TutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

@@ -6,8 +6,6 @@ import br.com.easylearn.controller.form.CategoriaForm;
 import br.com.easylearn.domain.Categoria;
 import br.com.easylearn.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
