@@ -57,11 +57,16 @@ public class MatriculaController {
     @GetMapping("/verificaByIdSeMatriculeiAlgumCurso/{idAluno}/{uuidCurso}")
     @Cacheable(value = "listaDeMatriculas")
     public ResponseEntity<? extends Boolean> verificaByIdSeMatriculeiAlgumCurso(@PathVariable Long idAluno, @PathVariable String uuidCurso){
-        Optional<Matricula> byAlunoIdAndCurso_uuid = matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno, uuidCurso);
-        if(byAlunoIdAndCurso_uuid.isPresent()){
-            return ResponseEntity.ok(Boolean.TRUE);
-        }
 
+        try{
+            Optional<Matricula> byAlunoIdAndCurso_uuid = matriculaRepository.findByAlunoIdAndCurso_Uuid(idAluno, uuidCurso);
+            if(byAlunoIdAndCurso_uuid.isPresent()){
+                return ResponseEntity.ok(Boolean.TRUE);
+            }
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Boolean.FALSE);
     }
 
