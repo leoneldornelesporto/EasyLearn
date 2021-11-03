@@ -97,22 +97,27 @@ public class MatriculaController {
 
     @GetMapping("/porcentagemCurso/{idAluno}/{uuidCurso}")
     public Integer verificarPorcentagemCurso(@PathVariable Long idAluno, @PathVariable String uuidCurso){
-        Integer sum=0, total=0;
-        List<AssistirAula> byIdAlunoAndUuidCurso = assistirAulaRepository.findByIdAlunoAndUuidCurso(idAluno, uuidCurso);
+        try{
+            Integer sum=0, total=0;
+            List<AssistirAula> byIdAlunoAndUuidCurso = assistirAulaRepository.findByIdAlunoAndUuidCurso(idAluno, uuidCurso);
 
-        for (Aula aula : aulaRepository.findAll()) {
-            if(aula.getModulo().getCurso().getUuid().equals(uuidCurso)){
-                sum++;
+            for (Aula aula : aulaRepository.findAll()) {
+                if(aula.getModulo().getCurso().getUuid().equals(uuidCurso)){
+                    sum++;
+                }
             }
+
+            total = (byIdAlunoAndUuidCurso.size() * 100) / sum;
+
+            if (total>100){
+                total = 100;
+            }
+
+            return total;
+        }catch (Exception e){
+            System.out.println(e);
         }
-
-        total = (byIdAlunoAndUuidCurso.size() * 100) / sum;
-
-        if (total>100){
-            total = 100;
-        }
-
-        return total;
+        return 0;
     }
 
     @GetMapping("/verificaByUuid/{idAluno}/{uuid}")
