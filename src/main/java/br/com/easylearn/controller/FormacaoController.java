@@ -86,7 +86,7 @@ public class FormacaoController {
 
     @GetMapping("/categoria/{idCategoria}")
     public ResponseEntity<? extends List<FormacoesDto>> findAllFormacoesByIdCategoria(@PathVariable Long idCategoria){
-        List<FormacoesDto> formacaoDtoList = FormacoesDto.converter(formacaoRepository.findAllByCategoriaId(idCategoria));
+        List<FormacoesDto> formacaoDtoList = FormacoesDto.converter(formacaoRepository.findAllByCategoriaId(idCategoria),cursoRepository);
         if (formacaoDtoList.isEmpty())
             return ResponseEntity.notFound().build();
         else
