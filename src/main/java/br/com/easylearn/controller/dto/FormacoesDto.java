@@ -1,9 +1,7 @@
 package br.com.easylearn.controller.dto;
 
 import br.com.easylearn.domain.Formacao;
-import br.com.easylearn.repository.CursoRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
