@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("v1/protectedA/payment")
 public class PaymentController {
@@ -29,11 +31,16 @@ public class PaymentController {
 
     @PostMapping
     public ResponseEntity<? extends Payment> savePayment(@RequestBody Payment payment){
-        Payment save = paymentRepository.save(payment);
-        if (save == null)
-            return ResponseEntity.notFound().build();
-        else
-            return ResponseEntity.ok(save);
+        try{
+            Optional<Payment> byUuidCursoAndIdAluno = paymentRepository.findByUuidCursoAndIdAluno(payment.getUuidCurso(), payment.getIdAluno());
+            if(!byUuidCursoAndIdAluno.isPresent()){
+                Payment save = paymentRepository.save(payment);
+                return ResponseEntity.ok(save);
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/todos")
