@@ -50,12 +50,32 @@ public class FormacaoDto {
         }
     }
 
+    public FormacaoDto(Formacao formacao, ModuloRepository moduloRepository) {
+        this.id = formacao.getId();
+        this.titulo = formacao.getTitulo();
+        this.descricao = formacao.getDescricao();
+        this.subtitulo = formacao.getSubtitulo();
+        this.descricaoSubtitulo = formacao.getDescricaoSubtitulo();
+        this.categoria = formacao.getCategoria().getNome();
+    }
+
     public static FormacaoDto converter(Formacao formacao) {
         return new FormacaoDto(formacao);
     }
 
     public static List<FormacaoDto> converter(List<Formacao> allFormacoes) {
         return allFormacoes.stream().map(FormacaoDto::new).collect(Collectors.toList());
+    }
+
+    public static List<FormacaoDto> converter(List<Formacao> allFormacoes, ModuloRepository moduloRepository) {
+        List<FormacaoDto> formacaoDtoList = new ArrayList<>();
+
+        for(Formacao formacao:allFormacoes){
+            FormacaoDto formacaoDto = new FormacaoDto(formacao,moduloRepository);
+            formacaoDtoList.add(formacaoDto);
+        }
+
+        return formacaoDtoList;
     }
 
     public Long getId() {
