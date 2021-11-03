@@ -18,8 +18,6 @@ public class FormacaoDto {
     private String subtitulo;
     private String descricaoSubtitulo;
     private String categoria;
-    private List<CursoDto> cursoDtoList;
-    private List<AssistirAula> assistirAulaArrayList = new ArrayList<>();
 
     public FormacaoDto(Formacao formacao) {
         this.id = formacao.getId();
@@ -37,17 +35,6 @@ public class FormacaoDto {
         this.subtitulo = formacao.getSubtitulo();
         this.descricaoSubtitulo = formacao.getDescricaoSubtitulo();
         this.categoria = formacao.getCategoria().getNome();
-        this.cursoDtoList = CursoDto.converter(formacao.getCursoList());
-
-        List<AssistirAula> all = assistirAulaRepository.findAll();
-
-        for (Curso curso:formacao.getCursoList()){
-            for(AssistirAula assistirAula:all){
-                if(assistirAula.getUuidCurso().equals(curso.getUuid())){
-                    assistirAulaArrayList.add(assistirAula);
-                }
-            }
-        }
     }
 
     public FormacaoDto(Formacao formacao, ModuloRepository moduloRepository) {
@@ -100,13 +87,5 @@ public class FormacaoDto {
 
     public String getCategoria() {
         return categoria;
-    }
-
-    public List<CursoDto> getCursoDtoList() {
-        return cursoDtoList;
-    }
-
-    public List<AssistirAula> getAssistirAulaArrayList() {
-        return assistirAulaArrayList;
     }
 }
