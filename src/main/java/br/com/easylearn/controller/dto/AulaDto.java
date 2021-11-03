@@ -11,6 +11,7 @@ public class AulaDto {
     private Integer indice;
     private String titulo;
     private String urlVideo;
+    private Integer min;
     private String transcricao;
 
     public AulaDto(Aula aula) {
@@ -18,6 +19,7 @@ public class AulaDto {
         this.indice = aula.getIndice();
         this.titulo = aula.getTitulo();
         this.urlVideo = aula.getUrlVideo();
+        this.min = aula.getMin();
         this.transcricao = aula.getTranscricao();
     }
 
@@ -47,5 +49,9 @@ public class AulaDto {
 
     public String getTranscricao() {
         return transcricao;
+    }
+
+    public Integer getMin() {
+        return min;
     }
 }

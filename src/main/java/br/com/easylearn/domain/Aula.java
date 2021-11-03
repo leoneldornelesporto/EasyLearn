@@ -9,11 +9,20 @@ public class Aula extends AbstractEntity{
     private Integer indice;
     private String titulo;
     private String urlVideo;
+    private Integer min;
     private String transcricao;
     @ManyToOne
     private Modulo modulo;
 
     public Aula() {
+    }
+
+    public Aula(Integer indice, String titulo, String urlVideo, Integer min, String transcricao) {
+        this.indice = indice;
+        this.titulo = titulo;
+        this.urlVideo = urlVideo;
+        this.min = min;
+        this.transcricao = transcricao;
     }
 
     public Aula(Integer indice, String titulo, String urlVideo, String transcricao) {
@@ -61,5 +70,13 @@ public class Aula extends AbstractEntity{
 
     public void setModulo(Modulo modulo) {
         this.modulo = modulo;
+    }
+
+    public Integer getMin() {
+        return min;
+    }
+
+    public void setMin(Integer min) {
+        this.min = min;
     }
 }
