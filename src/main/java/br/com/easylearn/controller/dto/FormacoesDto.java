@@ -41,8 +41,4 @@ public class FormacoesDto {
     public String getCategoria() {
         return categoria;
     }
-
-    public Integer getQuantidadeDeCursos() {
-        return quantidadeDeCursos;
-    }
 }
