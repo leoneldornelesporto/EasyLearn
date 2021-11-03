@@ -108,6 +108,10 @@ public class MatriculaController {
 
         total = (byIdAlunoAndUuidCurso.size() * 100) / sum;
 
+        if (total>100){
+            total = 100;
+        }
+
         return total;
     }
 
