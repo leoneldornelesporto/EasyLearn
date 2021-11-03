@@ -18,6 +18,7 @@ public class FormacaoDto {
     private String subtitulo;
     private String descricaoSubtitulo;
     private String categoria;
+    private Integer qtdCursos;
 
     public FormacaoDto(Formacao formacao) {
         this.id = formacao.getId();
@@ -26,6 +27,7 @@ public class FormacaoDto {
         this.subtitulo = formacao.getSubtitulo();
         this.descricaoSubtitulo = formacao.getDescricaoSubtitulo();
         this.categoria = formacao.getCategoria().getNome();
+        this.qtdCursos = formacao.getCursoList().size();
     }
 
     public FormacaoDto(Formacao formacao, AssistirAulaRepository assistirAulaRepository) {
@@ -87,5 +89,9 @@ public class FormacaoDto {
 
     public String getCategoria() {
         return categoria;
+    }
+
+    public Integer getQtdCursos() {
+        return qtdCursos;
     }
 }
