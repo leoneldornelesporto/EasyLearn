@@ -7,6 +7,7 @@ import br.com.easylearn.controller.form.TopicoForm;
 import br.com.easylearn.domain.Topico;
 import br.com.easylearn.repository.CursoRepository;
 import br.com.easylearn.repository.TopicosRepository;
+import br.com.easylearn.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +25,13 @@ public class TopicosController {
 
     private final TopicosRepository topicosRepository;
     private final CursoRepository cursoRepository;
+    private final UsuarioRepository usuarioRepository;
 
     @Autowired
-    public TopicosController(TopicosRepository topicosRepository, CursoRepository cursoRepository) {
+    public TopicosController(TopicosRepository topicosRepository, CursoRepository cursoRepository, UsuarioRepository usuarioRepository) {
         this.topicosRepository = topicosRepository;
         this.cursoRepository = cursoRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @GetMapping
@@ -46,7 +49,7 @@ public class TopicosController {
     @PostMapping
     @Transactional
     public ResponseEntity<TopicoDto> cadastrar(@RequestBody TopicoForm form, UriComponentsBuilder uriBuilder) {
-        Topico topico = form.converter(cursoRepository);
+        Topico topico = form.converter(cursoRepository,usuarioRepository);
         topicosRepository.save(topico);
 
         URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
