@@ -66,6 +66,19 @@ public class AulaController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("v1/protectedA/aulas/{id}/{uuid}")
+    @Transactional
+    @PreAuthorize("hasRole('ALUNO')")
+    public ResponseEntity<? extends AulaDto> getAulaByIdAulaAndUuidCurso(@PathVariable Long id, @PathVariable String uuid) {
+        Optional<Aula> byId = aulaRepository.findByIdAndModuloCursoUuid(id,uuid);
+
+        if (byId.isPresent()) {
+            return ResponseEntity.ok(new AulaDto(byId.get()));
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
 
     @PostMapping("v1/protectedP/aulas")
     @Transactional
