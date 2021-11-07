@@ -16,4 +16,6 @@ public interface CursoRepository extends JpaRepository<Curso, Long> {
 	@Query("SELECT c.formacao FROM Curso c WHERE c.uuid = :uuid")
 	List<Formacao> findAllFormacaoByCursoUuid(String uuid);
 	List<Formacao> findAllByFormacaoId(Long id);
+
+	Curso findByNome(String nomeCurso);
 }
