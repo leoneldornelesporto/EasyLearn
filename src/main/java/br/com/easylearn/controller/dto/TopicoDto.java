@@ -2,7 +2,6 @@ package br.com.easylearn.controller.dto;
 
 import br.com.easylearn.domain.Topico;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,12 +11,14 @@ public class TopicoDto {
     private String titulo;
     private String mensagem;
     private UsuarioDto autor;
+    private Integer qtdResposta;
 
     public TopicoDto(Topico topico) {
         this.id = topico.getId();
         this.titulo = topico.getTitulo();
         this.mensagem = topico.getMensagem();
         this.autor = UsuarioDto.converter(topico.getAutor());
+        this.qtdResposta = topico.getRespostas().size();
     }
 
     public static List<TopicoDto> converter(List<Topico> all) {
@@ -38,5 +39,9 @@ public class TopicoDto {
 
     public UsuarioDto getAutor() {
         return autor;
+    }
+
+    public Integer getQtdResposta() {
+        return qtdResposta;
     }
 }
