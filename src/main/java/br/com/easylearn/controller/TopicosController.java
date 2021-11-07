@@ -4,6 +4,7 @@ import br.com.easylearn.controller.dto.DetalhesDoTopicoDto;
 import br.com.easylearn.controller.dto.TopicoDto;
 import br.com.easylearn.controller.form.AtualizacaoTopicoForm;
 import br.com.easylearn.controller.form.TopicoForm;
+import br.com.easylearn.domain.StatusTopico;
 import br.com.easylearn.domain.Topico;
 import br.com.easylearn.repository.CursoRepository;
 import br.com.easylearn.repository.TopicosRepository;
@@ -73,6 +74,18 @@ public class TopicosController {
         if (optional.isPresent()) {
             Topico topico = form.atualizar(id, topicosRepository);
             return ResponseEntity.ok(new TopicoDto(topico));
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("solucionar/{id}")
+    @Transactional
+    public ResponseEntity<TopicoDto> solucionarTopico(@PathVariable Long id) {
+        Optional<Topico> optional = topicosRepository.findById(id);
+        if (optional.isPresent()) {
+            optional.get().setStatus(StatusTopico.SOLUCIONADO);
+            return ResponseEntity.ok(new TopicoDto(optional.get()));
         }
 
         return ResponseEntity.notFound().build();
