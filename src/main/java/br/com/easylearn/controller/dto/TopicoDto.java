@@ -11,13 +11,13 @@ public class TopicoDto {
     private Long id;
     private String titulo;
     private String mensagem;
-    private LocalDateTime dataCriacao;
+    private UsuarioDto autor;
 
     public TopicoDto(Topico topico) {
         this.id = topico.getId();
         this.titulo = topico.getTitulo();
         this.mensagem = topico.getMensagem();
-        this.dataCriacao = topico.getDataCriacao();
+        this.autor = UsuarioDto.converter(topico.getAutor());
     }
 
     public static List<TopicoDto> converter(List<Topico> all) {
@@ -36,7 +36,7 @@ public class TopicoDto {
         return mensagem;
     }
 
-    public LocalDateTime getDataCriacao() {
-        return dataCriacao;
+    public UsuarioDto getAutor() {
+        return autor;
     }
 }
