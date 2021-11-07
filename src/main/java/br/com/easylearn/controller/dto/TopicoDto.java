@@ -1,5 +1,6 @@
 package br.com.easylearn.controller.dto;
 
+import br.com.easylearn.domain.StatusTopico;
 import br.com.easylearn.domain.Topico;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class TopicoDto {
     private String mensagem;
     private UsuarioDto autor;
     private Integer qtdResposta;
+    private StatusTopico status;
 
     public TopicoDto(Topico topico) {
         this.id = topico.getId();
@@ -19,6 +21,7 @@ public class TopicoDto {
         this.mensagem = topico.getMensagem();
         this.autor = UsuarioDto.converter(topico.getAutor());
         this.qtdResposta = topico.getRespostas().size();
+        this.status = topico.getStatus();
     }
 
     public static List<TopicoDto> converter(List<Topico> all) {
@@ -43,5 +46,9 @@ public class TopicoDto {
 
     public Integer getQtdResposta() {
         return qtdResposta;
+    }
+
+    public StatusTopico getStatus() {
+        return status;
     }
 }
