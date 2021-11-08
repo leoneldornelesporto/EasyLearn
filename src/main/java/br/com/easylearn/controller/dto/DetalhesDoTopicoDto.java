@@ -12,7 +12,6 @@ public class DetalhesDoTopicoDto {
     private Long id;
     private String titulo;
     private String mensagem;
-    private LocalDateTime dataCriacao;
     private String nomeAutor;
     private StatusTopico status;
     private List<RespostaDto> respostas;
@@ -21,7 +20,6 @@ public class DetalhesDoTopicoDto {
         this.id = topico.getId();
         this.titulo = topico.getTitulo();
         this.mensagem = topico.getMensagem();
-        this.dataCriacao = topico.getDataCriacao();
         this.nomeAutor = topico.getAutor().getNomeCompleto();
         this.status = topico.getStatus();
         this.respostas = new ArrayList<>();
@@ -38,10 +36,6 @@ public class DetalhesDoTopicoDto {
 
     public String getMensagem() {
         return mensagem;
-    }
-
-    public LocalDateTime getDataCriacao() {
-        return dataCriacao;
     }
 
     public String getNomeAutor() {
