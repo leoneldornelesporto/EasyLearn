@@ -1,6 +1,7 @@
 package br.com.easylearn.controller;
 
 import br.com.easylearn.controller.dto.DetalhesDoTopicoDto;
+import br.com.easylearn.controller.dto.RespostaDto;
 import br.com.easylearn.controller.dto.TopicoDto;
 import br.com.easylearn.controller.form.AtualizacaoTopicoForm;
 import br.com.easylearn.controller.form.RespostaForm;
@@ -9,6 +10,7 @@ import br.com.easylearn.domain.Resposta;
 import br.com.easylearn.domain.StatusTopico;
 import br.com.easylearn.domain.Topico;
 import br.com.easylearn.repository.CursoRepository;
+import br.com.easylearn.repository.RespostaRepository;
 import br.com.easylearn.repository.TopicosRepository;
 import br.com.easylearn.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +31,14 @@ public class TopicosController {
     private final TopicosRepository topicosRepository;
     private final CursoRepository cursoRepository;
     private final UsuarioRepository usuarioRepository;
+    private final RespostaRepository respostaRepository;
 
     @Autowired
-    public TopicosController(TopicosRepository topicosRepository, CursoRepository cursoRepository, UsuarioRepository usuarioRepository) {
+    public TopicosController(TopicosRepository topicosRepository, CursoRepository cursoRepository, UsuarioRepository usuarioRepository, RespostaRepository respostaRepository) {
         this.topicosRepository = topicosRepository;
         this.cursoRepository = cursoRepository;
         this.usuarioRepository = usuarioRepository;
+        this.respostaRepository = respostaRepository;
     }
 
     @GetMapping
@@ -83,12 +87,11 @@ public class TopicosController {
 
     @PutMapping("responder/{id}")
     @Transactional
-    public ResponseEntity<TopicoDto> responderTopico(@PathVariable Long id, @RequestBody Resposta resposta) {
+    public ResponseEntity<RespostaDto> responderTopico(@PathVariable Long id, @RequestBody RespostaForm respostaForm) {
         Optional<Topico> optional = topicosRepository.findById(id);
         if (optional.isPresent()) {
-            optional.get().setRespostas(resposta);
-            topicosRepository.save(optional.get());
-            return ResponseEntity.ok(new TopicoDto(optional.get()));
+            RespostaDto respostaDto = respostaForm.save(usuarioRepository,topicosRepository,respostaRepository);
+            return ResponseEntity.ok(respostaDto);
         }
 
         return ResponseEntity.notFound().build();

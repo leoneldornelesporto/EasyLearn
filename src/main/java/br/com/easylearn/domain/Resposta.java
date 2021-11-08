@@ -15,6 +15,15 @@ public class Resposta extends AbstractEntity {
     private Usuario autor;
     private Boolean solucao = false;
 
+    public Resposta() {
+    }
+
+    public Resposta(Topico topico, Usuario usuario, String mensagem) {
+        this.topico = topico;
+        this.autor = usuario;
+        this.mensagem = mensagem;
+    }
+
     public String getMensagem() {
         return mensagem;
     }
