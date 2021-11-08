@@ -81,7 +81,7 @@ public class Topico extends AbstractEntity{
         return respostas;
     }
 
-    public void setRespostas(List<Resposta> respostas) {
-        this.respostas = respostas;
+    public void setRespostas(Resposta respostas) {
+        this.respostas.add(respostas);
     }
 }
