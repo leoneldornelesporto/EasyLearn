@@ -90,10 +90,9 @@ public class TopicosController {
     public ResponseEntity<RespostaDto> responderTopico(@PathVariable Long id, @RequestBody RespostaForm respostaForm) {
         Optional<Topico> optional = topicosRepository.findById(id);
         if (optional.isPresent()) {
-            RespostaDto respostaDto = respostaForm.save(usuarioRepository,topicosRepository,respostaRepository);
+            RespostaDto respostaDto = respostaForm.save(id,usuarioRepository,topicosRepository,respostaRepository);
             return ResponseEntity.ok(respostaDto);
         }
-
         return ResponseEntity.notFound().build();
     }
 

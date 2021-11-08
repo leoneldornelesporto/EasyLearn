@@ -13,22 +13,17 @@ import java.util.Optional;
 public class RespostaForm {
 
     private String mensagem;
-    private Long idTopico;
     private Long idUsuario;
 
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
     }
 
-    public void setIdTopico(Long idTopico) {
-        this.idTopico = idTopico;
-    }
-
     public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
 
-    public RespostaDto save(UsuarioRepository usuarioRepository, TopicosRepository topicosRepository, RespostaRepository respostaRepository) {
+    public RespostaDto save(Long idTopico, UsuarioRepository usuarioRepository, TopicosRepository topicosRepository, RespostaRepository respostaRepository) {
         Optional<Topico> topicoById = topicosRepository.findById(idTopico);
 
         if (topicoById.isPresent()){
