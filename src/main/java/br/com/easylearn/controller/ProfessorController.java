@@ -14,6 +14,7 @@ import br.com.easylearn.domain.Professor;
 import br.com.easylearn.domain.Tutor;
 import br.com.easylearn.repository.AlunoRepository;
 import br.com.easylearn.repository.ProfessorRepository;
+import br.com.easylearn.repository.TutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -33,12 +34,14 @@ public class ProfessorController {
 
     private final ProfessorRepository professorRepository;
     private final AlunoRepository alunoRepository;
+    private final TutorRepository tutorRepository;
     private final SendMailServiceImpl service;
 
     @Autowired
-    public ProfessorController(ProfessorRepository professorRepository, AlunoRepository alunoRepository, SendMailServiceImpl service) {
+    public ProfessorController(ProfessorRepository professorRepository, AlunoRepository alunoRepository, TutorRepository tutorRepository, SendMailServiceImpl service) {
         this.professorRepository = professorRepository;
         this.alunoRepository = alunoRepository;
+        this.tutorRepository = tutorRepository;
         this.service = service;
     }
 
@@ -106,12 +109,24 @@ public class ProfessorController {
     }
 
     @PreAuthorize("hasRole('PROFESSOR')")
-    @DeleteMapping("v1/protectedP/professor/salvar/aluno/{idAluno}")
+    @DeleteMapping("v1/protectedP/professor/deletar/aluno/{idAluno}")
     @Transactional
     public ResponseEntity<?> removerAluno(@PathVariable Long idAluno) {
         Optional<Aluno> optional = alunoRepository.findById(idAluno);
         if (optional.isPresent()) {
             alunoRepository.deleteById(idAluno);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PreAuthorize("hasRole('PROFESSOR')")
+    @DeleteMapping("v1/protectedP/professor/deletar/tutor/{idTutor}")
+    @Transactional
+    public ResponseEntity<?> removerTutor(@PathVariable Long idTutor) {
+        Optional<Tutor> byIdTutor = tutorRepository.findById(idTutor);
+        if (byIdTutor.isPresent()) {
+            tutorRepository.deleteById(idTutor);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
