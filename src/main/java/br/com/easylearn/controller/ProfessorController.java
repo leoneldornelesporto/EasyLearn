@@ -69,6 +69,8 @@ public class ProfessorController {
         ProfessorForm professorForm2 = new ProfessorForm("Marla","Professora Marla","Professora Titular IFSUL","111.555.222-22",
                 "professora-marla.com","marla_professor@outlook.com","12345","12-11-1989","Teste","Teste","Teste","Teste","IFSUL","Professor Titular","Teste","http://www2.pelotas.ifsul.edu.br/bibdipec/images/foto_Cintia_Silva.jpg","IFSUL","TSI");
 
+        professorForm2.save(professorRepository);
+
         return true;
     }
 
