@@ -36,20 +36,20 @@ public class AlunoController {
 
     @GetMapping("/cadastrarAlunos")
     public Boolean cadastrarUsuarios(){
-        alunoRepository.deleteById(14L);
-        alunoRepository.deleteById(15L);
-        alunoRepository.deleteById(16L);
-        AlunoForm professorForm = new AlunoForm("Paulo Aluno","Professor Paulo","Professor Titular IFSUL","112355555588",
-                "professor-paulo.com","paulo_aluno@outlook.com","12345","14-11-1989","Teste","Teste","Teste","Teste","IFSUL","Professor Titular","Teste","https://i1.rgstatic.net/ii/profile.image/610962222628865-1522676153533_Q128/Paulo-Asconavieta.jpg","IFSUL","TSI");
+        alunoRepository.deleteById(17L);
+        alunoRepository.deleteById(18L);
+        alunoRepository.deleteById(19L);
+        AlunoForm professorForm = new AlunoForm("PauloAluno","Paulo Professor","","112355555588",
+                "","paulo_aluno@outlook.com","12345","14-11-1969","Teste","","","","","","","https://i1.rgstatic.net/ii/profile.image/610962222628865-1522676153533_Q128/Paulo-Asconavieta.jpg","","");
         professorForm.save(alunoRepository);
 
-        AlunoForm professorForm1 = new AlunoForm("Marcia Aluna","Professora Marcia","Professora Titular IFSUL","88877722241",
-                "professora-marcia.com","marcia_aluna@outlook.com","12345","12-11-1989","Teste","Teste","Teste","Teste","IFSUL","Professor Titular","Teste","http://ubiq.inf.ufpel.edu.br/marciazg/lib/exe/fetch.php?media=mzg.jpg","IFSUL","TSI");
+        AlunoForm professorForm1 = new AlunoForm("MarciaAluna","Marcia Professora","","88877722241",
+                "","marcia_aluna@outlook.com","12345","12-11-1979","","","","","","","","http://ubiq.inf.ufpel.edu.br/marciazg/lib/exe/fetch.php?media=mzg.jpg","","");
 
         professorForm1.save(alunoRepository);
 
-        AlunoForm professorForm2 = new AlunoForm("Marla Aluna","Professora Marla","Professora Titular IFSUL","99988877355",
-                "professora-marla.com","marla_aluna@outlook.com","12345","12-11-1989","Teste","Teste","Teste","Teste","IFSUL","Professor Titular","Teste","http://www2.pelotas.ifsul.edu.br/bibdipec/images/foto_Cintia_Silva.jpg","IFSUL","TSI");
+        AlunoForm professorForm2 = new AlunoForm("MarlaAluna","Marla Professora"," Titular IFSUL","99988877355",
+                "","marla_aluna@outlook.com","12345","12-12-1989","","","","","","","","http://www2.pelotas.ifsul.edu.br/bibdipec/images/foto_Cintia_Silva.jpg","","");
 
         professorForm2.save(alunoRepository);
 
