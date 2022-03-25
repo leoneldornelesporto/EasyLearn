@@ -57,12 +57,16 @@ public class ProfessorController {
 
     @GetMapping("/cadastrarProfessores")
     public Boolean cadastrarUsuarios(){
+        professorRepository.deleteById(8L);
+        professorRepository.deleteById(9L);
+        professorRepository.deleteById(10L);
+
         ProfessorForm professorForm = new ProfessorForm("Paulo","Professor Paulo","Professor Titular IFSUL","000.222.555-88",
                 "professor-paulo.com","paulo_professor@outlook.com","12345","14-11-1989","Teste","Teste","Teste","Teste","IFSUL","Professor Titular","Teste","https://i1.rgstatic.net/ii/profile.image/610962222628865-1522676153533_Q128/Paulo-Asconavieta.jpg","IFSUL","TSI");
         professorForm.save(professorRepository);
 
         ProfessorForm professorForm1 = new ProfessorForm("Marcia","Professora Marcia","Professora Titular IFSUL","000.555.222-11",
-                "professora-marcia.com","marcia_professor@outlook.com","12345","12-11-1989","Teste","Teste","Teste","Teste","IFSUL","Professor Titular","Teste","http://ubiq.inf.ufpel.edu.br/marciazg/lib/exe/detail.php?id=start&media=mzg.jpg","IFSUL","TSI");
+                "professora-marcia.com","marcia_professor@outlook.com","12345","12-11-1989","Teste","Teste","Teste","Teste","IFSUL","Professor Titular","Teste","http://ubiq.inf.ufpel.edu.br/marciazg/lib/exe/fetch.php?media=mzg.jpg","IFSUL","TSI");
 
         professorForm1.save(professorRepository);
 
