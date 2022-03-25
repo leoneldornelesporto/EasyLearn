@@ -24,6 +24,30 @@ public class AlunoForm {
     private String instituicao;
     private String curso;
 
+    public AlunoForm() {
+    }
+
+    public AlunoForm(String nomeCompleto, String nomeNoCertificado, String ocupacao, String cpf, String usuarioNaUrl, String email, String senha, String dataDeNascimento, String biografia, String linkedin, String github, String twitter, String empresa, String cargo, String linkPersonalizado, String avatar, String instituicao, String curso) {
+        this.nomeCompleto = nomeCompleto;
+        this.nomeNoCertificado = nomeNoCertificado;
+        this.ocupacao = ocupacao;
+        this.cpf = cpf;
+        this.usuarioNaUrl = usuarioNaUrl;
+        this.email = email;
+        this.senha = senha;
+        this.dataDeNascimento = dataDeNascimento;
+        this.biografia = biografia;
+        this.linkedin = linkedin;
+        this.github = github;
+        this.twitter = twitter;
+        this.empresa = empresa;
+        this.cargo = cargo;
+        this.linkPersonalizado = linkPersonalizado;
+        this.avatar = avatar;
+        this.instituicao = instituicao;
+        this.curso = curso;
+    }
+
     public Aluno save(AlunoRepository alunoRepository) {
         Aluno aluno = new Aluno(nomeCompleto,nomeNoCertificado,ocupacao,cpf,usuarioNaUrl,email,senha,dataDeNascimento,biografia,linkedin,github,twitter,empresa,cargo,linkPersonalizado,avatar,instituicao,curso);
         return alunoRepository.save(aluno);

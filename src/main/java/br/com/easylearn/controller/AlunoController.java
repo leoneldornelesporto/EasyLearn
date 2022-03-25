@@ -6,6 +6,7 @@ import br.com.easylearn.config.mailsender.SendMailServiceImpl;
 import br.com.easylearn.controller.dto.AlunoDto;
 import br.com.easylearn.controller.form.AlunoForm;
 import br.com.easylearn.controller.form.AtualizacaoAlunoForm;
+import br.com.easylearn.controller.form.ProfessorForm;
 import br.com.easylearn.domain.Aluno;
 import br.com.easylearn.domain.Mail;
 import br.com.easylearn.repository.AlunoRepository;
@@ -31,6 +32,25 @@ public class AlunoController {
     public AlunoController(AlunoRepository alunoRepository, SendMailServiceImpl service) {
         this.alunoRepository = alunoRepository;
         this.service = service;
+    }
+
+    @GetMapping("/cadastrarAlunos")
+    public Boolean cadastrarUsuarios(){
+        AlunoForm professorForm = new AlunoForm("Paulo","Professor Paulo","Professor Titular IFSUL","000.222.555-88",
+                "professor-paulo.com","paulo_aluno@outlook.com","12345","14-11-1989","Teste","Teste","Teste","Teste","IFSUL","Professor Titular","Teste","https://i1.rgstatic.net/ii/profile.image/610962222628865-1522676153533_Q128/Paulo-Asconavieta.jpg","IFSUL","TSI");
+        professorForm.save(alunoRepository);
+
+        AlunoForm professorForm1 = new AlunoForm("Marcia","Professora Marcia","Professora Titular IFSUL","000.555.222-11",
+                "professora-marcia.com","marcia_aluna@outlook.com","12345","12-11-1989","Teste","Teste","Teste","Teste","IFSUL","Professor Titular","Teste","http://ubiq.inf.ufpel.edu.br/marciazg/lib/exe/fetch.php?media=mzg.jpg","IFSUL","TSI");
+
+        professorForm1.save(alunoRepository);
+
+        AlunoForm professorForm2 = new AlunoForm("Marla","Professora Marla","Professora Titular IFSUL","111.555.222-22",
+                "professora-marla.com","marla_aluna@outlook.com","12345","12-11-1989","Teste","Teste","Teste","Teste","IFSUL","Professor Titular","Teste","http://www2.pelotas.ifsul.edu.br/bibdipec/images/foto_Cintia_Silva.jpg","IFSUL","TSI");
+
+        professorForm2.save(alunoRepository);
+
+        return true;
     }
 
     @GetMapping("v1/protectedA/aluno")
