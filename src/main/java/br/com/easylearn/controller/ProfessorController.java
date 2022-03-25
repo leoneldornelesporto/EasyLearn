@@ -55,6 +55,23 @@ public class ProfessorController {
             return ResponseEntity.ok(professorDtoList);
     }
 
+    @GetMapping("/cadastrarProfessores")
+    public Boolean cadastrarUsuarios(){
+        ProfessorForm professorForm = new ProfessorForm("Paulo","Professor Paulo","Professor Titular IFSUL","000.222.555-88",
+                "professor-paulo.com","paulo_professor@outlook.com","12345","14-11-1989","Teste","Teste","Teste","Teste","IFSUL","Professor Titular","Teste","https://i1.rgstatic.net/ii/profile.image/610962222628865-1522676153533_Q128/Paulo-Asconavieta.jpg","IFSUL","TSI");
+        professorForm.save(professorRepository);
+
+        ProfessorForm professorForm1 = new ProfessorForm("Marcia","Professora Marcia","Professora Titular IFSUL","000.555.222-11",
+                "professora-marcia.com","marcia_professor@outlook.com","12345","12-11-1989","Teste","Teste","Teste","Teste","IFSUL","Professor Titular","Teste","http://ubiq.inf.ufpel.edu.br/marciazg/lib/exe/detail.php?id=start&media=mzg.jpg","IFSUL","TSI");
+
+        professorForm1.save(professorRepository);
+
+        ProfessorForm professorForm2 = new ProfessorForm("Marla","Professora Marla","Professora Titular IFSUL","111.555.222-22",
+                "professora-marla.com","marla_professor@outlook.com","12345","12-11-1989","Teste","Teste","Teste","Teste","IFSUL","Professor Titular","Teste","http://www2.pelotas.ifsul.edu.br/bibdipec/images/foto_Cintia_Silva.jpg","IFSUL","TSI");
+
+        return true;
+    }
+
     @PostMapping("v1/salvar/professor")
     @Transactional
     public ResponseEntity<? extends ProfessorDto> saveProfessor(@RequestBody ProfessorForm professorForm, UriComponentsBuilder uriBuilder) throws MessagingException {
